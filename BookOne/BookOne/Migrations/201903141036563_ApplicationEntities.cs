@@ -3,7 +3,7 @@ namespace BookOne.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AdditionalApplicationEntities : DbMigration
+    public partial class ApplicationEntities : DbMigration
     {
         public override void Up()
         {
@@ -52,28 +52,12 @@ namespace BookOne.Migrations
                 c => new
                     {
                         ClubId = c.Int(nullable: false, identity: true),
-                        ClubName = c.String(),
+                        ClubName = c.String(nullable: false),
                         ClubDescription = c.String(),
                         ClubLocation = c.Int(nullable: false),
                         CreatedOn = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.ClubId);
-            
-            CreateTable(
-                "dbo.ClubMembers",
-                c => new
-                    {
-                        ClubMemberId = c.Int(nullable: false, identity: true),
-                        JoinedOn = c.DateTime(nullable: false),
-                        MemberIsConnector = c.Boolean(nullable: false),
-                        AssociatedClub_ClubId = c.Int(),
-                        Member_Id = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.ClubMemberId)
-                .ForeignKey("dbo.Clubs", t => t.AssociatedClub_ClubId)
-                .ForeignKey("dbo.AspNetUsers", t => t.Member_Id)
-                .Index(t => t.AssociatedClub_ClubId)
-                .Index(t => t.Member_Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -142,7 +126,7 @@ namespace BookOne.Migrations
                 c => new
                     {
                         BookNoteId = c.Int(nullable: false, identity: true),
-                        Content = c.String(),
+                        Content = c.String(nullable: false),
                         ReceivedOn = c.DateTime(nullable: false),
                         BookAssociated_BookId = c.Int(),
                         Giver_Id = c.String(maxLength: 128),
@@ -201,10 +185,27 @@ namespace BookOne.Migrations
                 .Index(t => t.AssociatedClub_ClubId);
             
             CreateTable(
+                "dbo.ClubMembers",
+                c => new
+                    {
+                        ClubMemberId = c.Int(nullable: false, identity: true),
+                        JoinedOn = c.DateTime(nullable: false),
+                        MemberIsConnector = c.Boolean(nullable: false),
+                        AssociatedClub_ClubId = c.Int(),
+                        Member_Id = c.String(maxLength: 128),
+                    })
+                .PrimaryKey(t => t.ClubMemberId)
+                .ForeignKey("dbo.Clubs", t => t.AssociatedClub_ClubId)
+                .ForeignKey("dbo.AspNetUsers", t => t.Member_Id)
+                .Index(t => t.AssociatedClub_ClubId)
+                .Index(t => t.Member_Id);
+            
+            CreateTable(
                 "dbo.Messages",
                 c => new
                     {
                         MessageId = c.Int(nullable: false, identity: true),
+                        Content = c.String(nullable: false),
                         SentOn = c.DateTime(nullable: false),
                         Receiver_Id = c.String(maxLength: 128),
                         Sender_Id = c.String(maxLength: 128),
@@ -219,14 +220,14 @@ namespace BookOne.Migrations
                 "dbo.Reactions",
                 c => new
                     {
-                        ActionId = c.String(nullable: false, maxLength: 128),
+                        ReactionId = c.String(nullable: false, maxLength: 128),
                         Choice = c.Int(nullable: false),
                         ReceivedOn = c.DateTime(nullable: false),
                         ActionGiver_Id = c.String(maxLength: 128),
                         ActionReceiver_Id = c.String(maxLength: 128),
                         ForBook_BookId = c.Int(),
                     })
-                .PrimaryKey(t => t.ActionId)
+                .PrimaryKey(t => t.ReactionId)
                 .ForeignKey("dbo.AspNetUsers", t => t.ActionGiver_Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.ActionReceiver_Id)
                 .ForeignKey("dbo.Books", t => t.ForBook_BookId)
@@ -254,6 +255,8 @@ namespace BookOne.Migrations
             DropForeignKey("dbo.Reactions", "ActionGiver_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.Messages", "Sender_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.Messages", "Receiver_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ClubMembers", "Member_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.ClubMembers", "AssociatedClub_ClubId", "dbo.Clubs");
             DropForeignKey("dbo.ClubLimitations", "AssociatedClub_ClubId", "dbo.Clubs");
             DropForeignKey("dbo.ClubInitiations", "InitialMember_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.ClubInitiations", "AssociatedClub_ClubId", "dbo.Clubs");
@@ -266,11 +269,9 @@ namespace BookOne.Migrations
             DropForeignKey("dbo.BookCirculations", "Borrower_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.BookCirculations", "BookAssociated_BookId", "dbo.Books");
             DropForeignKey("dbo.Books", "Owner_Id", "dbo.AspNetUsers");
-            DropForeignKey("dbo.ClubMembers", "Member_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.ClubMembers", "AssociatedClub_ClubId", "dbo.Clubs");
             DropForeignKey("dbo.Books", "AssociatedClub_ClubId", "dbo.Clubs");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Reactions", new[] { "ForBook_BookId" });
@@ -278,6 +279,8 @@ namespace BookOne.Migrations
             DropIndex("dbo.Reactions", new[] { "ActionGiver_Id" });
             DropIndex("dbo.Messages", new[] { "Sender_Id" });
             DropIndex("dbo.Messages", new[] { "Receiver_Id" });
+            DropIndex("dbo.ClubMembers", new[] { "Member_Id" });
+            DropIndex("dbo.ClubMembers", new[] { "AssociatedClub_ClubId" });
             DropIndex("dbo.ClubLimitations", new[] { "AssociatedClub_ClubId" });
             DropIndex("dbo.ClubInitiations", new[] { "InitialMember_Id" });
             DropIndex("dbo.ClubInitiations", new[] { "AssociatedClub_ClubId" });
@@ -291,8 +294,6 @@ namespace BookOne.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.ClubMembers", new[] { "Member_Id" });
-            DropIndex("dbo.ClubMembers", new[] { "AssociatedClub_ClubId" });
             DropIndex("dbo.Books", new[] { "Owner_Id" });
             DropIndex("dbo.Books", new[] { "AssociatedClub_ClubId" });
             DropIndex("dbo.BookCirculations", new[] { "Owner_Id" });
@@ -301,6 +302,7 @@ namespace BookOne.Migrations
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Reactions");
             DropTable("dbo.Messages");
+            DropTable("dbo.ClubMembers");
             DropTable("dbo.ClubLimitations");
             DropTable("dbo.ClubInitiations");
             DropTable("dbo.BookRequests");
@@ -309,7 +311,6 @@ namespace BookOne.Migrations
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.ClubMembers");
             DropTable("dbo.Clubs");
             DropTable("dbo.Books");
             DropTable("dbo.BookCirculations");

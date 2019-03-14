@@ -7,13 +7,13 @@ namespace BookOne.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AdditionalApplicationEntities : IMigrationMetadata
+    public sealed partial class ApplicationEntities : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AdditionalApplicationEntities));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ApplicationEntities));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903131308452_AdditionalApplicationEntities"; }
+            get { return "201903141036563_ApplicationEntities"; }
         }
         
         string IMigrationMetadata.Source

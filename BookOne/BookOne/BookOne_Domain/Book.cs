@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace BookOne.BookOne_Domain
 {
@@ -13,28 +10,25 @@ namespace BookOne.BookOne_Domain
         public Book()
         {
             RegisteredOn = DateTime.Now;
+            BookStatus = BookStatuses.Public;
         }
 
-        [Key]
+        
         public int BookId { get; set; }
 
-        //[ForeignKey("UserId")]
-        public virtual ApplicationUser Owner { get; set; }
+        public ApplicationUser Owner { get; set; }
 
-        //[ForeignKey("ClubId")]
-        public virtual Club AssociatedClub { get; set; }
+        public Club AssociatedClub { get; set; }
 
-        [Required(ErrorMessage = "Title field can not be empty.")]
+        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Author field can not be empty.")]
+        [Required(ErrorMessage = "Author is required")]
         public string Author { get; set; }
 
         public DateTime RegisteredOn { get; set; }
 
         public BookStatuses BookStatus { get; set; }
-
-
     }
 
     public enum BookStatuses

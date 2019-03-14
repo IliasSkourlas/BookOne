@@ -1,11 +1,6 @@
 ﻿using BookOne.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookOne.BookOne_Domain
 {
@@ -17,17 +12,13 @@ namespace BookOne.BookOne_Domain
         }
 
 
-        [Key]
-        public string ActionId { get; set; }
+        public string ReactionId { get; set; }
 
-        //[ForeignKey("UserId")]
-        public virtual ApplicationUser ActionGiver { get; set; }
+        public ApplicationUser ActionGiver { get; set; }
 
-        //[ForeignKey("UserId")]
-        public virtual ApplicationUser ActionReceiver { get; set; }
+        public ApplicationUser ActionReceiver { get; set; }
 
-        //[ForeignKey("BookId")]
-        public virtual Book ForBook { get; set; }
+        public Book ForBook { get; set; }
 
         public ReactionChoices Choice { get; set; }
 
@@ -41,6 +32,7 @@ namespace BookOne.BookOne_Domain
         Shovel,
         Treat,
         PoisonousCookie,
-        ConnectorBonus
+        ConnectorBonus,
+        Nothing
     }
 }

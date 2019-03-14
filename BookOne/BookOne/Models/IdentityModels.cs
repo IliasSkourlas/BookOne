@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -17,11 +18,11 @@ namespace BookOne.Models
             UserStatus = UserStatuses.Active;
         }
 
-
+        [Required]
         public int PostalCode { get; set; }
 
         public DateTime RegisteredOn { get; set; }
-
+        
         public UserStatuses UserStatus { get; set; }
 
         public int XP_Points { get; set; }

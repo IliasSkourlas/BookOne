@@ -27,8 +27,9 @@ namespace BookOne.Migrations
             //firstUser.Id = "meh";
             //firstUser.PasswordHash = "ksdjfh";
 
-            var user = context.Users.Where(u => u.Email == "sotosmaniac@yahoo.com").FirstOrDefault();
 
+
+            var user = context.Users.Where(u => u.Email == "moufauser@bookone.com").FirstOrDefault();
 
             Club firstClub = new Club();
             firstClub.ClubName = "Clubara";
@@ -41,7 +42,7 @@ namespace BookOne.Migrations
             firstBook.Title = "The Running Man";
             firstBook.Author = "Stephen King";
             firstBook.BookStatus = BookStatuses.Public;
-            firstBook.AssociatedClub = context.Clubs.FirstOrDefault(c => c.ClubName == "Clubara");
+            firstBook.AssociatedClub = firstClub;
             firstBook.Owner = user;
             context.Books.AddOrUpdate(firstBook);
             

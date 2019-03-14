@@ -1,33 +1,33 @@
 ﻿using BookOne.Models;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace BookOne.BookOne_Domain
 {
     public class BookCirculation
     {
-        [Key]
+        public BookCirculation()
+        {
+            BorrowedOn = DateTime.Now;
+        }
+
+
         public int BookCirculationId { get; set; }
 
-        //[ForeignKey("BookId")]
-        public virtual Book BookAssociated { get; set; }
+        public Book BookAssociated { get; set; }
 
-        //[ForeignKey("UserId")]
-        public virtual ApplicationUser Owner { get; set; }
+        public ApplicationUser Owner { get; set; }
 
-        //[ForeignKey("UserId")]
-        public virtual ApplicationUser Borrower { get; set; }
+        public ApplicationUser Borrower { get; set; }
 
         public DateTime BorrowedOn { get; set; }
 
+        [Required(ErrorMessage = "A number of weeks is required")]
         public int BorrowedForXWeeks { get; set; }
-
+        
         public bool OwnerGaveBook { get; set; }
-
+        
         public bool BorrowerReceivedBook { get; set; }
 
         public CirculationStatuses CirculationStatus { get; set; }
