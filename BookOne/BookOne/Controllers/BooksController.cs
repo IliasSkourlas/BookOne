@@ -21,7 +21,7 @@ namespace BookOne.Controllers
             //Displays all Books not owned by the logged in user
             var loggedInUserId = User.Identity.GetUserId();
 
-            return View(db.Books.Where(b => b.Owner.Id != loggedInUserId).ToList());
+            return View(db.Books.Where(b => b.Owner.Id != loggedInUserId && b.BookStatus == BookStatuses.Public).ToList());
         }
 
         // GET: MyBooks
@@ -37,23 +37,33 @@ namespace BookOne.Controllers
         public ActionResult MyHand()
         {
             //Displays all Books that the logged in user currently holds
-
             var loggedInUserId = User.Identity.GetUserId();
-            var userBooks = db.Books.Where(b => b.Owner.Id == loggedInUserId).ToList();
-            var booksInUserHand = new List<Book>();
 
-            foreach (var book in userBooks)
-            {
-                var bookCirculations = book.ThisBookCirculations.LastOrDefault().CirculationStatus != CirculationStatuses.Borrowed;
-
-                if (bookCirculations == false)
-                {
-                    booksInUserHand.Add(book);
-                }
-            }
+            var booksInUserHand = MyHand(loggedInUserId);
             
             return View(booksInUserHand);
         }
+
+
+
+
+        private IEnumerable<Book> MyHand(string loggedInUserId)
+        {
+            // books currently borrowed by the logged in user
+            var borrowedBooks =
+                db.BookCirculations.Where(c => c.CirculationStatus == CirculationStatuses.Borrowed && c.Borrower.Id == loggedInUserId)
+                .Select(c => c.BookAssociated);
+
+            // my books not currently borrowed by anyone
+            var ownedBooksNotCurrentlyBorrowed =
+                db.Books.Where(b => b.Owner.Id == loggedInUserId).Except(
+                    db.BookCirculations.Where(c => c.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
+                    .Select(c => c.BookAssociated));
+
+            return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).ToList();
+        }
+
+
 
 
         // GET: Books/Details/5
@@ -162,6 +172,53 @@ namespace BookOne.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+        // GET: Requests
+        public ActionResult Requests()
+        {
+            var loggedInUserId = User.Identity.GetUserId();
+
+            var openRequests = db.BookRequests.Where(r => r.BookOwner.Id == loggedInUserId && r.ApprovedByOwner == false);   /////////
+
+            return View(openRequests);
+        }
+
+        // GET: Books/RequestConfirmation/5
+        public ActionResult RequestConfirmation(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            return View(book);
+        }
+
+
+        public ActionResult MakeARequest(int? id)
+        {
+            var loggedInUserId = User.Identity.GetUserId();
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = db.Books.Find(id);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+            BookRequest request = new BookRequest();
+            request.RequestedBy.Id = loggedInUserId;
+            request.BookRequested = book;
+
+            return View();
         }
     }
 }

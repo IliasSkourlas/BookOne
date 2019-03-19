@@ -1,0 +1,48 @@
+﻿@model IEnumerable<BookOne.BookOne_Domain.BookRequest>
+
+@{
+    ViewBag.Title = "Requests";
+}
+
+<h2>My Books' Requests</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BookRequested.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestedBy.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RequestedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ApprovedByOwner)
+        </th>
+        @*<th></th>*@
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.BookRequested.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.RequestedBy.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RequestedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ApprovedByOwner)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BookRequestId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BookRequestId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BookRequestId })
+        </td>*@
+    </tr>
+}
+
+</table>

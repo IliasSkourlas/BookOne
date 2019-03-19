@@ -8,7 +8,7 @@ namespace BookOne.BookOne_Domain
 {
     public class Book
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        //private ApplicationDbContext db = new ApplicationDbContext();
 
         public Book()
         {
@@ -33,7 +33,7 @@ namespace BookOne.BookOne_Domain
 
         public BookStatuses BookStatus { get; set; }
 
-        public ICollection<BookCirculation> ThisBookCirculations { get; set; }
+        //public ICollection<BookCirculation> ThisBookCirculations { get; set; }
     }
 
     public enum BookStatuses

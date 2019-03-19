@@ -7,8 +7,9 @@
 <h2>MyHand</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("All Books", "Index") | @Html.ActionLink("My Books", "MyBooks") | @Html.ActionLink("My Hand", "MyHand")
+    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("All Books", "Index") | @Html.ActionLink("My Books", "MyBooks") | @Html.ActionLink("Borrowed Books", "MyHand") | @Html.ActionLink("Requests", "Requests")
 </p>
+
 <table class="table">
     <tr>
         <th>
@@ -23,7 +24,6 @@
         <th>
             @Html.DisplayNameFor(model => model.BookStatus)
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -39,11 +39,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BookStatus)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookId })
         </td>
     </tr>
 }
