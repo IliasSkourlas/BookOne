@@ -18,12 +18,16 @@ namespace BookOne.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(db.Books.ToList());
+            //Displays all Books not owned by the logged in user
+            var loggedInUserId = User.Identity.GetUserId();
+
+            return View(db.Books.Where(b => b.Owner.Id != loggedInUserId).ToList());
         }
 
         // GET: MyBooks
         public ActionResult MyBooks()
         {
+            //Displays all Books owned by the logged in user
             var loggedInUserId = User.Identity.GetUserId();
 
             return View(db.Books.Where(b => b.Owner.Id == loggedInUserId).ToList());
@@ -32,13 +36,17 @@ namespace BookOne.Controllers
         // GET: MyHand
         public ActionResult MyHand()
         {
+            //Displays all Books that the logged in user currently holds
+
             var loggedInUserId = User.Identity.GetUserId();
             var userBooks = db.Books.Where(b => b.Owner.Id == loggedInUserId).ToList();
             var booksInUserHand = new List<Book>();
 
             foreach (var book in userBooks)
             {
-                if(book.ThisBookCirculations.LastOrDefault().CirculationStatus != CirculationStatuses.Borrowed)
+                var bookCirculations = book.ThisBookCirculations.LastOrDefault().CirculationStatus != CirculationStatuses.Borrowed;
+
+                if (bookCirculations == false)
                 {
                     booksInUserHand.Add(book);
                 }
