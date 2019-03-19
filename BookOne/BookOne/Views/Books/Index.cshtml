@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BookOne.BookOne_Domain.Book>
+
+@{
+    ViewBag.Title = "Books";
+}
+
+<h2>Books</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("My Books", "MyBooks") | @Html.ActionLink("My Hand", "MyHand")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegisteredOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookStatus)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegisteredOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BookId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.BookId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
+            </td>
+        </tr>
+    }
+
+</table>
