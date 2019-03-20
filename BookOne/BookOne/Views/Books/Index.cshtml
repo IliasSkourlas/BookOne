@@ -24,6 +24,9 @@
         <th>
             @Html.DisplayNameFor(model => model.BookStatus)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailabilityStatus)
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -41,6 +44,16 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BookStatus)
+        </td>
+        <td>
+            @if(item.AvailabilityStatus == true)
+            {
+            <button>Available</button>
+            }
+            else
+            {
+            <p>Unavailable</p>
+            }
         </td>
     </tr>
     }

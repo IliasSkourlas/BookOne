@@ -14,6 +14,7 @@ namespace BookOne.BookOne_Domain
         {
             RegisteredOn = DateTime.Now;
             BookStatus = BookStatuses.Public;
+            AvailabilityStatus = true;
         }
 
         
@@ -33,7 +34,7 @@ namespace BookOne.BookOne_Domain
 
         public BookStatuses BookStatus { get; set; }
 
-        //public ICollection<BookCirculation> ThisBookCirculations { get; set; }
+        public bool AvailabilityStatus { get; set; }
     }
 
     public enum BookStatuses
