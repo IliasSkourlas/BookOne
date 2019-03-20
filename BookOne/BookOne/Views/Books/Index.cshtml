@@ -21,54 +21,58 @@
 
 <h3>@*Books*@</h3>
 
+<div class="btn2">
 
-<table class="table">
-    <tr color="pink">
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-                
-        <th class="ThisOne" >
-            @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th >
-            @Html.DisplayNameFor(model => model.Owner.UserName)
-        </th>
-        <th class="ThisOne" >
-            @Html.DisplayNameFor(model => model.BookStatus)
-        </th>
-        <th class="ThisOne">
-            @Html.DisplayNameFor(model => model.AvailabilityStatus)
-        </th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
+    <table class="table">
         <tr>
-            <td>
-                @*<a href="@Html.Action("MakeARequest", "Books", new { id=item.BookId })">@Html.DisplayFor(modelItem => item.Title)</a>*@
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td class="ThisOne">
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner.UserName)
-            </td>
-            <td class="ThisOne">
-                @Html.DisplayFor(modelItem => item.BookStatus)
-            </td>
-            <td class="ThisOne">
-                @if (item.AvailabilityStatus == true)
-                {
-                    <button>Available</button>
-                }
-                else
-                {
-                    <p>Unavailable</p>
-                }
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+                
+            <th class="ThisOne" >
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th >
+                @Html.DisplayNameFor(model => model.Owner.UserName)
+            </th>
+            <th class="ThisOne" >
+                @Html.DisplayNameFor(model => model.BookStatus)
+            </th>
+            <th class="ThisOne">
+                @Html.DisplayNameFor(model => model.AvailabilityStatus)
+            </th>
         </tr>
-    }
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @*<a href="@Html.Action("MakeARequest", "Books", new { id=item.BookId })">@Html.DisplayFor(modelItem => item.Title)</a>*@
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td class="ThisOne">
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner.UserName)
+                </td>
+                <td class="ThisOne">
+                    @Html.DisplayFor(modelItem => item.BookStatus)
+                </td>
+                <td class="ThisOne">
+                    @if (item.AvailabilityStatus == true)
+                    {
+                        <button>Available</button>
+                    }
+                    else
+                    {
+                        <p>Unavailable</p>
+                    }
+                </td>
+            </tr>
+        }
+
+</div>
 
 </table>
