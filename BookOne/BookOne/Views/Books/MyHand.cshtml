@@ -7,7 +7,7 @@
 <h2>MyHand</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("All Books", "Index") | @Html.ActionLink("My Books", "MyBooks") | @Html.ActionLink("Borrowed Books", "MyHand") | @Html.ActionLink("Requests", "Requests")
+    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("All Books", "Index") | @Html.ActionLink("My Books", "MyBooks") | @Html.ActionLink("My Hand", "MyHand") | @Html.ActionLink("Requests", "Requests")
 </p>
 
 <table class="table">
@@ -19,10 +19,7 @@
             @Html.DisplayNameFor(model => model.Author)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RegisteredOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookStatus)
+            @Html.DisplayNameFor(model => model.Owner.UserName)
         </th>
     </tr>
 
@@ -35,11 +32,9 @@
             @Html.DisplayFor(modelItem => item.Author)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RegisteredOn)
+            @Html.DisplayFor(modelItem => item.Owner.UserName)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookStatus)
-        </td>
+        @*if book status is borrowed then show how many days i have left to return it*@
     </tr>
 }
 

@@ -7,7 +7,7 @@
 <h2>Books</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("All Books", "Index") | @Html.ActionLink("My Books", "MyBooks") | @Html.ActionLink("Borrowed Books", "MyHand") | @Html.ActionLink("Requests", "Requests")
+    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("All Books", "Index") | @Html.ActionLink("My Books", "MyBooks") | @Html.ActionLink("My Hand", "MyHand") | @Html.ActionLink("Requests", "Requests")
 </p>
 
 <table class="table">
@@ -20,9 +20,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Owner.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookStatus)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AvailabilityStatus)
@@ -40,9 +37,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Owner.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookStatus)
         </td>
         <td>
             @if(item.AvailabilityStatus == true)

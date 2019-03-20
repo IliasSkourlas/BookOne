@@ -79,5 +79,24 @@ namespace BookOne.BookOne_Domain
             db.Books.Remove(book);
             db.SaveChanges();
         }
+
+
+        //Promote User to Player (change of his role)
+
+        //Insert Request to the Database
+
+        //Count Requests of user's books
+
+        //Get all user's book requests
+
+        //Decline request for a book
+
+        //Add BookCirculation for a book
+        //Borrow a book to someone (Owner gave book)
+        //Borrow a book from someone (Borrower received book)
+
+        //Change book's Availability Status while it's borrowed
+
+        //DaysRemaining counter for borrowed book
     }
 }

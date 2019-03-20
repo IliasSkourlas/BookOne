@@ -83,7 +83,7 @@ namespace BookOne.Controllers
 
                 book.Owner = loggedInUser;
                 dbOps.InsertBook(book);
-                return RedirectToAction("Index");
+                return RedirectToAction("MyBooks");
             }
 
             return View(book);
@@ -114,7 +114,7 @@ namespace BookOne.Controllers
             if (ModelState.IsValid)
             {
                 dbOps.UpdateBook(book);
-                return RedirectToAction("Index");
+                return RedirectToAction("MyBooks");
             }
             return View(book);
         }
@@ -141,7 +141,7 @@ namespace BookOne.Controllers
         {
             Book book = dbOps.GetBook(id);
             dbOps.DeleteBook(book);
-            return RedirectToAction("Index");
+            return RedirectToAction("MyBooks");
         }
 
 
