@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using BookOne.BookOne_Domain;
 using BookOne.Models;
@@ -14,6 +10,8 @@ namespace BookOne.Controllers
     public class BooksController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private DatabaseOperations dbOps = new DatabaseOperations();
+
 
         // GET: Books
         public ActionResult Index()
@@ -21,8 +19,9 @@ namespace BookOne.Controllers
             //Displays all Books not owned by the logged in user
             var loggedInUserId = User.Identity.GetUserId();
 
-            return View(db.Books.Where(b => b.Owner.Id != loggedInUserId && b.BookStatus == BookStatuses.Public).ToList());
+            return View(dbOps.AllBooksExceptOwners(loggedInUserId));
         }
+
 
         // GET: MyBooks
         public ActionResult MyBooks()
@@ -30,39 +29,22 @@ namespace BookOne.Controllers
             //Displays all Books owned by the logged in user
             var loggedInUserId = User.Identity.GetUserId();
 
-            return View(db.Books.Where(b => b.Owner.Id == loggedInUserId).ToList());
+            return View(dbOps.MyBooks(loggedInUserId));
         }
+
 
         // GET: MyHand
         public ActionResult MyHand()
         {
+            var dbOps = new DatabaseOperations();
+
             //Displays all Books that the logged in user currently holds
             var loggedInUserId = User.Identity.GetUserId();
 
-            var booksInUserHand = MyHand(loggedInUserId);
-            
+            var booksInUserHand = dbOps.MyHand(loggedInUserId);
+
             return View(booksInUserHand);
         }
-
-
-
-
-        private IEnumerable<Book> MyHand(string loggedInUserId)
-        {
-            // books currently borrowed by the logged in user
-            var borrowedBooks =
-                db.BookCirculations.Where(c => c.CirculationStatus == CirculationStatuses.Borrowed && c.Borrower.Id == loggedInUserId)
-                .Select(c => c.BookAssociated);
-
-            // my books not currently borrowed by anyone
-            var ownedBooksNotCurrentlyBorrowed =
-                db.Books.Where(b => b.Owner.Id == loggedInUserId).Except(
-                    db.BookCirculations.Where(c => c.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
-                    .Select(c => c.BookAssociated));
-
-            return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).ToList();
-        }
-
 
 
 
@@ -73,7 +55,7 @@ namespace BookOne.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = dbOps.GetBook(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -97,11 +79,10 @@ namespace BookOne.Controllers
             if (ModelState.IsValid)
             {
                 var loggedInUserId = User.Identity.GetUserId();
-                var loggedInUser = db.Users.Where(u => u.Id == loggedInUserId).SingleOrDefault();
+                var loggedInUser = dbOps.LoggedInUser(loggedInUserId);
 
                 book.Owner = loggedInUser;
-                db.Books.Add(book);
-                db.SaveChanges();
+                dbOps.InsertBook(book);
                 return RedirectToAction("Index");
             }
 
@@ -115,7 +96,7 @@ namespace BookOne.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = dbOps.GetBook(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -132,8 +113,7 @@ namespace BookOne.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(book).State = EntityState.Modified;
-                db.SaveChanges();
+                dbOps.UpdateBook(book);
                 return RedirectToAction("Index");
             }
             return View(book);
@@ -146,7 +126,7 @@ namespace BookOne.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Book book = db.Books.Find(id);
+            Book book = dbOps.GetBook(id);
             if (book == null)
             {
                 return HttpNotFound();
@@ -159,11 +139,12 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Book book = db.Books.Find(id);
-            db.Books.Remove(book);
-            db.SaveChanges();
+            Book book = dbOps.GetBook(id);
+            dbOps.DeleteBook(book);
             return RedirectToAction("Index");
         }
+
+
 
         protected override void Dispose(bool disposing)
         {
@@ -172,53 +153,6 @@ namespace BookOne.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-
-        // GET: Requests
-        public ActionResult Requests()
-        {
-            var loggedInUserId = User.Identity.GetUserId();
-
-            var openRequests = db.BookRequests.Where(r => r.BookOwner.Id == loggedInUserId && r.ApprovedByOwner == false);   /////////
-
-            return View(openRequests);
-        }
-
-        // GET: Books/RequestConfirmation/5
-        public ActionResult RequestConfirmation(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Book book = db.Books.Find(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-            return View(book);
-        }
-
-
-        public ActionResult MakeARequest(int? id)
-        {
-            var loggedInUserId = User.Identity.GetUserId();
-
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Book book = db.Books.Find(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-            BookRequest request = new BookRequest();
-            request.RequestedBy.Id = loggedInUserId;
-            request.BookRequested = book;
-
-            return View();
         }
     }
 }
