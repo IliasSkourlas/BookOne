@@ -27,19 +27,19 @@
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        if(....){
+        
 
-        }
+        
         <th class="clickOnce" >
             @Html.DisplayNameFor(model => model.Author)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Owner.UserName)
         </th>
-        @*<th >
+        <th class="ThisOne" >
             @Html.DisplayNameFor(model => model.BookStatus)
-        </th>*@
-        <th class="clickOnce">
+        </th>
+        <th class="ThisOne">
             @Html.DisplayNameFor(model => model.AvailabilityStatus)
         </th>
     </tr>
@@ -51,16 +51,16 @@
                 @*<a href="@Html.Action("MakeARequest", "Books", new { id=item.BookId })">@Html.DisplayFor(modelItem => item.Title)</a>*@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td class="clickOnce">
+            <td class="ThisOne">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Owner.UserName)
             </td>
-            @*<td >
+            <td class="ThisOne">
                 @Html.DisplayFor(modelItem => item.BookStatus)
-            </td>*@
-            <td class="clickOnce">
+            </td>
+            <td class="ThisOne">
                 @if (item.AvailabilityStatus == true)
                 {
                     <button>Available</button>
