@@ -175,6 +175,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BookOne_Domain\Book.cs" />
     <Compile Include="BookOne_Domain\BookCirculation.cs" />
+    <Compile Include="BookOne_Domain\DatabaseOperations.cs" />
     <Compile Include="BookOne_Domain\Reaction.cs" />
     <Compile Include="BookOne_Domain\BookNote.cs" />
     <Compile Include="BookOne_Domain\BookRequest.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -274,6 +276,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Player\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
