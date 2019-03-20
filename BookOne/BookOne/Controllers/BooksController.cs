@@ -102,7 +102,7 @@ namespace BookOne.Controllers
                 book.Owner = loggedInUser;
                 db.Books.Add(book);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("MyHand");
             }
 
             return View(book);

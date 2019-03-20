@@ -15,14 +15,17 @@ namespace BookOne.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Welcome. This is an app for searing your books with your friends. Not digital books, but your physical books. " +
+                 "It helps you to keep track with their whereabouts, as they are seared from a pool of carriers that you choose. " +
+                 "Read and write reviews and decide to give or not a Clap, when they are returned back to you in perfect condition. " +
+                 "So...explore and have fun...and don't hesitate searing!";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Uncertified Play Team One";
 
             return View();
         }

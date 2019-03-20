@@ -270,6 +270,7 @@
     <Content Include="Views\Books\MyHand.cshtml" />
     <Content Include="Views\Books\RequestConfirmation.cshtml" />
     <Content Include="Views\Books\Requests.cshtml" />
+    <Content Include="Views\Shared\_Layout - User1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

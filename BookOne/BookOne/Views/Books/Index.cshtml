@@ -1,61 +1,76 @@
 ﻿@model IEnumerable<BookOne.BookOne_Domain.Book>
 
 @{
+    Layout = "~/Views/Shared/_Layout - User1.cshtml";
+}
+
+@{
     ViewBag.Title = "Books";
 }
 
-<h2>Books</h2>
+<style type="text/css">
+    .invisible {
+        visibility: hidden;
+    }
 
-<p>
-    @Html.ActionLink("Create New", "Create") | @Html.ActionLink("All Books", "Index") | @Html.ActionLink("My Books", "MyBooks") | @Html.ActionLink("Borrowed Books", "MyHand") | @Html.ActionLink("Requests", "Requests")
-</p>
+    .clickOnce {
+        visibility: visible;
+    }
+</style>
+
+
+<h3>@*Books*@</h3>
+
 
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th>
+        if(....){
+
+        }
+        <th class="clickOnce" >
             @Html.DisplayNameFor(model => model.Author)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Owner.UserName)
         </th>
-        <th>
+        @*<th >
             @Html.DisplayNameFor(model => model.BookStatus)
-        </th>
-        <th>
+        </th>*@
+        <th class="clickOnce">
             @Html.DisplayNameFor(model => model.AvailabilityStatus)
         </th>
     </tr>
 
     @foreach (var item in Model)
     {
-    <tr>
-        <td>
-            @*<a href="@Html.Action("MakeARequest", "Books", new { id=item.BookId })">@Html.DisplayFor(modelItem => item.Title)</a>*@
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner.UserName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookStatus)
-        </td>
-        <td>
-            @if(item.AvailabilityStatus == true)
-            {
-            <button>Available</button>
-            }
-            else
-            {
-            <p>Unavailable</p>
-            }
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @*<a href="@Html.Action("MakeARequest", "Books", new { id=item.BookId })">@Html.DisplayFor(modelItem => item.Title)</a>*@
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td class="clickOnce">
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner.UserName)
+            </td>
+            @*<td >
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>*@
+            <td class="clickOnce">
+                @if (item.AvailabilityStatus == true)
+                {
+                    <button>Available</button>
+                }
+                else
+                {
+                    <p>Unavailable</p>
+                }
+            </td>
+        </tr>
     }
 
 </table>
