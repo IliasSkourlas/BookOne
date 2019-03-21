@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using BookOne.BookOne_Domain;
+using BookOne.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,19 +13,35 @@ namespace BookOne.Controllers
     [Authorize]
     public class PlayerController : Controller
     {
+        DatabaseOperations dbOps = new DatabaseOperations();
+        
         // GET: Player
         public ActionResult Index()
         {
-            return View();
+            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
+            if (!User.IsInRole("Player"))
+            {
+                var loggedInUserId = User.Identity.GetUserId();
+                var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
+
+                return View("PlayerForm", loggedInUser);
+            }
+
+            return View("Requests");
         }
 
 
-        //User has to complete a form with additional information needed to begin exchanging books
-        public ActionResult ChangeRole_UserToPlayer()
+        [HttpPost]
+        public ActionResult ChangeUserToPlayer(ApplicationUser loggedInUser)
         {
-            var loggedInUserId = User.Identity.GetUserId();
+            if (ModelState.IsValid)
+            {
+                dbOps.UpdateUserDetails(loggedInUser);
+                dbOps.ChangeUserRoleToPlayer(loggedInUser);
+                return RedirectToAction("Requests");
+            }
 
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
 
@@ -30,15 +49,16 @@ namespace BookOne.Controllers
         public ActionResult Requests()
         {
             var loggedInUserId = User.Identity.GetUserId();
+            var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
 
-            return View();
+            var requests = dbOps.GetRequests(loggedInUser);
+
+            return View(requests);
         }
 
 
         public ActionResult RequestConfirmation()
         {
-            var loggedInUserId = User.Identity.GetUserId();
-
             return View();
         }
     }

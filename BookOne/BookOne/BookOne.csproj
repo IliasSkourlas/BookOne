@@ -200,6 +200,10 @@
     <Compile Include="Migrations\201903192016144_SomeChangesWithTheEntities.Designer.cs">
       <DependentUpon>201903192016144_SomeChangesWithTheEntities.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903211210588_SomeChangesWithTheEntities2.cs" />
+    <Compile Include="Migrations\201903211210588_SomeChangesWithTheEntities2.Designer.cs">
+      <DependentUpon>201903211210588_SomeChangesWithTheEntities2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -270,13 +274,12 @@
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Books\MyBooks.cshtml" />
     <Content Include="Views\Books\MyHand.cshtml" />
-    <Content Include="Views\Books\RequestConfirmation.cshtml" />
-    <Content Include="Views\Books\Requests.cshtml" />
     <Content Include="Views\Shared\_Layout - User1.cshtml" />
+    <Content Include="Views\Player\PlayerForm.cshtml" />
+    <Content Include="Views\Player\Requests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Player\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -297,6 +300,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903192016144_SomeChangesWithTheEntities.resx">
       <DependentUpon>201903192016144_SomeChangesWithTheEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903211210588_SomeChangesWithTheEntities2.resx">
+      <DependentUpon>201903211210588_SomeChangesWithTheEntities2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

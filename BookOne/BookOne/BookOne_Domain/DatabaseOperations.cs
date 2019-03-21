@@ -13,6 +13,13 @@ namespace BookOne.BookOne_Domain
         private ApplicationDbContext db = new ApplicationDbContext();
 
 
+        //Get loggedInUser by his Id
+        public ApplicationUser GetLoggedInUser(string loggedInUserId)
+        {
+            return db.Users.Where(u => u.Id == loggedInUserId).SingleOrDefault();
+        }
+
+
         //Returns All books inserted to the application except logged in user's books
         public IEnumerable<Book> AllBooksExceptOwners(string loggedInUserId)
         {
@@ -84,13 +91,22 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        public void UpdateUserDetails(ApplicationUser loggedInUser)
+        {
+            db.Entry(loggedInUser).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
 
         //Promote User to Player (change of his role)
-        public void ChangeUserToPlayer(string userId)
+        public void ChangeUserRoleToPlayer(ApplicationUser user)
         {
-            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
-            userManager.RemoveFromRole(userId, "User");
-            userManager.AddToRole(userId, "Player");
+            var roleStore = new RoleStore<IdentityRole>(db);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            userManager.RemoveFromRole(user.Id, "User");
+            userManager.AddToRole(user.Id, "Player");
         }
 
 
