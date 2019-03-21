@@ -10,14 +10,13 @@ namespace BookOne.BookOne_Domain
         public BookCirculation()
         {
             BorrowedOn = DateTime.Now;
+            BorrowedForXWeeks = 2;      //As default value until it is implemented in the UI
         }
 
 
         public int BookCirculationId { get; set; }
 
         public Book BookAssociated { get; set; }
-
-        public ApplicationUser Owner { get; set; }
 
         public ApplicationUser Borrower { get; set; }
 

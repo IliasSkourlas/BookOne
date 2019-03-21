@@ -1,4 +1,7 @@
 ﻿using BookOne.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -36,7 +39,7 @@ namespace BookOne.BookOne_Domain
             // my books not currently borrowed by anyone
             var ownedBooksNotCurrentlyBorrowed =
                 db.Books.Where(b => b.Owner.Id == loggedInUserId).Except(
-                    db.BookCirculations.Where(c => c.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
+                    db.BookCirculations.Where(c => c.BookAssociated.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
                     .Select(c => c.BookAssociated));
 
             return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).ToList();
@@ -81,22 +84,104 @@ namespace BookOne.BookOne_Domain
         }
 
 
+
         //Promote User to Player (change of his role)
+        public void ChangeUserToPlayer(string userId)
+        {
+            var userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
+            userManager.RemoveFromRole(userId, "User");
+            userManager.AddToRole(userId, "Player");
+        }
 
-        //Insert Request to the Database
 
-        //Count Requests of user's books
+        //Inserts Request to the Database
+        public void InsertRequest(ApplicationUser userAskingForBook, Book book)
+        {
+            BookRequest request = new BookRequest();
+            request.BookRequested = book;
+            request.RequestedBy = userAskingForBook;
+            db.BookRequests.Add(request);
+            db.SaveChanges();
+        }
 
-        //Get all user's book requests
 
-        //Decline request for a book
+        //Owner declines Request to give a book
+        public void DeclineRequest(BookRequest request)
+        {
+            request.ApprovedByOwner = false;
+            db.SaveChanges();
+        }
 
-        //Add BookCirculation for a book
+
+        //Counts Requests of user's books
+        public int RequestsReceivedCounter(ApplicationUser user)
+        {
+            return db.BookRequests.Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Unanswered).Count();
+        }
+
+
+        //Gets all user's book requests (user is the owner of this book)
+        public IEnumerable<BookRequest> GetRequests(ApplicationUser user)
+        {
+            return db.BookRequests.Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Unanswered).ToList();
+        }
+
+
+        //Adds BookCirculation for a book
+        public void InsertBookCirculation(ApplicationUser userAskingForBook, Book book)
+        {
+            BookCirculation circulation = new BookCirculation();
+            circulation.BookAssociated = book;
+            circulation.Borrower = userAskingForBook;
+            db.BookCirculations.Add(circulation);
+            db.SaveChanges();
+        }
         //Borrow a book to someone (Owner gave book)
-        //Borrow a book from someone (Borrower received book)
+        public void OwnerBorrowedABook(BookCirculation circulation)
+        {
+            circulation.OwnerGaveBook = true;
+            var requestMadeForThisCirculation = db.BookRequests.Where(r => r.BookRequested.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
+            requestMadeForThisCirculation.RequestStatus = RequestStatuses.Accepted;
 
-        //Change book's Availability Status while it's borrowed
+            db.SaveChanges();
+        }
+        //Borrow a book from someone (Borrower received book)
+        public void BorrowerReceivedBook(BookCirculation circulation)
+        {
+            circulation.BorrowerReceivedBook = true;
+            circulation.CirculationStatus = CirculationStatuses.Borrowed;
+            circulation.BookAssociated.AvailabilityStatus = false;
+            db.SaveChanges();
+        }
+
+
+        //Get requests you made as a Borrower
+        public IEnumerable<BookRequest> GetBorrowerRequests(ApplicationUser user)
+        {
+            return db.BookRequests.Where(r => r.RequestedBy.Id == user.Id).ToList();
+        }
+
 
         //DaysRemaining counter for borrowed book
+        public int DaysRemainingCounter(BookCirculation circulation)
+        {
+            //For testing purposes, borrowing time is set to 14 days(2 weeks)
+            int weeksRemaining = circulation.BorrowedForXWeeks;
+            int daysInTheseWeeks = weeksRemaining * 7;
+
+            DateTime today = DateTime.Today;
+            DateTime returnBookDate = circulation.BorrowedOn.AddDays(daysInTheseWeeks);
+
+            return (returnBookDate - today).Days;
+        }
+
+
+        //Book returns to the owner
+        public void OwnerReceivedBookBack(BookCirculation circulation)
+        {
+            circulation.CirculationStatus = CirculationStatuses.Completed;
+            circulation.BookAssociated.AvailabilityStatus = true;
+            db.SaveChanges();
+        }
     }
 }

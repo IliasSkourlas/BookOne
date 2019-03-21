@@ -8,8 +8,6 @@ namespace BookOne.BookOne_Domain
 {
     public class Book
     {
-        //private ApplicationDbContext db = new ApplicationDbContext();
-
         public Book()
         {
             RegisteredOn = DateTime.Now;
