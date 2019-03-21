@@ -29,7 +29,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-                
             <th class="ThisOne" >
                 @Html.DisplayNameFor(model => model.Author)
             </th>
@@ -62,7 +61,7 @@
                 <td class="ThisOne">
                     @if (item.AvailabilityStatus == true)
                     {
-                        <button>Available</button>
+                        @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
                     }
                     else
                     {

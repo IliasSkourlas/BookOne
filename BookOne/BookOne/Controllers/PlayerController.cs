@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -56,10 +57,35 @@ namespace BookOne.Controllers
             return View(requests);
         }
 
-
-        public ActionResult RequestConfirmation()
+        //Create request for a book
+        //Books/RequestConfirmation/4
+        public ActionResult RequestConfirmation(int? bookId)
         {
-            return View();
+            if (bookId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Book book = dbOps.GetBook(bookId);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(book);
+        }
+
+
+        [HttpPost, ActionName("RequestConfirmation")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RequestConfirmed(Book book)
+        {
+            var loggedInUserId = User.Identity.GetUserId();
+            var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
+
+            var bookRequested = dbOps.GetBook(book.BookId);
+            dbOps.InsertRequest(loggedInUser, bookRequested);
+
+            return RedirectToAction("Requests");
         }
     }
 }

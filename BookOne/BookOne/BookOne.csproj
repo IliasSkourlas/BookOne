@@ -277,6 +277,7 @@
     <Content Include="Views\Shared\_Layout - User1.cshtml" />
     <Content Include="Views\Player\PlayerForm.cshtml" />
     <Content Include="Views\Player\Requests.cshtml" />
+    <Content Include="Views\Player\RequestConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -323,7 +324,10 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64735</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:64735/</IISUrl>
+          <IISUrl>http://localhost:10001/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>
+          </IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
