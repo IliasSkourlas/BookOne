@@ -29,7 +29,7 @@
             @Html.DisplayFor(modelItem => item.BookRequested.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RequestedBy.UserName)
+            @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RequestedOn)
@@ -39,7 +39,7 @@
         </td>
         <td>
             @Html.ActionLink("Accept", "Accept", new { id = item.BookRequestId })
-            @Html.ActionLink("Delete", "Delete", new { id = item.BookRequestId })
+            @Html.ActionLink("Decline", "Decline", new { id = item.BookRequestId })
         </td>
     </tr>
 }

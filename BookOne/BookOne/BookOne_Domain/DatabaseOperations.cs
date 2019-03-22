@@ -23,7 +23,7 @@ namespace BookOne.BookOne_Domain
         //Returns All books inserted to the application except logged in user's books
         public IEnumerable<Book> AllBooksExceptOwners(string loggedInUserId)
         {
-            return db.Books.Where(b => b.Owner.Id != loggedInUserId && b.BookStatus == BookStatuses.Public).ToList();
+            return db.Books.Where(b => b.Owner.Id != loggedInUserId && b.BookStatus == BookStatuses.Public).Include(b => b.Owner).ToList();
         }
 
 
@@ -41,13 +41,13 @@ namespace BookOne.BookOne_Domain
             // books currently borrowed by the logged in user
             var borrowedBooks =
                 db.BookCirculations.Where(c => c.CirculationStatus == CirculationStatuses.Borrowed && c.Borrower.Id == loggedInUserId)
-                .Select(c => c.BookAssociated);
+                .Select(c => c.BookAssociated).Include(c => c.Owner);
 
             // my books not currently borrowed by anyone
             var ownedBooksNotCurrentlyBorrowed =
                 db.Books.Where(b => b.Owner.Id == loggedInUserId).Except(
                     db.BookCirculations.Where(c => c.BookAssociated.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
-                    .Select(c => c.BookAssociated));
+                    .Select(c => c.BookAssociated)).Include(c => c.Owner);
 
             return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).ToList();
         }
@@ -109,6 +109,16 @@ namespace BookOne.BookOne_Domain
             userManager.AddToRole(user.Id, "Player");
         }
 
+        
+        public bool UserIsAPlayer(ApplicationUser user)
+        {
+            int meh = user.Roles.Where(r => r.RoleId == "2").Count();
+            if (meh > 0)
+                return true;
+            else
+                return false;
+        }
+
 
         //Inserts Request to the Database
         public void InsertRequest(ApplicationUser userAskingForBook, Book book)
@@ -139,7 +149,7 @@ namespace BookOne.BookOne_Domain
         //Gets all user's book requests (user is the owner of this book)
         public IEnumerable<BookRequest> GetRequests(ApplicationUser user)
         {
-            return db.BookRequests.Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Unanswered).ToList();
+            return db.BookRequests.Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Unanswered).Include(r => r.BookRequested).Include(r => r.RequestedBy).ToList();
         }
 
 
