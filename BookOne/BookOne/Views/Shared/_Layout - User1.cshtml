@@ -65,14 +65,60 @@
     </script>
 
     <style type="text/css">
+
+        body {
+            /*color: rgb(185, 131, 131);*/
+            color: black;
+           
+        }
+
+        /*.container {
+            width: 1600px;
+        }*/
+
+        .navbar-inverse .navbar-brand {
+            font-size: 30px;
+            color: deeppink;
+        }
+       
+            ul .nav a:hover {
+            color: black !important;
+        }
+
         #MyNavbar {
+
             background-color: transparent;
             border: solid;
             border-bottom: solid;
-            border-color: rgb(185, 131, 131);
+            border-color:white;
             
             opacity: 0.65;
             filter: alpha(opacity=30)
+        }
+        .navbar-nav > li > a {
+            color: #9d9d9d;
+            font-size: larger;
+        }
+        .form-control {
+            color: #bfbfbf;
+            font-size: large;
+            padding: 6px 100px;
+        }
+
+        .table {
+            font-size: 160%;
+            padding: 27px;
+            border: 10px solid white; /*#4CAF50;*/
+        }
+        .table > tbody > tr > td, .table > tfoot > tr > td {
+            padding: 27px;
+            line-height: 1;
+            vertical-align: top;
+            border-top: 1px solid hsla(0, 0%, 100%, 0.05);
+        }
+        a {
+            color: #c0c0c0;
+            text-decoration: none;
         }
     </style>
 
@@ -89,7 +135,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("BookOne", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink(":)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

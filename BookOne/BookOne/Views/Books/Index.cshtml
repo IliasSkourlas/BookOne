@@ -8,22 +8,18 @@
     ViewBag.Title = "Books";
 }
 
-<style type="text/css">
-    .invisible {
-        visibility: hidden;
-    }
 
-    .clickOnce {
-        visibility: visible;
-    }
-</style>
 
 
 <h3>@*Books*@</h3>
 
-<div >
 
-    <table class="table">
+
+
+
+
+
+    <table  class="table">
         <tr>
             <th onclick="rotate()">
                 @Html.DisplayNameFor(model => model.Title)
@@ -69,5 +65,4 @@
                 </td>
             </tr>
         }
-</div>
 </table>
