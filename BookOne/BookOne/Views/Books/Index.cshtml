@@ -21,24 +21,23 @@
 
 <h3>@*Books*@</h3>
 
-<div class="btn2">
-
+<div >
 
     <table class="table">
         <tr>
-            <th>
+            <th onclick="rotate()">
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th class="ThisOne" >
+            <th class="hide1">
                 @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th >
+            </th >
+            <th class="hide2">
                 Username
             </th>
-            <th class="ThisOne" >
+            <th class="hide3" >
                 @Html.DisplayNameFor(model => model.BookStatus)
             </th>
-            <th class="ThisOne">
+            <th>
                 @Html.DisplayNameFor(model => model.AvailabilityStatus)
             </th>
         </tr>
@@ -46,19 +45,19 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td onclick="rotate()">
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
-                <td class="ThisOne">
+                <td class="hide1">
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
-                <td>
+                <td class="hide2">
                     @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
                 </td>
-                <td class="ThisOne">
+                <td class="hide3">
                     @Html.DisplayFor(modelItem => item.BookStatus)
                 </td>
-                <td class="ThisOne">
+                <td >
                     @if (item.AvailabilityStatus == true)
                     {
                         @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
@@ -70,7 +69,5 @@
                 </td>
             </tr>
         }
-
 </div>
-
 </table>
