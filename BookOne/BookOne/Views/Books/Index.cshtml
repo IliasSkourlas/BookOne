@@ -33,7 +33,7 @@
                 @Html.DisplayNameFor(model => model.Author)
             </th>
             <th >
-                @Html.DisplayNameFor(model => model.Owner.UserName)
+                Username
             </th>
             <th class="ThisOne" >
                 @Html.DisplayNameFor(model => model.BookStatus)
@@ -53,7 +53,7 @@
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Owner.UserName)
+                    @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
                 </td>
                 <td class="ThisOne">
                     @Html.DisplayFor(modelItem => item.BookStatus)

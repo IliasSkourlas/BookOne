@@ -28,13 +28,14 @@
         @Html.HiddenFor(model => model.LockoutEndDateUtc)
         @Html.HiddenFor(model => model.LockoutEnabled)
         @Html.HiddenFor(model => model.AccessFailedCount)
+        @Html.HiddenFor(model => model.UserName)
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ActualUsername, "Username" ,htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ActualUsername, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ActualUsername, "", new { @class = "text-danger" })
             </div>
         </div>
 

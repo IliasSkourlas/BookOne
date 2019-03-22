@@ -16,7 +16,11 @@ namespace BookOne.Models
         {
             RegisteredOn = DateTime.Now;
             UserStatus = UserStatuses.Active;
+            ActualUsername = "...";
         }
+
+        //By default, MVC's username is the user's email address. So we have to create a custom username field.
+        public string ActualUsername { get; set; }
 
         [Required]
         public int PostalCode { get; set; }
