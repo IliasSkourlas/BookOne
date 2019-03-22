@@ -19,15 +19,6 @@ namespace BookOne.Controllers
         // GET: Player
         public ActionResult Index()
         {
-            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            //if (!User.IsInRole("Player"))
-            //{
-            //    var loggedInUserId = User.Identity.GetUserId();
-            //    var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
-
-            //    return View("PlayerForm", loggedInUser);
-            //}
-
             return View();
         }
 
@@ -51,8 +42,13 @@ namespace BookOne.Controllers
         {
             var loggedInUserId = User.Identity.GetUserId();
             var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
-
-            CheckIfUserIsPlayer(loggedInUser);
+            
+            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
+            //if (!User.IsInRole("Player"))
+            if (!dbOps.UserIsAPlayer(loggedInUser))
+            {
+                return View("PlayerForm", loggedInUser);
+            }
 
             var requests = dbOps.GetRequests(loggedInUser);
 
@@ -88,19 +84,6 @@ namespace BookOne.Controllers
             dbOps.InsertRequest(loggedInUser, bookRequested);
 
             return RedirectToAction("Requests");
-        }
-
-
-        public void CheckIfUserIsPlayer(ApplicationUser user)
-        {
-            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!User.IsInRole("Player"))
-            {
-                var loggedInUserId = User.Identity.GetUserId();
-                var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
-
-                View("PlayerForm", loggedInUser);
-            }
         }
     }
 }

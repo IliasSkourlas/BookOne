@@ -23,6 +23,9 @@
             @Html.DisplayNameFor(model => model.RegisteredOn)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Owner)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.BookStatus)
         </th>
     </tr>
@@ -37,6 +40,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RegisteredOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BookStatus)
