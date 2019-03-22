@@ -1,12 +1,7 @@
 ﻿using BookOne.BookOne_Domain;
 using BookOne.Models;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace BookOne.Controllers
@@ -56,7 +51,6 @@ namespace BookOne.Controllers
         }
 
         //Create request for a book
-        //Books/RequestConfirmation/4
         public ActionResult RequestConfirmation(int? bookId)
         {
             if (bookId == null)
@@ -84,6 +78,56 @@ namespace BookOne.Controllers
             dbOps.InsertRequest(loggedInUser, bookRequested);
 
             return RedirectToAction("Requests");
+        }
+
+
+        
+        public ActionResult BorrowerReceivesBook(int? BookRequestId)
+        {
+            if (BookRequestId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var request = dbOps.GetBookRequest(BookRequestId);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            return View("BorrowingBookConfirmation", request);
+        }
+
+        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BorrowingBookConfirmation(BookRequest request)
+        {
+            var borrower = request.RequestedBy;
+            var bookBeingBorrowed = request.BookRequested;
+
+            var circulation = dbOps.InsertBookCirculation(borrower, bookBeingBorrowed);
+
+            dbOps.OwnerGaveBook(circulation);
+
+            return View("Requests");
+        }
+
+
+        //Owner Declines to borrow his book for this request
+        public ActionResult DeclineRequest(int? BookRequestId)
+        {
+            if (BookRequestId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var request = dbOps.GetBookRequest(BookRequestId);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+
+            dbOps.DeclineRequest(request);
+            return View("Requests");
         }
     }
 }

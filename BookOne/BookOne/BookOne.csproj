@@ -208,6 +208,10 @@
     <Compile Include="Migrations\201903220952502_AddedUsersActualUsernameField.Designer.cs">
       <DependentUpon>201903220952502_AddedUsersActualUsernameField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903221634130_ChangedOwnerDeclinedFieldInBookRequestModel.cs" />
+    <Compile Include="Migrations\201903221634130_ChangedOwnerDeclinedFieldInBookRequestModel.Designer.cs">
+      <DependentUpon>201903221634130_ChangedOwnerDeclinedFieldInBookRequestModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -282,6 +286,7 @@
     <Content Include="Views\Player\PlayerForm.cshtml" />
     <Content Include="Views\Player\Requests.cshtml" />
     <Content Include="Views\Player\RequestConfirmation.cshtml" />
+    <Content Include="Views\Player\BorrowingBookConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -311,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903220952502_AddedUsersActualUsernameField.resx">
       <DependentUpon>201903220952502_AddedUsersActualUsernameField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903221634130_ChangedOwnerDeclinedFieldInBookRequestModel.resx">
+      <DependentUpon>201903221634130_ChangedOwnerDeclinedFieldInBookRequestModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

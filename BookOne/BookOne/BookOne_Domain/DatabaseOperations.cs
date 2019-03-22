@@ -120,6 +120,12 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        public BookRequest GetBookRequest(int? id)
+        {
+            return db.BookRequests.Find(id);
+        }
+
+
         //Inserts Request to the Database
         public void InsertRequest(ApplicationUser userAskingForBook, Book book)
         {
@@ -134,7 +140,8 @@ namespace BookOne.BookOne_Domain
         //Owner declines Request to give a book
         public void DeclineRequest(BookRequest request)
         {
-            request.ApprovedByOwner = false;
+            request.OwnerDeclined = true;
+            request.RequestStatus = RequestStatuses.Declined;
             db.SaveChanges();
         }
 
@@ -154,16 +161,18 @@ namespace BookOne.BookOne_Domain
 
 
         //Adds BookCirculation for a book
-        public void InsertBookCirculation(ApplicationUser userAskingForBook, Book book)
+        public BookCirculation InsertBookCirculation(ApplicationUser userAskingForBook, Book book)
         {
             BookCirculation circulation = new BookCirculation();
             circulation.BookAssociated = book;
             circulation.Borrower = userAskingForBook;
             db.BookCirculations.Add(circulation);
             db.SaveChanges();
+
+            return circulation;
         }
         //Borrow a book to someone (Owner gave book)
-        public void OwnerBorrowedABook(BookCirculation circulation)
+        public void OwnerGaveBook(BookCirculation circulation)
         {
             circulation.OwnerGaveBook = true;
             var requestMadeForThisCirculation = db.BookRequests.Where(r => r.BookRequested.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
@@ -179,7 +188,7 @@ namespace BookOne.BookOne_Domain
             circulation.BookAssociated.AvailabilityStatus = false;
             db.SaveChanges();
         }
-
+        
 
         //Get requests you made as a Borrower
         public IEnumerable<BookRequest> GetBorrowerRequests(ApplicationUser user)
