@@ -8,35 +8,77 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 
     <script>
-        $(document).ready(function () {
-            $(".btn1").click(function () {
-                //$("p").hide();
-                $(".ThisOne").hide();
-            });
-            $(".btn2").click(function () {
-                //$("p").show();
-                $(".ThisOne").show();
-            });
-        });
+
+        function hideAll() {
+            $('.hide1').hide();
+            $('.hide2').hide();
+            $('.hide3').hide();
+        }
+
+        var n = 0;
+        var i = 1;
+
+        function rotate() {
+            n = n + i;
+            if (n === 0) {
+                i = 1;
+            }
+            if (n === 1) {
+                new function () {
+                    $('.hide1').show();
+                }
+            }
+            if (n === 2) {
+                new function () {
+                    $('.hide2').show();
+                }
+            }
+            if (n === 3) {
+                new function () {
+                    $('.hide2').hide();
+                }
+            }
+            if (n === 4) {
+                n = 0;
+                new function () {
+                    $('.hide1').hide();
+                }
+            }
+            //if (n === 5) {
+            //    new function () {
+            //        $('.hide2').hide();
+            //    }
+            //}
+            //if (n === 6) {
+            //    n = 0;
+            //    new function () {
+            //        $('.hide1').hide();
+            //    }
+            //}
+            console.log("new", n);
+        }
+
     </script>
 
     <style type="text/css">
         #MyNavbar {
-            background-color: cyan; /*transparent;*/
-            border-bottom: none;
+            background-color: transparent;
+            border: solid;
+            border-bottom: solid;
+            border-color: rgb(185, 131, 131);
+            
             opacity: 0.65;
             filter: alpha(opacity=30)
         }
     </style>
 
 </head>
-<body>
+<body onload="hideAll()">
 
-    <button class="btn1">Hide</button>
-    @*<button class="btn2">Show</button>*@
 
 
     <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
@@ -75,7 +117,8 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+
+    <div class="container body-content" >
         @RenderBody()
         <hr />
         <footer>
@@ -83,8 +126,6 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
