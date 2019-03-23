@@ -24,13 +24,13 @@
             <th onclick="rotate()">
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th class="hide1">
+            <th class="this1" >
                 @Html.DisplayNameFor(model => model.Author)
             </th >
-            <th class="hide2">
+            <th class="this2" >
                 Username
             </th>
-            <th class="hide3" >
+            <th class="this3" >
                 @Html.DisplayNameFor(model => model.BookStatus)
             </th>
             <th>
@@ -44,13 +44,13 @@
                 <td onclick="rotate()">
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
-                <td class="hide1">
+                <td class="this1">
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
-                <td class="hide2">
+                <td class="this2">
                     @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
                 </td>
-                <td class="hide3">
+                <td class="this3">
                     @Html.DisplayFor(modelItem => item.BookStatus)
                 </td>
                 <td >
@@ -64,5 +64,5 @@
                     }
                 </td>
             </tr>
-        }
+        } 
 </table>

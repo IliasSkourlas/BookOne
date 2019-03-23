@@ -14,9 +14,9 @@
     <script>
 
         function hideAll() {
-            $('.hide1').hide();
-            $('.hide2').hide();
-            $('.hide3').hide();
+            $('.this1').hide();
+            $('.this2').hide();
+            $('.this3').hide();
         }
 
         var n = 0;
@@ -29,23 +29,25 @@
             }
             if (n === 1) {
                 new function () {
-                    $('.hide1').show();
+                    $('.this1').show();
                 }
             }
             if (n === 2) {
                 new function () {
-                    $('.hide2').show();
+                    $('.this1').hide();
+                    $('.this2').show();
                 }
             }
             if (n === 3) {
                 new function () {
-                    $('.hide2').hide();
+                    $('.this2').hide();
+                    $('.this1').show();
                 }
             }
             if (n === 4) {
                 n = 0;
                 new function () {
-                    $('.hide1').hide();
+                    $('.this1').hide();
                 }
             }
             //if (n === 5) {
@@ -110,6 +112,10 @@
             padding: 27px;
             border: 10px solid white; /*#4CAF50;*/
         }
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+            padding: 27px;
+        }
+
         .table > tbody > tr > td, .table > tfoot > tr > td {
             padding: 27px;
             line-height: 1;
