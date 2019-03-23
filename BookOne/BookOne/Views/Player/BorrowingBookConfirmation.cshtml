@@ -1,0 +1,44 @@
+﻿@model BookOne.BookOne_Domain.BookRequest
+
+@{
+    ViewBag.Title = "Confirmation";
+}
+
+
+<h2>Borrowing Book Confirmation</h2>
+
+<h3>(Press Accept only if you are giving your book to the borrower right now)</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.BookRequested.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BookRequested.Title)
+        </dd>
+        <dt>
+            Requested By
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RequestedBy.ActualUsername)
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.BorrowedForXWeeks)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BorrowedForXWeeks)
+        </dd>*@
+
+    </dl>
+
+    @using (Html.BeginForm("BorrowingBookConfirmation", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Gave Book" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Requests")
+        </div>
+    }
+</div>

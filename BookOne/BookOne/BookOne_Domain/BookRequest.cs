@@ -21,7 +21,7 @@ namespace BookOne.BookOne_Domain
 
         public DateTime RequestedOn { get; set; }
 
-        public bool ApprovedByOwner { get; set; }
+        public bool OwnerDeclined { get; set; }
 
         public RequestStatuses RequestStatus { get; set; }
     }
