@@ -19,7 +19,7 @@
 
 
 
-    <table  class="table">
+    <table id="listOfBooks" class="table">
         <tr>
             <th onclick="rotate()">
                 @Html.DisplayNameFor(model => model.Title)
@@ -40,7 +40,7 @@
 
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="bookTitle">
                 <td onclick="rotate()">
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>

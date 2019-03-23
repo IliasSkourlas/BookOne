@@ -28,11 +28,11 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
+    <tr id="listOfBooks">
+        <td class="bookTitle">
             @Html.DisplayFor(modelItem => item.Title)
         </td>
-        <td>
+        <td class="bookAuthor">
             @Html.DisplayFor(modelItem => item.Author)
         </td>
         <td>
