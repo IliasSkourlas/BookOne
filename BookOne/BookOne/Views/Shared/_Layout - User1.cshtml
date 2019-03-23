@@ -11,67 +11,16 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
-    <script>
-
-        function hideAll() {
-            $('.this1').hide();
-            $('.this2').hide();
-            $('.this3').hide();
-        }
-
-        var n = 0;
-        var i = 1;
-
-        function rotate() {
-            n = n + i;
-            if (n === 0) {
-                i = 1;
-            }
-            if (n === 1) {
-                new function () {
-                    $('.this1').show();
-                }
-            }
-            if (n === 2) {
-                new function () {
-                    $('.this1').hide();
-                    $('.this2').show();
-                }
-            }
-            if (n === 3) {
-                new function () {
-                    $('.this2').hide();
-                    $('.this1').show();
-                }
-            }
-            if (n === 4) {
-                n = 0;
-                new function () {
-                    $('.this1').hide();
-                }
-            }
-            //if (n === 5) {
-            //    new function () {
-            //        $('.hide2').hide();
-            //    }
-            //}
-            //if (n === 6) {
-            //    n = 0;
-            //    new function () {
-            //        $('.hide1').hide();
-            //    }
-            //}
-            console.log("new", n);
-        }
-
-    </script>
+   
 
     <style type="text/css">
 
         body {
             /*color: rgb(185, 131, 131);*/
             color: black;
-           
+            background: url('C:\Users\penel\source\repos\BookOne2\BookOne\BookOne\VideoImages\PeterPan.JPG') center center no-repeat;
+            background-size: cover;
+            background-color: rgba(43, 43, 43, 0.01);
         }
 
         /*.container {
@@ -169,14 +118,76 @@
         </div>
     </div>
 
-    <div class="container body-content" >
+    <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
+            @*<video id="video" controls autoplay loop muted>
+                <source src="\BookOne\VideoImages\fish2.mp4.mp4" type=video/mp4>
+            </video>*@
+
             @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
         </footer>
     </div>
 
+    
+
     @RenderSection("scripts", required: false)
+
+    <script>
+
+        function hideAll() {
+            $('.this1').hide();
+            $('.this2').hide();
+            $('.this3').hide();
+        }
+
+        var n = 0;
+        var i = 1;
+
+        function rotate() {
+            n = n + i;
+            if (n === 0) {
+                i = 1;
+            }
+            if (n === 1) {
+                new function () {
+                    $('.this1').show();
+                }
+            }
+            if (n === 2) {
+                new function () {
+                    $('.this1').hide();
+                    $('.this2').show();
+                }
+            }
+            if (n === 3) {
+                new function () {
+                    $('.this2').hide();
+                    $('.this1').show();
+                }
+            }
+            if (n === 4) {
+                n = 0;
+                new function () {
+                    $('.this1').hide();
+                }
+            }
+            //if (n === 5) {
+            //    new function () {
+            //        $('.hide2').hide();
+            //    }
+            //}
+            //if (n === 6) {
+            //    n = 0;
+            //    new function () {
+            //        $('.hide1').hide();
+            //    }
+            //}
+            console.log("new", n);
+        }
+
+    </script>
+
 </body>
 </html>
