@@ -42,24 +42,13 @@
 
 
         body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .ImageText {
-            background-image: linear-gradient(rgb(52, 50, 50, 0.4),rgba(0,0,0,0.3)), url('../../Content/images/TenTenCut.jpg');
+            background-image: linear-gradient(rgb(52, 50, 50),rgba(0,0,0,1)), url('../../Content/images/Contents.jpg');
+            background-position: center;
             background-repeat: no-repeat;
-            /*background-size: cover;*/
-            
-            color: #fff;
-            width: 100%;
-            height: 100vh;
             background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            /*image-orientation: from-image;*/
+            color: #fff;
         }
-       
 
         .video-container {
             position: absolute;
@@ -107,45 +96,39 @@
 </head>
 <body>
 
+    <div class="video-container">
+        <video id="video" autoplay loop muted>
+            <source src="~/Content/images/fish2.mp4" type="video/mp4" />
+        </video>
+    </div>
 
-    <div class="ImageText">
-
-
-        <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("BookOne", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            <li>@Html.ActionLink("Books", "Index", "Books")</li>
-                        }
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
+    <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("BookOne", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                    }
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
+    </div>
+    <div class="container body-content">
 
 
-
-        <div class="video-container">
-            <video id="video" autoplay loop muted>
-                <source src="~/Content/images/fish2.mp4" type="video/mp4" />
-            </video>
-        </div>
-        <div class="container body-content">
-
-            @RenderBody()
-        </div>
+        @RenderBody()
 
     </div>
 

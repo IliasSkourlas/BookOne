@@ -225,10 +225,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\Contents.jpg" />
+    <Content Include="Content\images\ContentsCut1.jpg" />
     <Content Include="Content\images\fish2.mp4" />
+    <Content Include="Content\images\IMG_1323.jpg" />
     <Content Include="Content\images\PeterPan.JPG" />
     <Content Include="Content\images\PeterPan2.jpg" />
     <Content Include="Content\images\TenTen.jpg" />
+    <Content Include="Content\images\TenTenCut.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -294,7 +297,8 @@
     <Content Include="Views\Player\BorrowingBookConfirmation.cshtml" />
     <Content Include="Views\Shared\_Layout - About.cshtml" />
     <Content Include="Views\Shared\_Layout - Contact.cshtml" />
-    <Content Include="Views\Shared\_Layout - About - Copy.cshtml" />
+    <Content Include="Views\Shared\_Layout - Contact - TheHappy.cshtml" />
+    <Content Include="Views\Shared\_Layout - Hand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

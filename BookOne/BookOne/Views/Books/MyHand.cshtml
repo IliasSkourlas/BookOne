@@ -3,51 +3,55 @@
 @{
     ViewBag.Title = "MyHand";
 }
+@{
+    Layout = "~/Views/Shared/_Layout - Hand.cshtml";
+}
 
 <p>
     @Html.ActionLink("All Books", "Index")  @Html.ActionLink("My Books", "MyBooks")  @Html.ActionLink("Ask", "Index", "Player")
 </p>
 
-<h3>MyHand</h3>
+@*<h3>MyHand</h3>*@
 
 
-<table class="table">
+<table id="listOfBooks" class="table">
     <tr>
-        <th>
+        <th onclick="rotate()">
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th>
+        <th class="this1">
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.RegisteredOn)
-        </th>
-        <th>
+        </th>*@
+        <th class="this2">
             @Html.DisplayNameFor(model => model.Owner)
         </th>
-        <th>
+        <th class="this3">
             @Html.DisplayNameFor(model => model.BookStatus)
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegisteredOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookStatus)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr class="bookTitle">
+            <td onclick="rotate()">
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td class="this1">
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.RegisteredOn)
+            </td>*@
+            <td class="this2">
+                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
+            </td>
+            <td class="this3">
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+        </tr>
+    }
 
 </table>

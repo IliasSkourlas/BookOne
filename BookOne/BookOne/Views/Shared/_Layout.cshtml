@@ -4,8 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - BookOne</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
 
     <style type="text/css">
         #MyNavbar {
@@ -14,8 +19,6 @@
             opacity: 0.65;
             filter: alpha(opacity=30)
         }
-
-
     </style>
 
 </head>
@@ -51,8 +54,7 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+   
     @RenderSection("scripts", required: false)
 </body>
 </html>
