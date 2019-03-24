@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - BookOne</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style type="text/css">
+        .container-fluid .navbar-brand {
+            margin-left: -200px;
+        }
+        #MyNavbar {
+            background-color: rgba(21, 226, 226, 0.9); 
+            border-bottom: none;
+            opacity: 0.69;
+            filter: alpha(opacity=30)
+        }
+
+        .navbar-brand{
+            font-size: 30px;
+        }
+        .navbar-nav {
+            font-size: 25px;
+        }
+        .navbar {
+            min-height: 80px;
+        }
+        .navbar-inverse .navbar-nav > li > a {
+            color: #FFC0CB;
+            opacity: 0.9;
+        }
+        
+        .nav > li > a:hover {
+            background-color: #FCC;
+            
+        }
+        .navbar-inverse .navbar-brand {
+            color: #FFC0CB;
+        }
+
+
+        body {
+            background-image: linear-gradient(rgb(52, 50, 50),rgba(0,0,0,0.1)), url('../../Content/images/TenTen.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fff;
+        }
+        video {
+            height: 100vh;
+            width: 100%;
+            object-fit: fill;
+            position: absolute;
+            opacity: 0.2;
+            padding-top: 0px;
+        }
+        #AboutText {
+            margin-top: 32%;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: large;
+            color: rgba(255, 255, 255, 1);
+            text-align: center;
+            letter-spacing: 4px;
+            background-position: center;
+            opacity: 0.8;
+            
+        }
+        #email {
+            width: 200%;
+            padding: 0px 0px;
+            font-size: 25px;
+            color: #fac8d1;
+            background-color: transparent;
+        }
+        #emailInput {
+            color: #fac8d1;
+            font-size: 25px;
+            position: center;
+            background-color: transparent;
+        }
+            #emailInput::placeholder {
+                color: rgba(21, 226, 226, 0.8);
+            }
+            /*.input-group-append {
+            width: 100%;
+            padding: 4px 2px;
+        }*/
+            #oneMore {
+            font-size: 25px;
+            background-color: transparent;
+            border:thin;
+            border-color:black;
+
+        }
+       
+       
+       
+    </style>
+
+</head>
+<body>
+
+    <video id="video" autoplay loop muted>
+        <source src="~/Content/images/fish2.mp4" type="video/mp4" />
+    </video>
+
+    <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("BookOne", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                    }
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+
+
+        @RenderBody()
+
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+        document.getElementById("oneMore").addEventListener("click", addOne);
+
+        var count = 1;
+
+        function addOne() {
+            var x = document.getElementById("emailInput").value;
+
+
+            // Make better
+            if (x.length > 12 && x.includes("") && x.includes(".")) {
+                count += 1;
+                document.getElementById("counter").innerHTML = count;
+                document.getElementById("emailInput").value = "";
+            }
+            document.getElementById("emailInput").value = "";
+        }
+
+    </script>
+</body>
+</html>

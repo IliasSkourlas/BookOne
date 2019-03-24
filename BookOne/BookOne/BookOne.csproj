@@ -225,7 +225,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\fish2.mp4" />
-    <Content Include="Content\images\IMG_1323.jpg" />
     <Content Include="Content\images\PeterPan.JPG" />
     <Content Include="Content\images\TenTen.jpg" />
     <Content Include="favicon.ico" />
@@ -292,6 +291,7 @@
     <Content Include="Views\Player\RequestConfirmation.cshtml" />
     <Content Include="Views\Player\BorrowingBookConfirmation.cshtml" />
     <Content Include="Views\Shared\_Layout - About.cshtml" />
+    <Content Include="Views\Shared\_Layout - Contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
