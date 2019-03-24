@@ -38,8 +38,8 @@
             @Html.DisplayFor(modelItem => item.RequestedBy.PhoneNumber)
         </td>
         <td>
-            @Html.ActionLink("Give Book", "BorrowerReceivesBook", "Player", new { id = item.BookRequestId }, null)  |
-            @Html.ActionLink("Decline Request", "DeclineRequest", "Player", new { id = item.BookRequestId }, null)
+            @Html.ActionLink("Give Book", "BorrowerReceivesBook", new { RequestId = item.BookRequestId })  |
+            @Html.ActionLink("Decline Request", "DeclineRequest", new { RequestId = item.BookRequestId })
         </td>
     </tr>
 }

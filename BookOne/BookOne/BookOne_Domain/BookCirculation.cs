@@ -10,6 +10,7 @@ namespace BookOne.BookOne_Domain
         public BookCirculation()
         {
             BorrowedOn = DateTime.Now;
+            CirculationStatus = CirculationStatuses.Fresh;
             BorrowedForXWeeks = 2;      //As default value until it is implemented in the UI
         }
 
@@ -35,6 +36,7 @@ namespace BookOne.BookOne_Domain
 
     public enum CirculationStatuses
     {
+        Fresh,
         Borrowed,
         Completed
     }

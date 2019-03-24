@@ -99,16 +99,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*@if (User.Identity.IsAuthenticated)
-                        {
-                            <li>@Html.ActionLink("Books", "Index", "Books")</li>
-                        }*@
+                    {
+                        <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                    }*@
 
 
 
                     <li>@Html.ActionLink("My Books", "MyBooks", "Books")</li>
                     <li>@Html.ActionLink("My Hand", "MyHand", "Books")</li>
-                    <li>@Html.ActionLink("Ask", "Requests", "Player")</li>
-
+                    <li>@Html.ActionLink("Requests", "Requests", "Player")</li>
 
                 </ul>
                 @Html.Partial("_LoginPartial")
