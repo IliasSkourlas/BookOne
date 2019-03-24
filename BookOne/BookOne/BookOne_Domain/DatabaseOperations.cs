@@ -31,25 +31,30 @@ namespace BookOne.BookOne_Domain
         public IEnumerable<Book> MyBooks(string loggedInUserId)
         {
             return db.Books.Where(b => b.Owner.Id == loggedInUserId).ToList();
-
         }
 
 
         //Returns All books that the user currently holds
         public IEnumerable<Book> MyHand(string loggedInUserId)
         {
-            // books currently borrowed by the logged in user
-            var borrowedBooks =
-                db.BookCirculations.Where(c => c.CirculationStatus == CirculationStatuses.Borrowed && c.Borrower.Id == loggedInUserId)
-                .Select(c => c.BookAssociated).Include(c => c.Owner);
-
             // my books not currently borrowed by anyone
             var ownedBooksNotCurrentlyBorrowed =
                 db.Books.Where(b => b.Owner.Id == loggedInUserId).Except(
                     db.BookCirculations.Where(c => c.BookAssociated.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
-                    .Select(c => c.BookAssociated)).Include(c => c.Owner);
+                    .Select(c => c.BookAssociated)).Include(b => b.Owner);
 
-            return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).ToList();
+            // books currently borrowed by the logged in user
+            var borrowedBooks =
+                db.BookCirculations.Where(c => c.Borrower.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
+                .Select(c => c.BookAssociated).Include(b => b.Owner);
+
+            // pending books to be borrowed by the logged in user
+            var booksToBeBorrowed =
+                db.BookRequests.Where(r => r.RequestedBy.Id == loggedInUserId && r.RequestStatus == RequestStatuses.Accepted)
+                .Select(r => r.BookRequested).Include(b => b.Owner);
+            
+
+            return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).Union(booksToBeBorrowed).ToList();
         }
 
 
@@ -172,7 +177,6 @@ namespace BookOne.BookOne_Domain
             BookCirculation circulation = new BookCirculation();
             circulation.BookAssociated = book;
             circulation.Borrower = userAskingForBook;
-            book.AvailabilityStatus = false;
             db.BookCirculations.Add(circulation);
             db.SaveChanges();
 

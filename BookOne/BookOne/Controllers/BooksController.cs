@@ -36,8 +36,6 @@ namespace BookOne.Controllers
         // GET: MyHand
         public ActionResult MyHand()
         {
-            var dbOps = new DatabaseOperations();
-
             //Displays all Books that the logged in user currently holds
             var loggedInUserId = User.Identity.GetUserId();
 
