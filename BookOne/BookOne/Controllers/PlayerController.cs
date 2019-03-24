@@ -50,6 +50,15 @@ namespace BookOne.Controllers
             return View(requests);
         }
 
+        //public int CountUnansweredRequests()
+        //{
+        //    var loggedInUserId = User.Identity.GetUserId();
+        //    var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
+
+        //    return dbOps.RequestsReceivedCounter(loggedInUser);
+        //}
+
+
         //Create request for a book
         public ActionResult RequestConfirmation(int? bookId)
         {
@@ -65,8 +74,6 @@ namespace BookOne.Controllers
 
             return View(book);
         }
-
-
         [HttpPost, ActionName("RequestConfirmation")]
         [ValidateAntiForgeryToken]
         public ActionResult RequestConfirmed(Book book)
@@ -81,53 +88,50 @@ namespace BookOne.Controllers
         }
 
 
-        
-        public ActionResult BorrowerReceivesBook(int? BookRequestId)
+        //Owner is giving his book to the borrower
+        public ActionResult BorrowerReceivesBook(int? RequestId)
         {
-            if (BookRequestId == null)
+            if (RequestId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var request = dbOps.GetBookRequest(BookRequestId);
+            var request = dbOps.GetBookRequest(RequestId);
             if (request == null)
             {
                 return HttpNotFound();
             }
             return View("BorrowingBookConfirmation", request);
         }
-
-        
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult BorrowingBookConfirmation(BookRequest request)
         {
-            var borrower = request.RequestedBy;
-            var bookBeingBorrowed = request.BookRequested;
+            var borrowerId = request.RequestedBy.Id;
+            var bookBeingBorrowedId = request.BookRequested.BookId;
 
-            var circulation = dbOps.InsertBookCirculation(borrower, bookBeingBorrowed);
+            var circulation = dbOps.InsertBookCirculation(borrowerId, bookBeingBorrowedId);
 
             dbOps.OwnerGaveBook(circulation);
 
-            return View("Requests");
+            return RedirectToAction("Requests");
         }
 
 
         //Owner Declines to borrow his book for this request
-        public ActionResult DeclineRequest(int? BookRequestId)
+        public ActionResult DeclineRequest(int? RequestId)
         {
-            if (BookRequestId == null)
+            if (RequestId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var request = dbOps.GetBookRequest(BookRequestId);
+            var request = dbOps.GetBookRequest(RequestId);
             if (request == null)
             {
                 return HttpNotFound();
             }
 
             dbOps.DeclineRequest(request);
-            return View("Requests");
+            return RedirectToAction("Requests");
         }
     }
 }

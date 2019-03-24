@@ -122,7 +122,10 @@ namespace BookOne.BookOne_Domain
 
         public BookRequest GetBookRequest(int? id)
         {
-            return db.BookRequests.Find(id);
+            return db.BookRequests
+                .Include(r => r.BookRequested)
+                .Include(r => r.RequestedBy)
+                .Where(r => r.BookRequestId == id).SingleOrDefault();
         }
 
 
@@ -161,11 +164,15 @@ namespace BookOne.BookOne_Domain
 
 
         //Adds BookCirculation for a book
-        public BookCirculation InsertBookCirculation(ApplicationUser userAskingForBook, Book book)
+        public BookCirculation InsertBookCirculation(string userAskingForBookId, int bookId)
         {
+            var book = db.Books.Find(bookId);
+            var userAskingForBook = db.Users.Find(userAskingForBookId);
+
             BookCirculation circulation = new BookCirculation();
             circulation.BookAssociated = book;
             circulation.Borrower = userAskingForBook;
+            book.AvailabilityStatus = false;
             db.BookCirculations.Add(circulation);
             db.SaveChanges();
 
