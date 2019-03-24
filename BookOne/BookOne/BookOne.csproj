@@ -292,6 +292,7 @@
     <Content Include="Views\Player\BorrowingBookConfirmation.cshtml" />
     <Content Include="Views\Shared\_Layout - About.cshtml" />
     <Content Include="Views\Shared\_Layout - Contact.cshtml" />
+    <Content Include="Views\Shared\_Layout - About - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

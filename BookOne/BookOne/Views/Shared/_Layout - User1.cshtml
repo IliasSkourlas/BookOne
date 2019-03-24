@@ -11,80 +11,98 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
-   
+
 
     <style type="text/css">
-
-        body {
-            /*color: rgb(185, 131, 131);*/
-
-            /*color: black;
-            background-image: url('C:\Users\penel\source\repos\BookOne2\BookOne\BookOne\VideoImages\PeterPan.JPG');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;*/
-
-            /*background-color: rgba(43, 43, 43, 0.01);*/
-        }
-
-        /*.container {
-            width: 1600px;
-        }*/
-
-        .navbar-inverse .navbar-brand {
-            font-size: 30px;
-            color: deeppink;
-        }
-       
-            ul .nav a:hover {
-            color: black !important;
+        .container-fluid .navbar-brand {
+            margin-left: -200px;
         }
 
         #MyNavbar {
-
-            background-color: transparent;
-            border: solid;
-            border-bottom: solid;
-            border-color:white;
-            
-            opacity: 0.65;
+            background-color: rgba(21, 226, 226, 0.9);
+            border-bottom: none;
+            opacity: 0.69;
             filter: alpha(opacity=30)
         }
-        .navbar-nav > li > a {
-            color: #9d9d9d;
-            font-size: larger;
+
+        .navbar-brand {
+            font-size: 30px;
         }
-        .form-control {
-            color: #bfbfbf;
+
+        .navbar-nav {
+            font-size: 25px;
+        }
+
+        .navbar {
+            min-height: 80px;
+        }
+
+        .navbar-inverse .navbar-nav > li > a {
+            color: #FFC0CB;
+            opacity: 0.9;
+        }
+
+        .nav > li > a:hover {
+            background-color: #FCC;
+        }
+
+        .navbar-inverse .navbar-brand {
+            color: #FFC0CB;
+        }
+
+
+        body {
+            background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTen.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: #fff;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+            .video-container video {
+                /* Make video to at least 100% wide and tall */
+                min-width: 100%;
+                min-height: 100%;
+                /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+                width: auto;
+                height: auto;
+                /* Center the video */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                opacity: 0.2;
+            }
+
+        #AboutText {
+            margin-top: 32%;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: large;
-            padding: 6px 100px;
-        }
-
-        .table {
-            font-size: 160%;
-            padding: 27px;
-            border: 10px solid white; /*#4CAF50;*/
-        }
-        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-            padding: 27px;
-        }
-
-        .table > tbody > tr > td, .table > tfoot > tr > td {
-            padding: 27px;
-            line-height: 1;
-            vertical-align: top;
-            border-top: 1px solid hsla(0, 0%, 100%, 0.05);
-        }
-        a {
-            color: #c0c0c0;
-            text-decoration: none;
+            color: rgba(255, 255, 255, 1);
+            text-align: center;
+            letter-spacing: 4px;
         }
     </style>
 
 </head>
-<body onload="hideAll()">
+<body>
 
 
+
+    <div class="video-container">
+        <video id="video" autoplay loop muted>
+            <source src="~/Content/images/fish2.mp4" type="video/mp4" />
+        </video>
+    </div>
 
     <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -94,29 +112,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink(":)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("BookOne", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*@if (User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Books", "Index", "Books")</li>
-                    }*@
-
-
-
-                    <li>@Html.ActionLink("My Books", "MyBooks", "Books")</li>
-                    <li>@Html.ActionLink("My Hand", "MyHand", "Books")</li>
-                    <li>@Html.ActionLink("Requests", "Requests", "Player")</li>
-
+                    }
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">
-                        <input id ="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">User</button>
-                </form>
             </div>
         </div>
     </div>
@@ -126,14 +133,14 @@
         <hr />
         <footer>
             @*<video id="video" controls autoplay loop muted>
-                <source src="\BookOne\VideoImages\fish2.mp4.mp4" type=video/mp4>
-            </video>*@
+                    <source src="\BookOne\VideoImages\fish2.mp4.mp4" type=video/mp4>
+                </video>*@
 
             @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
         </footer>
     </div>
 
-    
+
 
     @RenderSection("scripts", required: false)
 
