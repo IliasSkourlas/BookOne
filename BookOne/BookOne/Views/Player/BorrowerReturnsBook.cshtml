@@ -1,0 +1,57 @@
+﻿@model BookOne.BookOne_Domain.BookCirculation
+
+@{
+    ViewBag.Title = "BorrowerReturnsBook";
+}
+
+<h2>Return Book</h2>
+
+<h4>Are you receiving this book from its borrower right now?</h4>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookAssociated.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BookAssociated.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Borrower)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Borrower.ActualUsername)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BorrowedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BorrowedOn)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm("OwnerGetsBackHisBook", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.BookCirculationId)
+        @Html.HiddenFor(model => model.BorrowedForXWeeks)
+        @Html.HiddenFor(model => model.Borrower)
+        @Html.HiddenFor(model => model.BorrowerReceivedBook)
+        @Html.HiddenFor(model => model.CirculationStatus)
+        @Html.HiddenFor(model => model.OwnerGaveBook)
+        @Html.HiddenFor(model => model.BookAssociated.BookId)
+
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Yes" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "MyBooks", "Books")
+        </div>
+    }
+</div>

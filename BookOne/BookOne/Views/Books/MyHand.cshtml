@@ -1,14 +1,13 @@
-﻿@model IEnumerable<BookOne.BookOne_Domain.Book>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<BookOne.BookOne_Domain.Book>
 
 @{
-    ViewBag.Title = "MyHand";
-}
-@{
     Layout = "~/Views/Shared/_Layout - Hand.cshtml";
+    ViewBag.Title = "MyHand";
 }
 
 <p>
-    @Html.ActionLink("All Books", "Index")  @Html.ActionLink("My Books", "MyBooks")  @Html.ActionLink("Ask", "Index", "Player")
+    @Html.ActionLink("All Books", "Index")  @Html.ActionLink("My Books", "MyBooks")  @Html.ActionLink("Requests", "Requests", "Player")
 </p>
 
 @*<h3>MyHand</h3>*@
@@ -23,14 +22,15 @@
             @Html.DisplayNameFor(model => model.Author)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.RegisteredOn)
-        </th>*@
+                @Html.DisplayNameFor(model => model.RegisteredOn)
+            </th>*@
         <th class="this2">
             @Html.DisplayNameFor(model => model.Owner)
         </th>
         <th class="this3">
             @Html.DisplayNameFor(model => model.BookStatus)
         </th>
+        <th></th>
     </tr>
 
     @foreach (var item in Model)
@@ -43,13 +43,19 @@
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.RegisteredOn)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.RegisteredOn)
+                </td>*@
             <td class="this2">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
             <td class="this3">
                 @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td>
+                @if (item.Owner.Id != User.Identity.GetUserId() && item.AvailabilityStatus == false)
+                {
+                    <span>Borrowed</span>
+                }
             </td>
         </tr>
     }
