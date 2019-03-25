@@ -88,6 +88,7 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
+            background-attachment: fixed;
         }
 
             .video-container video {
@@ -102,16 +103,18 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%,-50%);
-                opacity: 0.2;
+                opacity: 0.4;
                 pointer-events: none;
+                background-attachment: fixed;
             }
 
         #listOfBooks {
-            margin-top: 15%;
+            margin-top: 100%;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 25px;
             color: rgba(255, 255, 255, 1);
-            letter-spacing: 3px;
+            letter-spacing: 2px;
+            z-index: 2;
         }
     </style>
 
