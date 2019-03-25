@@ -186,7 +186,7 @@ namespace BookOne.BookOne_Domain
         public void OwnerGaveBook(BookCirculation circulation)
         {
             circulation.OwnerGaveBook = true;
-            var requestMadeForThisCirculation = db.BookRequests.Where(r => r.BookRequested.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
+            var requestMadeForThisCirculation = db.BookRequests.Where(r => r.BookRequested.BookId == circulation.BookAssociated.BookId).LastOrDefault();
             requestMadeForThisCirculation.RequestStatus = RequestStatuses.Accepted;
 
             db.SaveChanges();
