@@ -229,6 +229,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\ContentsCut1.jpg" />
+    <Content Include="Content\images\Drowing.jpg" />
     <Content Include="Content\images\fish2.mp4" />
     <Content Include="Content\images\fishShadowMan.mp4" />
     <Content Include="Content\images\TenTen.jpg" />
@@ -297,11 +298,13 @@
     <Content Include="Views\Player\RequestConfirmation.cshtml" />
     <Content Include="Views\Player\BorrowingBookConfirmation.cshtml" />
     <Content Include="Views\Shared\_Layout - About.cshtml" />
-    <Content Include="Views\Shared\_Layout - Contact.cshtml" />
+    <Content Include="Views\Shared\_Layout - IdontNow.cshtml" />
     <Content Include="Views\Shared\_Layout - Contact - TheHappy.cshtml" />
     <Content Include="Views\Shared\_Layout - Hand.cshtml" />
     <Content Include="Views\Player\BorrowedBookConfirmation.cshtml" />
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
+    <Content Include="Views\Shared\_Layout - AddBook.cshtml" />
+    <Content Include="Views\Shared\_Layout - My.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

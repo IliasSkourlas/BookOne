@@ -3,11 +3,14 @@
 @{
     ViewBag.Title = "MyBooks";
 }
+@{
+    Layout = "~/Views/Shared/_Layout - My.cshtml";
+}
 
-<h2>MyBooks</h2>
+
 
 <p>
-    @Html.ActionLink("Create New", "Create") &ensp; @Html.ActionLink("All Books", "Index") &ensp; @Html.ActionLink("My Books", "MyBooks") &ensp; @Html.ActionLink("My Hand", "MyHand") &ensp; @Html.ActionLink("Requests", "Requests", "Player")
+    @Html.ActionLink("Add new", "Create") 
 </p>
 
 <table class="table">
@@ -15,48 +18,49 @@
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th>
+        @*<th class="this1">
             @Html.DisplayNameFor(model => model.Author)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.RegisteredOn)
-        </th>
-        <th>
+        </th>*@
+        @*<th>
             @Html.DisplayNameFor(model => model.BookStatus)
-        </th>
+        </th>*@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr id="listOfBooks">
-        <td class="bookTitle">
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td class="bookAuthor">
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegisteredOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookStatus)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.BookId })
-            @if (item.AvailabilityStatus == true)
-            {
-                <span> | </span>
-                @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
-                <span> | </span>
-                @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
-            }
-            @if (item.AvailabilityStatus == false)
-            {
-                <span>|</span>
-                @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr id="listOfBooks">
+            <td class="bookTitle">
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td class="bookAuthor" >
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.RegisteredOn)
+            </td>*@
+            <td class="thisStatus">
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td class="this2">
+                @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
+                @if (item.AvailabilityStatus == true)
+                {
+                <span> &emsp; </span>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
+                <span> &emsp; </span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
+                }
+                @if (item.AvailabilityStatus == false)
+                {
+                <span>&emsp;</span>
+                    @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
+                }
+            </td>
+        </tr>
+    }
 
 </table>

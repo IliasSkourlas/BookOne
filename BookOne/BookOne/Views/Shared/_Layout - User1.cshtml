@@ -56,13 +56,13 @@
             padding: 0;
             background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
             background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
             width: 100%;
             height: 100vh;
-            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-attachment: fixed;
         }
 
         .ImageText {
@@ -118,7 +118,7 @@
 </head>
 <body onload=" hideAll()">
 
-   
+
 
     <div class="ImageText">
 
@@ -230,43 +230,42 @@
         }
 
     </script>
+    <script>
+        function SearchFunction() {
+            // Declare variables
+            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            bookList = document.getElementById("listOfBooks");
+            bookTitles = bookList.getElementsByClassName("bookTitle");
 
+            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
+            // So we call the Array.prototype function and provide the nodeList as a parameter
+            Array.prototype.forEach.call(bookTitles,
+                book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (index = 0; index < bookTitles.length; index++) {
+                let bookTitle = bookTitles[index].getElementsByTagName("td")[0];
+                txtValue = bookTitle.innerHTML;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    bookTitles[index].style.display = "";
+                } else {
+                    bookTitles[index].style.display = "none";
+                }
+            }
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (index = 0; index < bookAuthors.length; index++) {
+                let author = bookAuthors[index];
+                if (author.toUpperCase().indexOf(filter) > -1) {
+                    console.log(author);
+                }
+            }
+        }
+
+    </script>
 </body>
 </html>
 
-<script>
-    function SearchFunction() {
-        // Declare variables
-        let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
-        input = document.getElementById('searchInput');
-        filter = input.value.toUpperCase();
-        bookList = document.getElementById("listOfBooks");
-        bookTitles = bookList.getElementsByClassName("bookTitle");
-
-        // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
-        // So we call the Array.prototype function and provide the nodeList as a parameter
-        Array.prototype.forEach.call(bookTitles,
-            book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
-
-
-        // Loop through all list items, and hide those who don't match the search query
-        for (index = 0; index < bookTitles.length; index++) {
-            let bookTitle = bookTitles[index].getElementsByTagName("td")[0];
-            txtValue = bookTitle.innerHTML;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                bookTitles[index].style.display = "";
-            } else {
-                bookTitles[index].style.display = "none";
-            }
-        }
-
-        // Loop through all list items, and hide those who don't match the search query
-        for (index = 0; index < bookAuthors.length; index++) {
-            let author = bookAuthors[index];
-            if (author.toUpperCase().indexOf(filter) > -1) {
-                console.log(author);
-            }
-        }
-    }
-
-</script>
