@@ -56,13 +56,13 @@
             padding: 0;
 
 
-            /*background-position: center;*/
+           
         }
 
         .ImageText {
             background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
             background-repeat: no-repeat;
-            /*background-size: cover;*/
+            
             color: #fff;
             width: 100%;
             height: 100vh;
@@ -82,13 +82,10 @@
         }
 
         .video-container video {
-            /* Make video to at least 100% wide and tall */
             min-width: 100%;
             min-height: 100%;
-            /* Setting width & height to auto prevents the browser from stretching or squishing the video */
             width: auto;
             height: auto;
-            /* Center the video */
             position: absolute;
             top: 50%;
             left: 50%;
@@ -99,7 +96,7 @@
         #listOfBooks {
             margin-top: 15%;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            font-size: 33px;
+            font-size: 25px;
             color: rgba(255, 255, 255, 1);
             
             letter-spacing: 3px;
@@ -109,9 +106,17 @@
     </style>
 
 </head>
-<body onload=" hideAll()" onclick="rotate()">
+<body onload=" hideAll()">
+
+   
 
     <div class="ImageText">
+
+        @*<div class="video-container">
+            <video id="video" autoplay loop muted>
+                <source src="~/Content/images/fish2.mp4" type="video/mp4" />
+            </video>
+        </div>*@
 
         <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -146,11 +151,7 @@
             </div>
         </div>
 
-        <div class="video-container">
-            <video id="video" autoplay loop muted>
-                <source src="~/Content/images/fish2.mp4" type="video/mp4" />
-            </video>
-        </div>
+
 
         <div class="container body-content">
             @RenderBody()
@@ -159,66 +160,66 @@
                 @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
             </footer>
         </div>
-
     </div>
 
-        @RenderSection("scripts", required: false)
 
-        <script>
+    @RenderSection("scripts", required: false)
 
-            function hideAll() {
-                $('.this1').hide();
-                $('.this2').hide();
-                $('.this3').hide();
+    <script>
+
+        function hideAll() {
+            $('.this1').hide();
+            $('.this2').hide();
+            $('.this3').hide();
+        }
+
+        var n = 0;
+        var i = 1;
+
+        function rotate() {
+            n = n + i;
+            console.log(n);
+            if (n === 0) {
+                i = 1;
             }
-
-            var n = 0;
-            var i = 1;
-
-            function rotate() {
-                n = n + i;
-                console.log(n);
-                if (n === 0) {
-                    i = 1;
+            if (n === 1) {
+                new function () {
+                    $('.this1').show();
                 }
-                if (n === 1) {
-                    new function () {
-                        $('.this1').show();
-                    }
-                }
-                if (n === 2) {
-                    new function () {
-                        $('.this1').hide();
-                        $('.this2').show();
-                    }
-                }
-                if (n === 3) {
-                    new function () {
-                        $('.this2').hide();
-                        $('.this1').show();
-                    }
-                }
-                if (n === 4) {
-                    n = 0;
-                    new function () {
-                        $('.this1').hide();
-                    }
-                }
-                //if (n === 5) {
-                //    new function () {
-                //        $('.hide2').hide();
-                //    }
-                //}
-                //if (n === 6) {
-                //    n = 0;
-                //    new function () {
-                //        $('.hide1').hide();
-                //    }
-                //}
-                console.log("new", n);
             }
+            if (n === 2) {
+                new function () {
+                    $('.this1').hide();
+                    $('.this2').show();
+                }
+            }
+            if (n === 3) {
+                new function () {
+                    $('.this2').hide();
+                    $('.this1').show();
+                }
+            }
+            if (n === 4) {
+                n = 0;
+                new function () {
+                    $('.this1').hide();
+                }
+            }
+            //if (n === 5) {
+            //    new function () {
+            //        $('.hide2').hide();
+            //    }
+            //}
+            //if (n === 6) {
+            //    n = 0;
+            //    new function () {
+            //        $('.hide1').hide();
+            //    }
+            //}
+            console.log("new", n);
+        }
 
-        </script>
+    </script>
 
 </body>
 </html>
