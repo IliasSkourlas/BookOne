@@ -18,7 +18,7 @@
         }
 
         #MyNavbar {
-            background-color: rgba(21, 226, 226, 0.9);
+            background-color: rgba(0, 1, 1, 0.96);
             border-bottom: none;
             opacity: 0.69;
             filter: alpha(opacity=30)
@@ -53,13 +53,22 @@
         body {
             margin: 0;
             padding: 0;
-            /*background-position: center;*/
-        }
 
-        .ImageText {
             background-image: linear-gradient(rgb(6, 9, 150, 0.9),rgba(0,0,0,0.3)), url('../../Content/images/ContentsCut1.jpg');
             background-repeat: no-repeat;
-           
+            
+            width: 100%;
+            height: 100vh;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-attachment: fixed;
+        }
+
+
+        .ImageText {
+            
             color: #fff;
             width: 100%;
             height: 100vh;
@@ -67,6 +76,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
+            background-attachment: fixed;
         }
 
         .video-container {
