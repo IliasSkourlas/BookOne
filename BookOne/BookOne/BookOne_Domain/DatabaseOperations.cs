@@ -189,16 +189,16 @@ namespace BookOne.BookOne_Domain
 
 
         //Adds BookCirculation for a book
-        public BookCirculation InsertBookCirculation(string userAskingForBookId, int bookId)
+        public BookCirculation InsertBookCirculation(BookRequest request)
         {
-            var book = db.Books.Find(bookId);
-            var userAskingForBook = db.Users.Find(userAskingForBookId);
+            var book = request.BookRequested;
+            var userAskingForBook = request.RequestedBy;
 
             BookCirculation circulation = new BookCirculation();
             circulation.BookAssociated = book;
             circulation.Borrower = userAskingForBook;
+            circulation.RequestForThisCirculation = request;
             db.BookCirculations.Add(circulation);
-            db.SaveChanges();
 
             return circulation;
         }
@@ -206,17 +206,16 @@ namespace BookOne.BookOne_Domain
         public void OwnerGaveBook(BookCirculation circulation)
         {
             circulation.OwnerGaveBook = true;
+            circulation.BookAssociated = circulation.RequestForThisCirculation.BookRequested;
 
-            var requestMadeForThisCirculation = BookRequestMadeForACirculation(circulation);
-
-            requestMadeForThisCirculation.RequestStatus = RequestStatuses.Accepted;
+            circulation.RequestForThisCirculation.RequestStatus = RequestStatuses.Accepted;
 
             db.SaveChanges();
         }
         //Borrow a book from someone (Borrower received book)
         public void BorrowerReceivedBook(BookRequest request)
         {
-            var circulation = BookRequestMadeForACirculation(request);
+            var circulation = db.BookCirculations.Where(c => c.RequestForThisCirculation.BookRequestId == request.BookRequestId).SingleOrDefault();
 
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
@@ -228,27 +227,29 @@ namespace BookOne.BookOne_Domain
         {
             var book = db.Books.Find(bookId);
 
-            return db.BookCirculations.Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus == CirculationStatuses.Borrowed).Include(c => c.Borrower).SingleOrDefault();
+            var circulation = db.BookCirculations.Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus != CirculationStatuses.Borrowed).Include(c => c.Borrower).Last();
+
+            return circulation;
         }
 
 
-        public BookRequest BookRequestMadeForACirculation(BookCirculation circulation)
-        {
-            return db.BookRequests
-                .Where(r => r.BookRequested.BookId == circulation.BookAssociated.BookId &&
-                r.RequestedBy.Id == circulation.Borrower.Id &&
-                r.RequestStatus == RequestStatuses.Unanswered)
-                .SingleOrDefault();
-        }
+        //public BookRequest BookRequestMadeForACirculation(BookCirculation circulation)
+        //{
+        //    return db.BookRequests
+        //        .Where(r => r.BookRequested.BookId == circulation.BookAssociated.BookId &&
+        //        r.RequestedBy.Id == circulation.Borrower.Id &&
+        //        r.RequestStatus == RequestStatuses.Unanswered)
+        //        .SingleOrDefault();
+        //}
 
-        public BookCirculation BookRequestMadeForACirculation(BookRequest request)
-        {
-            return db.BookCirculations
-                .Where(c => c.BookAssociated.BookId == request.BookRequested.BookId &&
-                c.Borrower.Id == request.RequestedBy.Id && 
-                c.BorrowerReceivedBook == false)
-                .LastOrDefault();
-        }
+        //public BookCirculation BookRequestMadeForACirculation(BookRequest request)
+        //{
+        //    return db.BookCirculations
+        //        .Where(c => c.BookAssociated.BookId == request.BookRequested.BookId &&
+        //        c.Borrower.Id == request.RequestedBy.Id && 
+        //        c.BorrowerReceivedBook == false)
+        //        .LastOrDefault();
+        //}
 
 
         //DaysRemaining counter for borrowed book
