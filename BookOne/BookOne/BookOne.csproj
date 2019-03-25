@@ -227,7 +227,6 @@
     <Content Include="Content\images\ContentsCut1.jpg" />
     <Content Include="Content\images\fish2.mp4" />
     <Content Include="Content\images\fishShadowMan.mp4" />
-    <Content Include="Content\images\rainSeaShort.mp4" />
     <Content Include="Content\images\TenTen.jpg" />
     <Content Include="Content\images\TenTenCut.jpg" />
     <Content Include="favicon.ico" />
