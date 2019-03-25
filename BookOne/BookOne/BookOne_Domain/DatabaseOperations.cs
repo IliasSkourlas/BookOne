@@ -47,14 +47,8 @@ namespace BookOne.BookOne_Domain
             var borrowedBooks =
                 db.BookCirculations.Where(c => c.Borrower.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
                 .Select(c => c.BookAssociated).Include(b => b.Owner);
-
-            // pending books to be borrowed by the logged in user
-            var booksToBeBorrowed =
-                db.BookRequests.Where(r => r.RequestedBy.Id == loggedInUserId && r.RequestStatus == RequestStatuses.Accepted)
-                .Select(r => r.BookRequested).Include(b => b.Owner);
             
-
-            return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).Union(booksToBeBorrowed).ToList();
+            return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).ToList();
         }
 
 
@@ -164,7 +158,33 @@ namespace BookOne.BookOne_Domain
         //Gets all user's book requests (user is the owner of this book)
         public IEnumerable<BookRequest> GetRequests(ApplicationUser user)
         {
-            return db.BookRequests.Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Unanswered).Include(r => r.BookRequested).Include(r => r.RequestedBy).ToList();
+             var booksRequestedFromTheLoggedInUser= db.BookRequests
+                .Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Unanswered)
+                .Include(r => r.BookRequested)
+                .Include(r => r.RequestedBy)
+                .Include(r => r.BookRequested.Owner);
+
+            // pending BookRequests made by the logged in user
+            var bookRequests_OwnerHasNotAnswered = 
+                db.BookRequests
+                .Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Unanswered)
+                .Include(r => r.BookRequested.Owner);
+
+            // pending BookRequests to be approved by the logged in user
+            var bookRequests_OwnerApproved =
+                db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Accepted)
+                .Include(r => r.BookRequested.Owner);
+
+            // pending BookRequests to be approved by the logged in user
+            var bookRequests_OwnerDeclined =
+                db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Declined)
+                .Include(r => r.BookRequested.Owner);
+
+            return booksRequestedFromTheLoggedInUser
+                .Union(bookRequests_OwnerHasNotAnswered)
+                .Union(bookRequests_OwnerApproved)
+                .Union(bookRequests_OwnerDeclined)
+                .ToList();
         }
 
 
@@ -186,25 +206,48 @@ namespace BookOne.BookOne_Domain
         public void OwnerGaveBook(BookCirculation circulation)
         {
             circulation.OwnerGaveBook = true;
-            var requestMadeForThisCirculation = db.BookRequests.Where(r => r.BookRequested.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
+
+            var requestMadeForThisCirculation = BookRequestMadeForACirculation(circulation);
+
             requestMadeForThisCirculation.RequestStatus = RequestStatuses.Accepted;
 
             db.SaveChanges();
         }
         //Borrow a book from someone (Borrower received book)
-        public void BorrowerReceivedBook(BookCirculation circulation)
+        public void BorrowerReceivedBook(BookRequest request)
         {
+            var circulation = BookRequestMadeForACirculation(request);
+
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
             circulation.BookAssociated.AvailabilityStatus = false;
             db.SaveChanges();
         }
-        
 
-        //Get requests you made as a Borrower
-        public IEnumerable<BookRequest> GetBorrowerRequests(ApplicationUser user)
+        public BookCirculation GetBookLatestOnGoingCirculation(int? bookId)
         {
-            return db.BookRequests.Where(r => r.RequestedBy.Id == user.Id).ToList();
+            var book = db.Books.Find(bookId);
+
+            return db.BookCirculations.Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus == CirculationStatuses.Borrowed).Include(c => c.Borrower).SingleOrDefault();
+        }
+
+
+        public BookRequest BookRequestMadeForACirculation(BookCirculation circulation)
+        {
+            return db.BookRequests
+                .Where(r => r.BookRequested.BookId == circulation.BookAssociated.BookId &&
+                r.RequestedBy.Id == circulation.Borrower.Id &&
+                r.RequestStatus == RequestStatuses.Unanswered)
+                .SingleOrDefault();
+        }
+
+        public BookCirculation BookRequestMadeForACirculation(BookRequest request)
+        {
+            return db.BookCirculations
+                .Where(c => c.BookAssociated.BookId == request.BookRequested.BookId &&
+                c.Borrower.Id == request.RequestedBy.Id && 
+                c.BorrowerReceivedBook == false)
+                .LastOrDefault();
         }
 
 
@@ -222,11 +265,14 @@ namespace BookOne.BookOne_Domain
         }
 
 
+
+
         //Book returns to the owner
         public void OwnerReceivedBookBack(BookCirculation circulation)
         {
             circulation.CirculationStatus = CirculationStatuses.Completed;
-            circulation.BookAssociated.AvailabilityStatus = true;
+            var book = db.Books.Where(b => b.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
+            book.AvailabilityStatus = true;
             db.SaveChanges();
         }
     }

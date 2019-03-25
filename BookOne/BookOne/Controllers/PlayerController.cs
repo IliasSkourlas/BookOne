@@ -133,5 +133,53 @@ namespace BookOne.Controllers
             dbOps.DeclineRequest(request);
             return RedirectToAction("Requests");
         }
+
+        //Borrower is receiving a book from its owner
+        public ActionResult BorrowerReceivedBook(int? RequestId)
+        {
+            if (RequestId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var request = dbOps.GetBookRequest(RequestId);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            return View("BorrowedBookConfirmation", request);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BorrowedBookConfirmation(BookRequest request)
+        {
+            dbOps.BorrowerReceivedBook(request);
+
+            return RedirectToAction("Requests");
+        }
+
+
+        //Owner is receiving a book from its borrower
+        public ActionResult ReturnBook(int? bookId)
+        {
+            if (bookId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var circulation = dbOps.GetBookLatestOnGoingCirculation(bookId);
+            if (circulation == null)
+            {
+                return HttpNotFound();
+            }
+            return View("BorrowerReturnsBook", circulation);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult OwnerGetsBackHisBook(BookCirculation circulation)
+        {
+            dbOps.OwnerReceivedBookBack(circulation);
+
+            return RedirectToAction("Requests");
+        }
     }
 }

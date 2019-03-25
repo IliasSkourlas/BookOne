@@ -42,9 +42,19 @@
             @Html.DisplayFor(modelItem => item.BookStatus)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookId })
+            @Html.ActionLink("Details", "Details", new { id = item.BookId })
+            @if (item.AvailabilityStatus == true)
+            {
+                <span> | </span>
+                @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
+                <span> | </span>
+                @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
+            }
+            @if (item.AvailabilityStatus == false)
+            {
+                <span>|</span>
+                @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
+            }
         </td>
     </tr>
 }
