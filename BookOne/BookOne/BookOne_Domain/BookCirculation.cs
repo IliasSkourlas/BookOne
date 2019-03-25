@@ -30,6 +30,8 @@ namespace BookOne.BookOne_Domain
         
         public bool BorrowerReceivedBook { get; set; }
 
+        public BookRequest RequestForThisCirculation { get; set; }
+
         public CirculationStatuses CirculationStatus { get; set; }
     }
 

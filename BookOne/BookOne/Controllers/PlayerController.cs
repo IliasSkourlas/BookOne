@@ -106,10 +106,7 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BorrowingBookConfirmation(BookRequest request)
         {
-            var borrowerId = request.RequestedBy.Id;
-            var bookBeingBorrowedId = request.BookRequested.BookId;
-
-            var circulation = dbOps.InsertBookCirculation(borrowerId, bookBeingBorrowedId);
+            var circulation = dbOps.InsertBookCirculation(request);
 
             dbOps.OwnerGaveBook(circulation);
 
