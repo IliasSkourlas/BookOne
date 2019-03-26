@@ -18,6 +18,8 @@
         background-size: cover;
         background-attachment: fixed;
     }
+
+    
 </style>
 
 @*<div class="video-container">
@@ -30,7 +32,7 @@
 
 
 <table id="listOfBooks" class="table">
-    <tr>
+    <tr class="header" >
         <th onclick="rotate()">
             @Html.DisplayNameFor(model => model.Title)
         </th>
@@ -38,7 +40,7 @@
             @Html.DisplayNameFor(model => model.Author)
         </th>
         <th class="this2">
-            Username
+            by
         </th>
         @*<th class="this3">
                 @Html.DisplayNameFor(model => model.BookStatus)
@@ -94,30 +96,34 @@
 
     function rotate() {
         n = n + i;
-        console.log(n);
+        
         if (n === 0) {
             i = 1;
         }
         if (n === 1) {
+            console.log("new", n);
             new function () {
                 $('.this1').show();
                 $('.bookAuthor').show();
                 $('.Status').hide();
-
+                
             }
         }
         if (n === 2) {
+            console.log("new", n);
             new function () {
                 $('.this1').hide();
                 $('.bookAuthor').hide();
-                $('.Status').hide();
+                $('.Status').show();
                 $('.this2').show();
             }
         }
         if (n === 3) {
+            console.log("new", n);
             new function () {
                 $('.this2').hide();
                 $('.Status').show();
+                
 
 
             }
@@ -125,14 +131,15 @@
         if (n === 4) {
             n = 1;
             new function () {
+                console.log("new", n);
+
                 $('.this1').show();
                 $('.bookAuthor').show();
                 $('.Status').hide();
-
             }
         }
 
-        console.log("new", n);
+        
     }
 
 </script>
