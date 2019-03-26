@@ -30,6 +30,7 @@ namespace BookOne.BookOne_Domain
     {
         Unanswered,
         Accepted,
-        Declined
+        Declined,
+        Closed
     }
 }

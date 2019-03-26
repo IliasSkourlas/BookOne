@@ -201,7 +201,10 @@ namespace BookOne.BookOne_Domain
             };
             
             db.BookCirculations.Add(circulation);
-            request.RequestStatus = RequestStatuses.Accepted;
+
+            var requestForThisCirculation = db.BookRequests.Find(request.BookRequestId);
+            requestForThisCirculation.RequestStatus = RequestStatuses.Accepted;
+
             db.SaveChanges();
 
             return circulation;
@@ -210,10 +213,11 @@ namespace BookOne.BookOne_Domain
         public void BorrowerReceivedBook(BookRequest request)
         {
             var circulation = db.BookCirculations.Where(c => c.RequestIdForThisCirculation== request.BookRequestId).SingleOrDefault();
+            var book = db.Books.Where(b => b.BookId == request.BookRequested.BookId).SingleOrDefault();
 
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
-            circulation.BookAssociated.AvailabilityStatus = false;
+            book.AvailabilityStatus = false;
             db.SaveChanges();
         }
 
@@ -222,7 +226,8 @@ namespace BookOne.BookOne_Domain
         {
             var book = db.Books.Find(bookId);
 
-            var circulation = db.BookCirculations.Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus != CirculationStatuses.Borrowed).Include(c => c.Borrower).Last();
+            //var circulation = db.BookCirculations.Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus == CirculationStatuses.Borrowed).Include(c => c.Borrower).Last();
+            var circulation = db.BookCirculations.OrderByDescending(c => c.BorrowedOn).Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus == CirculationStatuses.Borrowed).Include(c => c.Borrower).FirstOrDefault();
 
             return circulation;
         }
@@ -260,16 +265,20 @@ namespace BookOne.BookOne_Domain
 
             return (returnBookDate - today).Days;
         }
-
-
-
+        
 
         //Book returns to the owner
         public void OwnerReceivedBookBack(BookCirculation circulation)
         {
-            circulation.CirculationStatus = CirculationStatuses.Completed;
             var book = db.Books.Where(b => b.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
+            var requestForThisCirculation = db.BookRequests.Find(circulation.RequestIdForThisCirculation);
+            var borrower = requestForThisCirculation.RequestedBy;
+
+            var circulationForThisBook = db.BookCirculations.Find(circulation.BookCirculationId);
+            requestForThisCirculation.RequestStatus = RequestStatuses.Closed;
+
             book.AvailabilityStatus = true;
+            circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
             db.SaveChanges();
         }
     }
