@@ -309,6 +309,8 @@
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
     <Content Include="Views\Shared\_Layout - AddBook.cshtml" />
     <Content Include="Views\Shared\_Layout - My.cshtml" />
+    <Content Include="Views\Shared\_VideoPartial.cshtml" />
+    <Content Include="Views\Shared\_weAreHerePatial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

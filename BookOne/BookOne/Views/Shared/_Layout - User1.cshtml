@@ -70,12 +70,10 @@
 </head>
 <body onload=" hideAll()">
 
-
     <div class="video-container">
-        <video id="video" autoplay loop muted>
-            <source src="~/Content/images/fish2.mp4" type="video/mp4" />
-        </video>
+        @Html.Partial("_VideoPartial")
     </div>
+
 
     <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -88,16 +86,12 @@
                 @Html.ActionLink(":)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li id="weAreHere">@Html.ActionLink("All", "Index", "Books")</li>
-                    }
-                    <li>@Html.ActionLink("My", "MyBooks", "Books")</li>
-                    <li>@Html.ActionLink("Hand", "MyHand", "Books")</li>
-                    <li>@Html.ActionLink("Requests", "Requests", "Player")</li>
-                </ul>
 
+
+                <ul class="nav navbar-nav">
+                    @Html.Partial("_weAreHerePatial");
+                </ul>
+               
 
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
@@ -150,7 +144,7 @@
 
     @RenderSection("scripts", required: false)
 
-   
+
 
     <script>
         function SearchFunction() {

@@ -10,6 +10,7 @@
 
 
 
+
 <style type="text/css">
 
     body {
@@ -22,32 +23,28 @@
     
 </style>
 
-@*<div class="video-container">
-        <video id="video" autoplay loop muted>
-            <source src="~/Content/images/fish2.mp4" type="video/mp4" />
-        </video>
-    </div>*@
-
 
 
 
 <table id="listOfBooks" class="table">
     <tr class="header" >
-        <th onclick="rotate()">
+        <th onclick="document.getElementById('searchInput').placeholder='Book'">
+           
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th class="this1">
+        <th class="this1" onclick="document.getElementById('searchInput').placeholder='Author'">
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th class="this2">
+        <th class="this2" onclick="document.getElementById('searchInput').placeholder='Owner'">
             by
         </th>
         @*<th class="this3">
                 @Html.DisplayNameFor(model => model.BookStatus)
             </th>*@
-        @*<th class="Status">
-                @Html.DisplayNameFor(model => model.AvailabilityStatus)
-            </th>*@
+        <th class="Status" onclick="document.getElementById('searchInput').placeholder='Availability'">
+                @*@Html.DisplayNameFor(model => model.AvailabilityStatus)*@
+            ...
+         </th>
     </tr>
 
 
