@@ -20,12 +20,7 @@
             opacity: 0.7;
             filter: alpha(opacity=30)
         }
-        body {
-            background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgb(0, 0, 0, 0.02)), url('../../Content/images/Drowing.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-        }
+
         .video-container {
             position: absolute;
             top: 0;
@@ -65,6 +60,9 @@
 
 </head>
 <body onload=" hideAll()" >
+
+
+
 
     <div class="video-container">
         <video id="video" autoplay loop muted>
@@ -106,6 +104,9 @@
             </div>
         </div>
     </div>
+
+
+
     <div class="container body-content" onclick="rotate()">
 
 
@@ -132,7 +133,10 @@
             </ul>
         }
 
+
+
         @RenderBody()
+
         <hr />
         <footer>
             @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
@@ -142,69 +146,8 @@
 
     @RenderSection("scripts", required: false)
 
-    <script>
+   
 
-        function hideAll() {
-            $('.this1').hide();
-            $('.this2').hide();
-            $('.bookAuthor').hide();
-        }
-        
-        var n = 0;
-        var i = 1;
-
-        function rotate() {
-            n = n + i;
-            console.log(n);
-            if (n === 0) {
-                i = 1;
-            }
-            if (n === 1) {
-                new function () {
-                    $('.this1').show();
-                    $('.bookAuthor').show();
-                    $('.thisStatus').hide();
-                }
-            }
-            if (n === 2) {
-                new function () {
-                    $('.this1').hide();
-                    $('.bookAuthor').hide();
-                    $('.this2').show();
-                }
-            }
-            if (n === 3) {
-                new function () {
-                    $('.this2').hide();
-                    $('.thisStatus').show();
-
-
-                }
-            }
-            if (n === 4) {
-                n = 1;
-                new function () {
-                    $('.this1').show();
-                    $('.bookAuthor').show();
-                    $('.thisStatus').hide();
-
-                }
-            }
-            //if (n === 5) {
-            //    new function () {
-            //        $('.hide2').hide();
-            //    }
-            //}
-            //if (n === 6) {
-            //    n = 0;
-            //    new function () {
-            //        $('.hide1').hide();
-            //    }
-            //}
-            console.log("new", n);
-        }
-
-    </script>
     <script>
         function SearchFunction() {
             // Declare variables

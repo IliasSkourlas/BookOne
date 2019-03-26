@@ -300,7 +300,7 @@
     <Content Include="Views\Shared\_Layout - About.cshtml" />
     <Content Include="Views\Shared\_Layout - IdontNow.cshtml" />
     <Content Include="Views\Shared\_Layout - Contact - TheHappy.cshtml" />
-    <Content Include="Views\Shared\_Layout - Hand.cshtml" />
+    <Content Include="Views\Shared\_Layout - MyHand.cshtml" />
     <Content Include="Views\Player\BorrowedBookConfirmation.cshtml" />
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
     <Content Include="Views\Shared\_Layout - AddBook.cshtml" />

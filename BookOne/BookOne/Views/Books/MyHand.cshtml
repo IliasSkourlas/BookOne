@@ -2,15 +2,24 @@
 @model IEnumerable<BookOne.BookOne_Domain.Book>
 
 @{
-    Layout = "~/Views/Shared/_Layout - Hand.cshtml";
+    Layout = "~/Views/Shared/_Layout - MyHand.cshtml";
     ViewBag.Title = "MyHand";
 }
 
-<p>
-    @Html.ActionLink("All Books", "Index")  @Html.ActionLink("My Books", "MyBooks")  @Html.ActionLink("Requests", "Requests", "Player")
-</p>
 
-@*<h3>MyHand</h3>*@
+<style type="text/css">
+
+    body {
+        background-image: linear-gradient(rgb(6, 9, 150, 0.9),rgba(0,0,0,0.3)), url('../../Content/images/ContentsCut1.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+</style>
+
+
+
+
 
 
 <table id="listOfBooks" class="table">
@@ -27,9 +36,9 @@
         <th class="this2">
             @Html.DisplayNameFor(model => model.Owner)
         </th>
-        <th class="this3">
-            @Html.DisplayNameFor(model => model.BookStatus)
-        </th>
+        @*<th class="this3">
+                @Html.DisplayNameFor(model => model.BookStatus)
+            </th>*@
         <th></th>
     </tr>
 
@@ -48,7 +57,8 @@
             <td class="this2">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
-            <td class="this3">
+
+            <td class="thisStatus">
                 @Html.DisplayFor(modelItem => item.BookStatus)
             </td>
             <td>
@@ -61,3 +71,57 @@
     }
 
 </table>
+
+
+<script>
+
+    function hideAll() {
+        $('.this1').hide();
+        $('.this2').hide();
+        $('.bookAuthor').hide();
+    }
+
+    var n = 0;
+    var i = 1;
+
+    function rotate() {
+        n = n + i;
+        console.log(n);
+        if (n === 0) {
+            i = 1;
+        }
+        if (n === 1) {
+            new function () {
+                $('.this1').show();
+                $('.bookAuthor').show();
+                $('.thisStatus').hide();
+            }
+        }
+        if (n === 2) {
+            new function () {
+                $('.this1').hide();
+                $('.bookAuthor').hide();
+                $('.this2').show();
+            }
+        }
+        if (n === 3) {
+            new function () {
+                $('.this2').hide();
+                $('.thisStatus').show();
+
+
+            }
+        }
+        if (n === 4) {
+            n = 1;
+            new function () {
+                $('.this1').show();
+                $('.bookAuthor').show();
+                $('.thisStatus').hide();
+
+            }
+        }
+        console.log("new", n);
+    }
+
+</script>
