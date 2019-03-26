@@ -10,62 +10,130 @@
 
 
 
+<style type="text/css">
+
+    body {
+        background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+</style>
+
+@*<div class="video-container">
+        <video id="video" autoplay loop muted>
+            <source src="~/Content/images/fish2.mp4" type="video/mp4" />
+        </video>
+    </div>*@
 
 
 
 
-
-
-
-
-
-    <table id="listOfBooks" class="table">
-        <tr>
-            <th onclick="rotate()">
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th class="this1" >
-                @Html.DisplayNameFor(model => model.Author)
-            </th >
-            <th class="this2" >
-                Username
-            </th>
-            <th class="this3" >
+<table id="listOfBooks" class="table">
+    <tr>
+        <th onclick="rotate()">
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th class="this1">
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th class="this2">
+            Username
+        </th>
+        @*<th class="this3">
                 @Html.DisplayNameFor(model => model.BookStatus)
-            </th>
-            <th>
+            </th>*@
+        @*<th class="Status">
                 @Html.DisplayNameFor(model => model.AvailabilityStatus)
-            </th>
-        </tr>
-      
+            </th>*@
+    </tr>
 
 
-        @foreach (var item in Model)
-        {
-            <tr class="bookTitle">
-                <td onclick="rotate()">
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td class="this1">
-                    @Html.DisplayFor(modelItem => item.Author)
-                </td>
-                <td class="this2">
-                    @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
-                </td>
-                <td class="this3">
+
+    @foreach (var item in Model)
+    {
+        <tr class="bookTitle">
+            <td onclick="rotate()">
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td class="this1">
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td class="this2">
+                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
+            </td>
+            @*<td class="this3">
                     @Html.DisplayFor(modelItem => item.BookStatus)
-                </td>
-                <td >
-                    @if (item.AvailabilityStatus == true)
-                    {
-                        @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
-                    }
-                    else
-                    {
-                        <p>Unavailable</p>
-                    }
-                </td>
-            </tr>
-        } 
+                </td>*@
+            <td class="Status">
+                @if (item.AvailabilityStatus == true)
+                {
+                    @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
+                }
+                else
+                {
+                    <p>Unavailable</p>
+                }
+            </td>
+        </tr>
+    }
 </table>
+
+
+
+<script>
+
+    function hideAll() {
+        $('.this1').hide();
+        $('.this2').hide();
+        $('.bookAuthor').hide();
+    }
+
+    var n = 0;
+    var i = 1;
+
+    function rotate() {
+        n = n + i;
+        console.log(n);
+        if (n === 0) {
+            i = 1;
+        }
+        if (n === 1) {
+            new function () {
+                $('.this1').show();
+                $('.bookAuthor').show();
+                $('.Status').hide();
+
+            }
+        }
+        if (n === 2) {
+            new function () {
+                $('.this1').hide();
+                $('.bookAuthor').hide();
+                $('.Status').hide();
+                $('.this2').show();
+            }
+        }
+        if (n === 3) {
+            new function () {
+                $('.this2').hide();
+                $('.Status').show();
+
+
+            }
+        }
+        if (n === 4) {
+            n = 1;
+            new function () {
+                $('.this1').show();
+                $('.bookAuthor').show();
+                $('.Status').hide();
+
+            }
+        }
+
+        console.log("new", n);
+    }
+
+</script>
 

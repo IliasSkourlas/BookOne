@@ -3,45 +3,57 @@
 @{
     ViewBag.Title = "MyBooks";
 }
+
 @{
     Layout = "~/Views/Shared/_Layout - My.cshtml";
 }
 
 
+<style type="text/css">
+
+    body {
+        background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgb(0, 0, 0, 0.02)), url('../../Content/images/Drowing.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+</style>
+
 
 <p>
-    @Html.ActionLink("Add new", "Create") 
+    @Html.ActionLink("Add new", "Create")
 </p>
 
-<table class="table">
+
+<table id="listOfBooks" class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
         @*<th class="this1">
-            @Html.DisplayNameFor(model => model.Author)
-        </th>*@
+                @Html.DisplayNameFor(model => model.Author)
+            </th>*@
         @*<th>
-            @Html.DisplayNameFor(model => model.RegisteredOn)
-        </th>*@
+                @Html.DisplayNameFor(model => model.RegisteredOn)
+            </th>*@
         @*<th>
-            @Html.DisplayNameFor(model => model.BookStatus)
-        </th>*@
+                @Html.DisplayNameFor(model => model.BookStatus)
+            </th>*@
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr id="listOfBooks">
-            <td class="bookTitle">
+        <tr class="bookTitle">
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td class="bookAuthor" >
+            <td class="bookAuthor">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             @*<td>
-                @Html.DisplayFor(modelItem => item.RegisteredOn)
-            </td>*@
+                    @Html.DisplayFor(modelItem => item.RegisteredOn)
+                </td>*@
             <td class="thisStatus">
                 @Html.DisplayFor(modelItem => item.BookStatus)
             </td>
@@ -49,14 +61,14 @@
                 @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
                 @if (item.AvailabilityStatus == true)
                 {
-                <span> &emsp; </span>
+                    <span> &emsp; </span>
                     @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
-                <span> &emsp; </span>
+                    <span> &emsp; </span>
                     @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
                 }
                 @if (item.AvailabilityStatus == false)
                 {
-                <span>&emsp;</span>
+                    <span>&emsp;</span>
                     @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
                 }
             </td>
@@ -64,3 +76,59 @@
     }
 
 </table>
+
+
+
+<script>
+
+        function hideAll() {
+            $('.this1').hide();
+            $('.this2').hide();
+            $('.bookAuthor').hide();
+        }
+
+        var n = 0;
+        var i = 1;
+
+        function rotate() {
+            n = n + i;
+            console.log(n);
+            if (n === 0) {
+                i = 1;
+            }
+            if (n === 1) {
+                new function () {
+                    $('.this1').show();
+                    $('.bookAuthor').show();
+                    $('.thisStatus').hide();
+                }
+            }
+            if (n === 2) {
+                new function () {
+                    $('.this1').hide();
+                    $('.bookAuthor').hide();
+                    $('.this2').show();
+                }
+            }
+            if (n === 3) {
+                new function () {
+                    $('.this2').hide();
+                    $('.thisStatus').show();
+
+
+                }
+            }
+            if (n === 4) {
+                n = 1;
+                new function () {
+                    $('.this1').show();
+                    $('.bookAuthor').show();
+                    $('.thisStatus').hide();
+
+                }
+            }
+
+            console.log("new", n);
+        }
+
+</script>
