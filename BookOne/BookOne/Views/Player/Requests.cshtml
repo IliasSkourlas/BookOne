@@ -59,9 +59,17 @@
                 {
                     <span>Waiting for owner's response</span>
                 }
-                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted)
+                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
                 {
                     @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId })
+                }
+                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
+                {
+                    <span>You have this book</span>
+                }
+                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
+                {
+                    <span>You returned this book</span>
                 }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
                 {

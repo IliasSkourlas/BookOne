@@ -201,7 +201,10 @@ namespace BookOne.BookOne_Domain
             };
             
             db.BookCirculations.Add(circulation);
-            request.RequestStatus = RequestStatuses.Accepted;
+
+            var requestForThisCirculation = db.BookRequests.Find(request.BookRequestId);
+            requestForThisCirculation.RequestStatus = RequestStatuses.Accepted;
+
             db.SaveChanges();
 
             return circulation;
@@ -210,10 +213,11 @@ namespace BookOne.BookOne_Domain
         public void BorrowerReceivedBook(BookRequest request)
         {
             var circulation = db.BookCirculations.Where(c => c.RequestIdForThisCirculation== request.BookRequestId).SingleOrDefault();
+            var book = db.Books.Where(b => b.BookId == request.BookRequested.BookId).SingleOrDefault();
 
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
-            circulation.BookAssociated.AvailabilityStatus = false;
+            book.AvailabilityStatus = false;
             db.SaveChanges();
         }
 
@@ -269,6 +273,11 @@ namespace BookOne.BookOne_Domain
         {
             circulation.CirculationStatus = CirculationStatuses.Completed;
             var book = db.Books.Where(b => b.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
+
+            var requestIdForThisCirculation = db.BookCirculations.Where(c => c.RequestIdForThisCirculation == circulation.RequestIdForThisCirculation).Select(c => c.RequestIdForThisCirculation);
+            var requestForThisCirculation = db.BookRequests.Find(requestIdForThisCirculation);
+            requestForThisCirculation.RequestStatus = RequestStatuses.Closed;
+
             book.AvailabilityStatus = true;
             db.SaveChanges();
         }
