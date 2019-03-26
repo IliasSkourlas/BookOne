@@ -226,7 +226,8 @@ namespace BookOne.BookOne_Domain
         {
             var book = db.Books.Find(bookId);
 
-            var circulation = db.BookCirculations.Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus != CirculationStatuses.Borrowed).Include(c => c.Borrower).Last();
+            //var circulation = db.BookCirculations.Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus == CirculationStatuses.Borrowed).Include(c => c.Borrower).Last();
+            var circulation = db.BookCirculations.OrderByDescending(c => c.BorrowedOn).Where(c => c.BookAssociated.BookId == book.BookId && c.CirculationStatus == CirculationStatuses.Borrowed).Include(c => c.Borrower).FirstOrDefault();
 
             return circulation;
         }
@@ -264,21 +265,20 @@ namespace BookOne.BookOne_Domain
 
             return (returnBookDate - today).Days;
         }
-
-
-
+        
 
         //Book returns to the owner
         public void OwnerReceivedBookBack(BookCirculation circulation)
         {
-            circulation.CirculationStatus = CirculationStatuses.Completed;
             var book = db.Books.Where(b => b.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
+            var requestForThisCirculation = db.BookRequests.Find(circulation.RequestIdForThisCirculation);
+            var borrower = requestForThisCirculation.RequestedBy;
 
-            var requestIdForThisCirculation = db.BookCirculations.Where(c => c.RequestIdForThisCirculation == circulation.RequestIdForThisCirculation).Select(c => c.RequestIdForThisCirculation);
-            var requestForThisCirculation = db.BookRequests.Find(requestIdForThisCirculation);
+            var circulationForThisBook = db.BookCirculations.Find(circulation.BookCirculationId);
             requestForThisCirculation.RequestStatus = RequestStatuses.Closed;
 
             book.AvailabilityStatus = true;
+            circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
             db.SaveChanges();
         }
     }
