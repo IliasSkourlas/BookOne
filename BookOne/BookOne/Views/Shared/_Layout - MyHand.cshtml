@@ -47,6 +47,14 @@
             z-index: 1;
         }
 
+        .header th {
+            color: rgb(0, 255, 255);
+        }
+
+        #weAreHere a {
+            color: rgb(0, 255, 255);
+        }
+
         .table {
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 18px;
@@ -55,6 +63,10 @@
 
         a {
             color: rgba(255, 255, 255, 0.8);
+        }
+        div.navbar-collapse.collapse {
+            margin-left: 0px;
+            padding-left: 0;
         }
 
         </style>
@@ -87,7 +99,7 @@
                         <li>@Html.ActionLink("All", "Index", "Books")</li>
                     }
                     <li>@Html.ActionLink("My", "MyBooks", "Books")</li>
-                    <li>@Html.ActionLink("Hand", "MyHand", "Books")</li>
+                    <li id="weAreHere">@Html.ActionLink("Hand", "MyHand", "Books")</li>
                     <li>@Html.ActionLink("Requests", "Requests", "Player")</li>
                 </ul>
 

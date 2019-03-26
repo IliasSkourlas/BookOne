@@ -19,6 +19,10 @@
             opacity: 0.65;
             filter: alpha(opacity=30)
         }
+
+        #weAreHere a {
+            color: rgb(0, 255, 255);
+        }
     </style>
 
 </head>
@@ -30,7 +34,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>
+                </button id="weAreHere">
                 @Html.ActionLink("BookOne", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
