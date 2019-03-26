@@ -24,42 +24,37 @@
 
 <table id="listOfBooks" class="table">
     <tr class="header">
-        <th onclick="rotate()">
+        <th >
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th class="this1">
+        <th class="author">
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.RegisteredOn)
-            </th>*@
-        <th class="this2">
+        <th class="owner">
             @Html.DisplayNameFor(model => model.Owner)
         </th>
-        @*<th class="this3">
-                @Html.DisplayNameFor(model => model.BookStatus)
-            </th>*@
+        <th class="timeLeft">
+            Time left
+        </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         <tr class="bookTitle">
-            <td onclick="rotate()">
+            <td >
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td class="this1">
+            <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.RegisteredOn)
-                </td>*@
-            <td class="this2">
+            
+            <td class="owner">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
 
-            <td class="thisStatus">
-                @Html.DisplayFor(modelItem => item.BookStatus)
+            <td class="timeLeft">
+               
             </td>
             <td>
                 @if (item.Owner.Id != User.Identity.GetUserId() && item.AvailabilityStatus == false)
@@ -76,9 +71,9 @@
 <script>
 
     function hideAll() {
-        $('.this1').hide();
-        $('.this2').hide();
-        $('.bookAuthor').hide();
+        $('.author').hide();
+        $('.owner').hide();
+        $('.timeLeft').hide()
     }
 
     var n = 0;
@@ -86,28 +81,26 @@
 
     function rotate() {
         n = n + i;
-        console.log(n);
         if (n === 0) {
-            i = 1;
+
         }
         if (n === 1) {
             new function () {
-                $('.this1').show();
-                $('.bookAuthor').show();
-                $('.thisStatus').hide();
+                
+                $('.author').show();
+               
             }
         }
         if (n === 2) {
             new function () {
-                $('.this1').hide();
-                $('.bookAuthor').hide();
-                $('.this2').show();
+                $('.author').hide();
+                $('.owner').show();
             }
         }
         if (n === 3) {
             new function () {
-                $('.this2').hide();
-                $('.thisStatus').show();
+                $('.owner').hide();
+                $('.timeLeft').show();
 
 
             }
@@ -115,13 +108,13 @@
         if (n === 4) {
             n = 1;
             new function () {
-                $('.this1').show();
-                $('.bookAuthor').show();
-                $('.thisStatus').hide();
+                $('.author').show();
+                $('.owner').hide();
+                $('.timeLeft').hide();
 
             }
         }
+
         console.log("new", n);
     }
-
 </script>

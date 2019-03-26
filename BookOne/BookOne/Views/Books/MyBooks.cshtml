@@ -34,16 +34,18 @@
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        @*<th class="this1">
-                @Html.DisplayNameFor(model => model.Author)
-            </th>*@
-        @*<th>
-                @Html.DisplayNameFor(model => model.RegisteredOn)
-            </th>*@
-        @*<th>
-                @Html.DisplayNameFor(model => model.BookStatus)
-            </th>*@
-        <th></th>
+        <th class="author">
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th class="thisStatus">
+            status
+        </th>
+        <th class="carrier">
+            carrier
+        </th>
+        <th class="editDelete">
+            
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -52,16 +54,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td class="bookAuthor">
+            <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.RegisteredOn)
-                </td>*@
             <td class="thisStatus">
                 @Html.DisplayFor(modelItem => item.BookStatus)
             </td>
-            <td class="this2">
+            <td class="editDelete">
                 @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
                 @if (item.AvailabilityStatus == true)
                 {
@@ -86,9 +85,10 @@
 <script>
 
         function hideAll() {
-            $('.this1').hide();
-            $('.this2').hide();
-            $('.bookAuthor').hide();
+            $('.editDelete').hide();
+            $('.author').hide();
+            $('.thisStatus').hide();
+            $('.carrier').hide();
         }
 
         var n = 0;
@@ -96,28 +96,26 @@
 
         function rotate() {
             n = n + i;
-            console.log(n);
             if (n === 0) {
                 i = 1;
             }
             if (n === 1) {
                 new function () {
-                    $('.this1').show();
-                    $('.bookAuthor').show();
+                    $('.author').show();
                     $('.thisStatus').hide();
                 }
             }
             if (n === 2) {
                 new function () {
-                    $('.this1').hide();
-                    $('.bookAuthor').hide();
-                    $('.this2').show();
+                    $('.author').hide();
+                    $('.carrier').show();
                 }
             }
             if (n === 3) {
                 new function () {
-                    $('.this2').hide();
+                    $('.editDelete').show();
                     $('.thisStatus').show();
+                    $('.carrier').hide()
 
 
                 }
@@ -125,8 +123,8 @@
             if (n === 4) {
                 n = 1;
                 new function () {
-                    $('.this1').show();
-                    $('.bookAuthor').show();
+                    $('.author').show();
+                    $('.editDelete').hide()
                     $('.thisStatus').hide();
 
                 }

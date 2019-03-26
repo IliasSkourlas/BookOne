@@ -32,19 +32,15 @@
            
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th class="this1" onclick="document.getElementById('searchInput').placeholder='Author'">
+        <th class="author" onclick="document.getElementById('searchInput').placeholder='Author'">
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th class="this2" onclick="document.getElementById('searchInput').placeholder='Owner'">
-            by
+        <th class="owner" onclick="document.getElementById('searchInput').placeholder='Owner'">
+            By
         </th>
-        @*<th class="this3">
-                @Html.DisplayNameFor(model => model.BookStatus)
-            </th>*@
         <th class="Status" onclick="document.getElementById('searchInput').placeholder='Availability'">
                 @*@Html.DisplayNameFor(model => model.AvailabilityStatus)*@
-            ...
-         </th>
+        </th>
     </tr>
 
 
@@ -52,18 +48,15 @@
     @foreach (var item in Model)
     {
         <tr class="bookTitle">
-            <td onclick="rotate()">
+            <td >
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td class="this1">
+            <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
-            <td class="this2">
+            <td class="owner">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
-            @*<td class="this3">
-                    @Html.DisplayFor(modelItem => item.BookStatus)
-                </td>*@
             <td class="Status">
                 @if (item.AvailabilityStatus == true)
                 {
@@ -83,9 +76,9 @@
 <script>
 
     function hideAll() {
-        $('.this1').hide();
-        $('.this2').hide();
-        $('.bookAuthor').hide();
+        $('.author').hide();
+        $('.owner').hide();
+       
     }
 
     var n = 0;
@@ -93,15 +86,13 @@
 
     function rotate() {
         n = n + i;
-        
         if (n === 0) {
             i = 1;
         }
         if (n === 1) {
             console.log("new", n);
             new function () {
-                $('.this1').show();
-                $('.bookAuthor').show();
+                $('.author').show();
                 $('.Status').hide();
                 
             }
@@ -109,16 +100,14 @@
         if (n === 2) {
             console.log("new", n);
             new function () {
-                $('.this1').hide();
-                $('.bookAuthor').hide();
-                $('.Status').show();
-                $('.this2').show();
+                $('.author').hide();
+                $('.owner').show();
             }
         }
         if (n === 3) {
             console.log("new", n);
             new function () {
-                $('.this2').hide();
+                $('.owner').hide();
                 $('.Status').show();
                 
 
@@ -130,8 +119,7 @@
             new function () {
                 console.log("new", n);
 
-                $('.this1').show();
-                $('.bookAuthor').show();
+                $('.author').show();
                 $('.Status').hide();
             }
         }

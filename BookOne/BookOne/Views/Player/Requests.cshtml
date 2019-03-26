@@ -54,6 +54,8 @@
                     @Html.ActionLink("Give Book", "BorrowerReceivesBook", new { RequestId = item.BookRequestId }) <span>|</span>
 
                     @Html.ActionLink("Decline Request", "DeclineRequest", new { RequestId = item.BookRequestId })
+
+                    //Chainge color at MyBooks
                 }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
                 {
