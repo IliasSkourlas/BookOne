@@ -20,6 +20,40 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        //Inserts a book to the database
+        public void InsertBook(Book book)
+        {
+            db.Books.Add(book);
+            db.SaveChanges();
+        }
+
+
+        //Updates a book to the database
+        public void UpdateBook(Book book)
+        {
+            db.Entry(book).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+
+        //Removes a book from the database
+        public void DeleteBook(Book book)
+        {
+            db.Books.Remove(book);
+            db.SaveChanges();
+        }
+
+
+        //Reads a book by its id from the database
+        public Book GetBook(int? id)
+        {
+            return db.Books.Where(b => b.BookId == id).Include(b => b.Owner).SingleOrDefault();
+        }
+
+
         //Returns All books inserted to the application except logged in user's books
         public IEnumerable<Book> AllBooksExceptOwners(string loggedInUserId)
         {
@@ -50,45 +84,10 @@ namespace BookOne.BookOne_Domain
             
             return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).ToList();
         }
-
-
-        //Reads a book by its id from the database
-        public Book GetBook(int? id)
-        {
-            return db.Books.Find(id);
-        }
-
-
-        //Returns a user by his id
-        public ApplicationUser LoggedInUser(string id)
-        {
-            return db.Users.Where(u => u.Id == id).SingleOrDefault();
-        }
-
-
-        //Inserts a book to the database
-        public void InsertBook(Book book)
-        {
-            db.Books.Add(book);
-            db.SaveChanges();
-        }
-
-
-        //Updates a book to the database
-        public void UpdateBook(Book book)
-        {
-            db.Entry(book).State = EntityState.Modified;
-            db.SaveChanges();
-        }
         
 
-        //Removes a book from the database
-        public void DeleteBook(Book book)
-        {
-            db.Books.Remove(book);
-            db.SaveChanges();
-        }
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
 
         public void UpdateUserDetails(ApplicationUser loggedInUser)
         {
@@ -119,6 +118,9 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
         public BookRequest GetBookRequest(int? id)
         {
             return db.BookRequests
@@ -146,14 +148,7 @@ namespace BookOne.BookOne_Domain
             request.RequestStatus = RequestStatuses.Declined;
             db.SaveChanges();
         }
-
-
-        //Counts Requests of user's books
-        public int RequestsReceivedCounter(ApplicationUser user)
-        {
-            return db.BookRequests.Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Unanswered).Count();
-        }
-
+        
 
         //Gets all user's book requests (user is the owner of this book)
         public IEnumerable<BookRequest> GetRequests(ApplicationUser user)
@@ -188,40 +183,40 @@ namespace BookOne.BookOne_Domain
         }
 
 
-        //Adds BookCirculation for a book
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+
+        //Adds BookCirculation for a book / Owner is giving his book
         public BookCirculation InsertBookCirculation(BookRequest request)
         {
-            var book = request.BookRequested;
-            var userAskingForBook = request.RequestedBy;
+            var bookToBeBorrowed = db.Books.Find(request.BookRequested.BookId);
+            var borrower = db.Users.Find(request.RequestedBy.Id);
 
-            BookCirculation circulation = new BookCirculation();
-            circulation.BookAssociated = book;
-            circulation.Borrower = userAskingForBook;
-            circulation.RequestForThisCirculation = request;
+            BookCirculation circulation = new BookCirculation()
+            {
+                RequestIdForThisCirculation = request.BookRequestId,
+                BookAssociated = bookToBeBorrowed,
+                Borrower = borrower,
+                OwnerGaveBook = true,
+            };
+            
             db.BookCirculations.Add(circulation);
+            request.RequestStatus = RequestStatuses.Accepted;
+            db.SaveChanges();
 
             return circulation;
-        }
-        //Borrow a book to someone (Owner gave book)
-        public void OwnerGaveBook(BookCirculation circulation)
-        {
-            circulation.OwnerGaveBook = true;
-            circulation.BookAssociated = circulation.RequestForThisCirculation.BookRequested;
-
-            circulation.RequestForThisCirculation.RequestStatus = RequestStatuses.Accepted;
-
-            db.SaveChanges();
         }
         //Borrow a book from someone (Borrower received book)
         public void BorrowerReceivedBook(BookRequest request)
         {
-            var circulation = db.BookCirculations.Where(c => c.RequestForThisCirculation.BookRequestId == request.BookRequestId).SingleOrDefault();
+            var circulation = db.BookCirculations.Where(c => c.RequestIdForThisCirculation== request.BookRequestId).SingleOrDefault();
 
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
             circulation.BookAssociated.AvailabilityStatus = false;
             db.SaveChanges();
         }
+
 
         public BookCirculation GetBookLatestOnGoingCirculation(int? bookId)
         {
@@ -231,6 +226,7 @@ namespace BookOne.BookOne_Domain
 
             return circulation;
         }
+
 
 
         //public BookRequest BookRequestMadeForACirculation(BookCirculation circulation)

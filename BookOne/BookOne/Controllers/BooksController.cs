@@ -76,8 +76,7 @@ namespace BookOne.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loggedInUserId = User.Identity.GetUserId();
-                var loggedInUser = dbOps.LoggedInUser(loggedInUserId);
+                var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
 
                 book.Owner = loggedInUser;
                 dbOps.InsertBook(book);

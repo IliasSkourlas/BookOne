@@ -30,7 +30,8 @@ namespace BookOne.BookOne_Domain
         
         public bool BorrowerReceivedBook { get; set; }
 
-        public BookRequest RequestForThisCirculation { get; set; }
+        //Foreign key to the BookRequest for this circulation
+        public int RequestIdForThisCirculation { get; set; }
 
         public CirculationStatuses CirculationStatus { get; set; }
     }

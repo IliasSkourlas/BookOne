@@ -31,13 +31,15 @@ namespace BookOne.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
 
         // GET: Requests
         public ActionResult Requests()
         {
-            var loggedInUserId = User.Identity.GetUserId();
-            var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
-            
+            var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
+
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
             //if (!User.IsInRole("Player"))
             if (!dbOps.UserIsAPlayer(loggedInUser))
@@ -49,14 +51,6 @@ namespace BookOne.Controllers
 
             return View(requests);
         }
-
-        //public int CountUnansweredRequests()
-        //{
-        //    var loggedInUserId = User.Identity.GetUserId();
-        //    var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
-
-        //    return dbOps.RequestsReceivedCounter(loggedInUser);
-        //}
 
 
         //Create request for a book
@@ -78,14 +72,16 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RequestConfirmed(Book book)
         {
-            var loggedInUserId = User.Identity.GetUserId();
-            var loggedInUser = dbOps.GetLoggedInUser(loggedInUserId);
-
+            var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
             var bookRequested = dbOps.GetBook(book.BookId);
+
             dbOps.InsertRequest(loggedInUser, bookRequested);
 
             return RedirectToAction("Requests");
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         //Owner is giving his book to the borrower
@@ -107,9 +103,7 @@ namespace BookOne.Controllers
         public ActionResult BorrowingBookConfirmation(BookRequest request)
         {
             var circulation = dbOps.InsertBookCirculation(request);
-
-            dbOps.OwnerGaveBook(circulation);
-
+            
             return RedirectToAction("Requests");
         }
 
@@ -153,6 +147,9 @@ namespace BookOne.Controllers
 
             return RedirectToAction("Requests");
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         //Owner is receiving a book from its borrower
