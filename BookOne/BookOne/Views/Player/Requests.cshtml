@@ -59,7 +59,9 @@
                 }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
                 {
-                    <span>Waiting for owner's response</span>
+                    <span>Waiting for owner's response | </span>
+
+                    @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
                 }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
                 {

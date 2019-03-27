@@ -192,7 +192,9 @@ namespace BookOne.BookOne_Domain
         //Borrower cancels a Book Request
         public void CancelRequest(BookRequest request)
         {
-            request.RequestStatus = RequestStatuses.Closed;
+            var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
+
+            requestToBeChanged.RequestStatus = RequestStatuses.Closed;
             db.SaveChanges();
         }
 
