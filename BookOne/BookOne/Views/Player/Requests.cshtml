@@ -55,7 +55,7 @@
 
                     @Html.ActionLink("Decline Request", "DeclineRequest", new { RequestId = item.BookRequestId })
 
-                    //Chainge color at MyBooks
+                    //Change color at MyBooks
                 }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
                 {
@@ -63,7 +63,9 @@
                 }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
                 {
-                    @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId })
+                    @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId }) <span>|</span>
+
+                    @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
                 }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
                 {
@@ -72,6 +74,10 @@
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
                 {
                     <span>You returned this book</span>
+                }
+                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Canceled)
+                {
+                    <span>Request Canceled</span>
                 }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
                 {

@@ -31,6 +31,7 @@ namespace BookOne.BookOne_Domain
         Unanswered,
         Accepted,
         Declined,
+        Canceled,
         Closed
     }
 }
