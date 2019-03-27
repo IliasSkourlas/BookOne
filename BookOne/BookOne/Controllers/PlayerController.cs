@@ -18,6 +18,18 @@ namespace BookOne.Controllers
         }
 
 
+        //Display another user's details view
+        public ActionResult ShowUserProfile(string userId)
+        {
+            ApplicationUser user = dbOps.GetUser(userId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+
         [HttpPost]
         public ActionResult ChangeUserToPlayer(ApplicationUser loggedInUser)
         {
@@ -38,7 +50,7 @@ namespace BookOne.Controllers
         // GET: Requests
         public ActionResult Requests()
         {
-            var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
             if (!dbOps.UserIsAPlayer(loggedInUser))
@@ -71,7 +83,7 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RequestConfirmed(Book book)
         {
-            var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
             var bookRequested = dbOps.GetBook(book.BookId);
 
             dbOps.InsertRequest(loggedInUser, bookRequested);

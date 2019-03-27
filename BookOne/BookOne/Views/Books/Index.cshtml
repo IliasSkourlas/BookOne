@@ -36,7 +36,7 @@
             @Html.DisplayNameFor(model => model.Author)
         </th>
         <th class="owner" onclick="document.getElementById('searchInput').placeholder='Owner'">
-            By
+            Owner
         </th>
         <th class="Status" onclick="document.getElementById('searchInput').placeholder='Availability'">
                 @*@Html.DisplayNameFor(model => model.AvailabilityStatus)*@
@@ -55,7 +55,8 @@
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             <td class="owner">
-                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
+                @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
+                @*@Html.DisplayFor(modelItem => item.Owner.ActualUsername)*@
             </td>
             <td class="Status">
                 @if (item.AvailabilityStatus == true)

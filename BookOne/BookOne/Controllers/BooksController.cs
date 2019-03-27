@@ -64,7 +64,7 @@ namespace BookOne.Controllers
         // GET: Books/Create
         public ActionResult Create()
         {
-            var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
             if (!dbOps.UserIsAPlayer(loggedInUser))
@@ -84,7 +84,7 @@ namespace BookOne.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
+                var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
                 book.Owner = loggedInUser;
                 dbOps.InsertBook(book);

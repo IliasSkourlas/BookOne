@@ -63,7 +63,7 @@
         <td class="carrier">
             @if (item.AvailabilityStatus == false)
             {
-                @Html.DisplayFor(modelItem => item.CarrierUsername)
+                @Html.DisplayFor(modelItem => item.Carrier.ActualUsername)
             }
         </td>
         <td class="editDelete">

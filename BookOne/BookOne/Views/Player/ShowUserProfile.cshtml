@@ -1,7 +1,7 @@
 ﻿@model BookOne.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "User Details";
+    ViewBag.Title = "Show User Profile";
 }
 
 <h2>@Html.DisplayFor(model => model.ActualUsername)</h2>
@@ -22,7 +22,7 @@
         @Html.HiddenFor(model => model.AccessFailedCount)
         @Html.HiddenFor(model => model.UserName)
         @Html.HiddenFor(model => model.Id)
-
+        @Html.HiddenFor(model => model.PhoneNumber)
 
         <dt>
             @Html.DisplayNameFor(model => model.RegisteredOn)
@@ -38,15 +38,9 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "EditUserDetails", new { id = Model.Id }) |
+
+<div>
     @Html.ActionLink("Back to List", "Index", "Books")
-</p>
+</div>

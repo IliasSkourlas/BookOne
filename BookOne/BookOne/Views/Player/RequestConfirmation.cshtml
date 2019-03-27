@@ -7,10 +7,10 @@
 <h2>Request Confirmation</h2>
 
 
-@using (Html.BeginForm("RequestConfirmation", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) 
+@using (Html.BeginForm("RequestConfirmation", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Are you sure you want to send a request to this book's owner?</h4>
         <hr />
@@ -47,9 +47,9 @@
     </div>
 }
 
-@*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>*@
+<div>
+    @Html.ActionLink("Back to List", "Index", "Books")
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

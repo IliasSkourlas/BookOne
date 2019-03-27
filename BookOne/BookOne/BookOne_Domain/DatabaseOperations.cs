@@ -13,14 +13,14 @@ namespace BookOne.BookOne_Domain
         private ApplicationDbContext db = new ApplicationDbContext();
 
 
-        //Get loggedInUser by his Id
-        public ApplicationUser GetLoggedInUser(string loggedInUserId)
+        //Get a user by his Id
+        public ApplicationUser GetUser(string userId)
         {
             return db.Users
-                .Where(u => u.Id == loggedInUserId)
+                .Where(u => u.Id == userId)
                 .SingleOrDefault();
         }
-
+        
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -235,7 +235,7 @@ namespace BookOne.BookOne_Domain
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
             bookToBeBorrowed.AvailabilityStatus = false;
-            bookToBeBorrowed.CarrierUsername = request.RequestedBy.ActualUsername;
+            bookToBeBorrowed.Carrier = request.RequestedBy;
             db.SaveChanges();
         }
 
@@ -278,7 +278,7 @@ namespace BookOne.BookOne_Domain
             requestForThisCirculation.RequestStatus = RequestStatuses.Closed;
 
             book.AvailabilityStatus = true;
-            book.CarrierUsername = book.Owner.ActualUsername;
+            book.Carrier = book.Owner;
             circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
             db.SaveChanges();
         }
