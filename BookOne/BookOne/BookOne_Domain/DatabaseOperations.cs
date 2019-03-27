@@ -229,12 +229,13 @@ namespace BookOne.BookOne_Domain
             var circulation = db.BookCirculations.Where(c => c.RequestIdForThisCirculation == request.BookRequestId)
                 .SingleOrDefault();
 
-            var book = db.Books.Where(b => b.BookId == request.BookRequested.BookId)
+            var bookToBeBorrowed = db.Books.Where(b => b.BookId == request.BookRequested.BookId)
                 .SingleOrDefault();
 
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
-            book.AvailabilityStatus = false;
+            bookToBeBorrowed.AvailabilityStatus = false;
+            bookToBeBorrowed.CarrierUsername = request.RequestedBy.ActualUsername;
             db.SaveChanges();
         }
 
@@ -277,6 +278,7 @@ namespace BookOne.BookOne_Domain
             requestForThisCirculation.RequestStatus = RequestStatuses.Closed;
 
             book.AvailabilityStatus = true;
+            book.CarrierUsername = book.Owner.ActualUsername;
             circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
             db.SaveChanges();
         }

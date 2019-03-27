@@ -220,6 +220,10 @@
     <Compile Include="Migrations\201903261156430_ChangedBookCirculationModel.Designer.cs">
       <DependentUpon>201903261156430_ChangedBookCirculationModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903271603586_AddedCarrierUsernameInBookModel.cs" />
+    <Compile Include="Migrations\201903271603586_AddedCarrierUsernameInBookModel.Designer.cs">
+      <DependentUpon>201903271603586_AddedCarrierUsernameInBookModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -351,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903261156430_ChangedBookCirculationModel.resx">
       <DependentUpon>201903261156430_ChangedBookCirculationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903271603586_AddedCarrierUsernameInBookModel.resx">
+      <DependentUpon>201903271603586_AddedCarrierUsernameInBookModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

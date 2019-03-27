@@ -13,12 +13,15 @@ namespace BookOne.BookOne_Domain
             RegisteredOn = DateTime.Now;
             BookStatus = BookStatuses.Public;
             AvailabilityStatus = true;
+            CarrierUsername = Owner.ActualUsername;
         }
 
         
         public int BookId { get; set; }
 
         public ApplicationUser Owner { get; set; }
+
+        public string CarrierUsername { get; set; }
 
         public Club AssociatedClub { get; set; }
 
