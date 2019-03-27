@@ -69,7 +69,7 @@ namespace BookOne.BookOne_Domain
         //Returns All books owned by the logged in user
         public IEnumerable<Book> MyBooks(string loggedInUserId)
         {
-            return db.Books.Where(b => b.Owner.Id == loggedInUserId).ToList();
+            return db.Books.Where(b => b.Owner.Id == loggedInUserId).Include(b => b.Carrier).ToList();
         }
 
 
@@ -235,7 +235,7 @@ namespace BookOne.BookOne_Domain
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
             bookToBeBorrowed.AvailabilityStatus = false;
-            bookToBeBorrowed.Carrier = request.RequestedBy;
+            bookToBeBorrowed.Carrier = db.Users.Find(request.RequestedBy.Id);
             db.SaveChanges();
         }
 
@@ -278,7 +278,7 @@ namespace BookOne.BookOne_Domain
             requestForThisCirculation.RequestStatus = RequestStatuses.Closed;
 
             book.AvailabilityStatus = true;
-            book.Carrier = book.Owner;
+            book.Carrier = db.Users.Find(book.Owner.Id);
             circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
             db.SaveChanges();
         }
