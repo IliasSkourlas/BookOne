@@ -67,6 +67,10 @@
             {
                 @Html.DisplayFor(modelItem => item.Carrier.ActualUsername)
             }
+            @if (item.AvailabilityStatus == true)
+            {
+                <span>- - -</span>
+            }
         </td>
         <td class="editDelete">
             @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
