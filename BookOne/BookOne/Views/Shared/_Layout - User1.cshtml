@@ -70,12 +70,12 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
+
         #canvas1 {
             border: 1px solid rgba(255, 216, 0, 0.3);
             background-color: rgba(255, 216, 0, 0.2);
         }
-
-        .canvasContainer {
+        .canvasContainer1 {
             position: fixed;
             left: 43%;
             right: 43%;
@@ -85,14 +85,52 @@
             z-index: 1;
             background-color: transparent;
         }
-
-        .contextCanvas {
+        .contextCanvas1 {
             position: absolute;
             width: 100%;
             height: 100%;
             left: 0px;
             top: 0px;
             z-index: 1;
+        }
+
+
+
+        #canvas2 {
+            border: 1px solid rgba(255, 255, 255, 0.58);
+            background-color: rgba(14, 14, 14, 0.77);
+        }
+
+        #canvasContainer2 {
+            position: fixed;
+            left: 100%;
+            right: 0%;
+            min-width: 10%;
+            top: 0px;
+            bottom: 0px;
+            z-index: 1;
+            background-color: transparent;
+        }
+
+        .contextCanvas2 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+        }
+
+        .disapearclass {
+            position: fixed;
+            left: 100%;
+            right: 0%;
+            min-width: 10%;
+            top: 0px;
+            bottom: 0px;
+            z-index: 1;
+            background-color: transparent;
+            
         }
 
     </style>
@@ -136,7 +174,7 @@
         </div>
     </div>
 
-    <div class="container body-content">
+    <div class="container body-content" onclick=" disapearCanvas2()"  >
 
 
         @using Microsoft.AspNet.Identity
@@ -173,9 +211,15 @@
         </footer>
     </div>
 
-    <div  class="canvasContainer" onclick="rotate()">
-        <canvas id="canvas1" class="contextCanvas"></canvas>
+    <div class="canvasContainer1"  onclick="rotate()" >
+        <canvas id="canvas1" class="contextCanvas1"></canvas>
     </div>
+
+    <div id="canvasContainer2" >
+        <canvas id="canvas2" class="contextCanvas2"></canvas>
+    </div>
+
+
 
     @RenderSection("scripts", required: false)
 
@@ -184,15 +228,27 @@
     <script>
         // CANVAS
         ////////////////////////////////////
-        let canvas = document.getElementById("canvas1");
+        let canvas1 = document.getElementById("canvas1");
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas1.width = window.innerWidth;
+        canvas1.height = window.innerHeight;
 
-        let c = canvas.getContext('2d');
-        
+        let c = canvas1.getContext('2d');
+        // CANVAS2
+        ///////////////////////////////////
+        let canvas2 = document.getElementById("canvas1");
 
-       
+        canvas2.width = window.innerWidth;
+        canvas2.height = window.innerHeight;
+
+        let c2 = canvas2.getContext('2d');
+
+
+        // make canvas2 disapear
+        function disapearCanvas2() {
+            document.getElementById('canvas2').setAttribute("class", "disapearclass"); 
+            console.log("dewfewfew");
+        };
 
         // SEARCH
         /////////////////////////////
