@@ -80,6 +80,31 @@ namespace BookOne.Controllers
         }
 
 
+        //Borrower cancels a Book Request
+        public ActionResult CancelConfirmation(int? RequestId)
+        {
+            if (RequestId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BookRequest request = dbOps.GetBookRequest(RequestId);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(request);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancelConfirmed(BookRequest request)
+        {
+            dbOps.CancelRequest(request);
+
+            return RedirectToAction("Requests");
+        }
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

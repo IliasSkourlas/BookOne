@@ -220,6 +220,10 @@
     <Compile Include="Migrations\201903261156430_ChangedBookCirculationModel.Designer.cs">
       <DependentUpon>201903261156430_ChangedBookCirculationModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903271603586_AddedCarrierUsernameInBookModel.cs" />
+    <Compile Include="Migrations\201903271603586_AddedCarrierUsernameInBookModel.Designer.cs">
+      <DependentUpon>201903271603586_AddedCarrierUsernameInBookModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -311,6 +315,8 @@
     <Content Include="Views\Shared\_Layout - My.cshtml" />
     <Content Include="Views\Shared\_VideoPartial.cshtml" />
     <Content Include="Views\Shared\_weAreHerePatial.cshtml" />
+    <Content Include="Views\Player\Index.cshtml" />
+    <Content Include="Views\Player\CancelConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -349,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903261156430_ChangedBookCirculationModel.resx">
       <DependentUpon>201903261156430_ChangedBookCirculationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903271603586_AddedCarrierUsernameInBookModel.resx">
+      <DependentUpon>201903271603586_AddedCarrierUsernameInBookModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
