@@ -54,9 +54,9 @@
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
-            <td class="owner">
-                @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
-                @*@Html.DisplayFor(modelItem => item.Owner.ActualUsername)*@
+            <td class="owner" onclick="appearCanvas2()">
+                @*@Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)*@
+                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
             <td class="Status">
                 @if (item.AvailabilityStatus == true)
@@ -76,9 +76,12 @@
 
 <script>
 
+    // Player Text
 
 
 
+
+    ///////////////////////////////////////
 
     function hideAll() {
         $('.author').hide();
