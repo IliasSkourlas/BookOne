@@ -25,15 +25,15 @@ namespace BookOne.Controllers
             {
                 dbOps.UpdateUserDetails(loggedInUser);
                 dbOps.ChangeUserRoleToPlayer(loggedInUser);
-                return RedirectToAction("Requests");
+                return RedirectToAction("Index", "Books");
             }
 
             return RedirectToAction("Index", "Home");
         }
 
-        
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
 
         // GET: Requests
         public ActionResult Requests()
@@ -41,7 +41,6 @@ namespace BookOne.Controllers
             var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            //if (!User.IsInRole("Player"))
             if (!dbOps.UserIsAPlayer(loggedInUser))
             {
                 return View("PlayerForm", loggedInUser);

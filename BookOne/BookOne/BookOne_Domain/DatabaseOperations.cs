@@ -110,8 +110,8 @@ namespace BookOne.BookOne_Domain
         
         public bool UserIsAPlayer(ApplicationUser user)
         {
-            int meh = user.Roles.Where(r => r.RoleId == "2").Count();
-            if (meh > 0)
+            int userRole = user.Roles.Where(r => r.RoleId == "2").Count();
+            if (userRole > 0)
                 return true;
             else
                 return false;

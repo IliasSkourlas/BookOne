@@ -64,6 +64,14 @@ namespace BookOne.Controllers
         // GET: Books/Create
         public ActionResult Create()
         {
+            var loggedInUser = dbOps.GetLoggedInUser(User.Identity.GetUserId());
+
+            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
+            if (!dbOps.UserIsAPlayer(loggedInUser))
+            {
+                return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
+            }
+
             return View();
         }
 
