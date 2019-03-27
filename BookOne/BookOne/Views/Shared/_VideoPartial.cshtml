@@ -1,4 +1,34 @@
-﻿
+﻿@*<script>
+        if (document.location.pathname == '/Books') {
+            console.log("Books");
+            document.getElementById("videoSource").src = "~/Content/images/fish2.mp4"
+            document.getElementById("video").load();
+        }
+    </script>*@
+
+
+
+@*<div id="T">
+
+</div>*@
+
+
+@*<script>
+        if (document.location.pathname == '/Books') {
+            document.getElementById("T").innerHTML = '<video controls="controls" >< source src = "~/Content/images/fish2.mp4" type = "video/mp4" /></video >';
+
+        }
+    </script>*@
+
+
+
 <video id="video" autoplay loop muted>
-    <source src="~/Content/images/fish2.mp4" type="video/mp4" />
-</video>
+        <source src="~/Content/images/fish2.mp4" type = "video/mp4" />
+
+    </video>
+
+
+
+
+
+
