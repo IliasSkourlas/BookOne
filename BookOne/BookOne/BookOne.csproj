@@ -307,7 +307,6 @@
     <Content Include="Views\Shared\_Layout - User1.cshtml" />
     <Content Include="Views\Player\PlayerForm.cshtml" />
     <Content Include="Views\Player\Requests.cshtml" />
-    <Content Include="Views\Player\RequestConfirmation.cshtml" />
     <Content Include="Views\Player\BorrowingBookConfirmation.cshtml" />
     <Content Include="Views\Shared\_Layout - About.cshtml" />
     <Content Include="Views\Shared\_Layout - IdontNow.cshtml" />

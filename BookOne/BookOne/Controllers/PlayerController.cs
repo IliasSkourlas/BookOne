@@ -77,10 +77,9 @@ namespace BookOne.Controllers
                 return HttpNotFound();
             }
 
-            return View(book);
+            return RedirectToAction("RequestConfirmed", book);
         }
-        [HttpPost, ActionName("RequestConfirmation")]
-        [ValidateAntiForgeryToken]
+
         public ActionResult RequestConfirmed(Book book)
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
@@ -105,10 +104,9 @@ namespace BookOne.Controllers
                 return HttpNotFound();
             }
 
-            return View(request);
+            return RedirectToAction("CancelConfirmed", request);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult CancelConfirmed(BookRequest request)
         {
             dbOps.CancelRequest(request);
