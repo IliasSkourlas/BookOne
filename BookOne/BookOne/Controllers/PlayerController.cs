@@ -231,7 +231,7 @@ namespace BookOne.Controllers
                 {
                     ActionGiverId = book.Owner.Id,
                     ActionReceiverId = circulation.Borrower.Id,
-                    CirculationIdForThisReaction = circulation.BookCirculationId
+                    CirculationForThisReaction = circulation
                 }
             };
 
@@ -244,7 +244,7 @@ namespace BookOne.Controllers
         {
             dbOps.OwnerReceivedBookBack(model.Circulation);
 
-            dbOps.OwnerGivesAReaction(model.ReactionGiven);
+            dbOps.InsertReaction(model.ReactionGiven);
 
             return RedirectToAction("MyBooks", "Books");
         }
