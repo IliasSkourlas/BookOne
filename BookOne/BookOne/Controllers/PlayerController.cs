@@ -191,6 +191,13 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
+            var book = dbOps.GetBook(request.BookRequested.BookId);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Owner = book.Owner.ActualUsername;
             return View("BorrowedBookConfirmation", request);
         }
         [HttpPost]
@@ -242,9 +249,9 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult OwnerGetsBackHisBook(ReturnBookViewModel model)
         {
-            dbOps.InsertReaction(model.ReactionGiven);
-
             dbOps.OwnerReceivedBookBack(model.Circulation);
+
+            dbOps.InsertReaction(model.ReactionGiven);
 
             return RedirectToAction("MyBooks", "Books");
         }
