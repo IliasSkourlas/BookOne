@@ -294,9 +294,9 @@ namespace BookOne.BookOne_Domain
         }
 
 
-        public void OwnerGivesAReaction(Reaction reaction)
+        public void InsertReaction(Reaction reaction)
         {
-
+            reaction.CirculationForThisReaction = db.BookCirculations.Find(reaction.CirculationForThisReaction.BookCirculationId);
             db.Reactions.Add(reaction);
             db.SaveChanges();
         }

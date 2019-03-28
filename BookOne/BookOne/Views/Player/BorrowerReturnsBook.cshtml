@@ -51,7 +51,7 @@
         @Html.HiddenFor(model => model.Circulation.RequestIdForThisCirculation)
         @Html.HiddenFor(model => model.ReactionGiven.ActionGiverId)
         @Html.HiddenFor(model => model.ReactionGiven.ActionReceiverId)
-        @Html.HiddenFor(model => model.ReactionGiven.CirculationIdForThisReaction)
+        @Html.HiddenFor(model => model.ReactionGiven.CirculationForThisReaction.BookCirculationId)
         @Html.HiddenFor(model => model.ReactionGiven.ReactionId)
         @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
 
