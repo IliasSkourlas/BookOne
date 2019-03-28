@@ -52,15 +52,14 @@
         @Html.HiddenFor(model => model.ReactionGiven.ActionGiverId)
         @Html.HiddenFor(model => model.ReactionGiven.ActionReceiverId)
         @Html.HiddenFor(model => model.ReactionGiven.CirculationForThisReaction.BookCirculationId)
-        @Html.HiddenFor(model => model.ReactionGiven.ReactionId)
         @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
 
         <hr /><br />
         <h5>If you are receiving your book in perfect condition, you can thank the borrower by giving him a "Treat"...</h5>
         <div>
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span> Treat</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span> Poisonous Cookie</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 5) <span> Nothing</span> <br />
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3, new { @checked = true }) <span> Treat</span> <br />
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span> Poisonous Cookie</span> <br />
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0) <span> Nothing</span> <br />
 
             <br />
             <input type="submit" value="Yes" class="btn btn-default" /> |

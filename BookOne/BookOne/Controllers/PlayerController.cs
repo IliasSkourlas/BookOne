@@ -191,6 +191,13 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
+            var book = dbOps.GetBook(request.BookRequested.BookId);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Owner = book.Owner.ActualUsername;
             return View("BorrowedBookConfirmation", request);
         }
         [HttpPost]
@@ -227,7 +234,7 @@ namespace BookOne.Controllers
             var model = new ReturnBookViewModel()
             {
                 Circulation = circulation,
-                ReactionGiven = new Reaction()
+                ReactionGiven = new UserReaction()
                 {
                     ActionGiverId = book.Owner.Id,
                     ActionReceiverId = circulation.Borrower.Id,
