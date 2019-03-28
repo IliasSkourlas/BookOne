@@ -1,19 +1,19 @@
-﻿using BookOne.Models;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace BookOne.BookOne_Domain
 {
-    public class Reaction
+    public class UserReaction
     {
-        public Reaction()
+        public UserReaction()
         {
             ReceivedOn = DateTime.Now;
         }
 
 
-        public int ReactionId { get; set; }
+        public int UserReactionId { get; set; }
 
         public string ActionGiverId { get; set; }
 
@@ -21,13 +21,12 @@ namespace BookOne.BookOne_Domain
 
         public BookCirculation CirculationForThisReaction { get; set; }
 
-        public ReactionChoices Choice { get; set; }
+        public UserReactionChoices Choice { get; set; }
 
         public DateTime ReceivedOn { get; set; }
     }
 
-
-    public enum ReactionChoices
+    public enum UserReactionChoices
     {
         Nothing,
         Clap,

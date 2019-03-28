@@ -184,6 +184,7 @@
     <Compile Include="BookOne_Domain\ClubLimitation.cs" />
     <Compile Include="BookOne_Domain\ClubMember.cs" />
     <Compile Include="BookOne_Domain\Message.cs" />
+    <Compile Include="BookOne_Domain\UserReaction.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -247,6 +248,10 @@
     <Compile Include="Migrations\201903281153511_ChangedCirculationInReactionModelAgain.cs" />
     <Compile Include="Migrations\201903281153511_ChangedCirculationInReactionModelAgain.Designer.cs">
       <DependentUpon>201903281153511_ChangedCirculationInReactionModelAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281232455_AddedUserReactionModel.cs" />
+    <Compile Include="Migrations\201903281232455_AddedUserReactionModel.Designer.cs">
+      <DependentUpon>201903281232455_AddedUserReactionModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -403,6 +408,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903281153511_ChangedCirculationInReactionModelAgain.resx">
       <DependentUpon>201903281153511_ChangedCirculationInReactionModelAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281232455_AddedUserReactionModel.resx">
+      <DependentUpon>201903281232455_AddedUserReactionModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

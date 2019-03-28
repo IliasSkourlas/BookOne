@@ -242,9 +242,9 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult OwnerGetsBackHisBook(ReturnBookViewModel model)
         {
-            dbOps.OwnerReceivedBookBack(model.Circulation);
-
             dbOps.InsertReaction(model.ReactionGiven);
+
+            dbOps.OwnerReceivedBookBack(model.Circulation);
 
             return RedirectToAction("MyBooks", "Books");
         }

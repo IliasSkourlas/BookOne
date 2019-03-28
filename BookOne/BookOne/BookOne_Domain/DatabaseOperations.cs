@@ -297,6 +297,7 @@ namespace BookOne.BookOne_Domain
         public void InsertReaction(Reaction reaction)
         {
             reaction.CirculationForThisReaction = db.BookCirculations.Find(reaction.CirculationForThisReaction.BookCirculationId);
+            reaction.ReactionId = 1;
             db.Reactions.Add(reaction);
             db.SaveChanges();
         }
