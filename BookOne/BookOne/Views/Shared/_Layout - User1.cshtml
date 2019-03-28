@@ -100,8 +100,9 @@
             border: 1px solid rgba(255, 255, 255, 0.58);
             background-color: rgba(14, 14, 14, 0.86);
         }
-
         .canvasContainer2 {
+            transition: left 1s;
+
             position: fixed;
             left: 100%;
             right: 0%;
@@ -111,7 +112,6 @@
             z-index: 1;
             background-color: transparent;
         }
-
         .contextCanvas2 {
             position: absolute;
             width: 100%;
@@ -120,7 +120,7 @@
             top: 0px;
             z-index: 1;
         }
-        .disapearclass {
+        /*.disapearclass {
             position: fixed;
             left: 99.99%;
             right: 0%;
@@ -138,7 +138,7 @@
             top: 140px;
             bottom: 170px;
             z-index: 1;
-        }
+        }*/
 
     </style>
 
@@ -181,7 +181,7 @@
         </div>
     </div>
 
-    <div class="container body-content"  >
+    <div class="container body-content">
 
 
         @using Microsoft.AspNet.Identity
@@ -218,11 +218,12 @@
         </footer>
     </div>
 
-    <div class="canvasContainer1"  onclick="rotate()">
+    <div class="canvasContainer1" onclick="rotate()">
         <canvas id="canvas1" class="contextCanvas1"></canvas>
     </div>
 
-    <div id="canvasContainer2" class="canvasContainer2"   onclick=" disapearCanvas2()" >
+    @*onclick=" disapearCanvas2()*@
+    <div id="canvasContainer2" class="canvasContainer2" onclick=" ">
         <canvas id="canvas2" class="contextCanvas2"></canvas>
     </div>
 
@@ -249,30 +250,26 @@
 
         let c2 = canvas2.getContext('2d');
 
-        
+
         // Player Text
-        
+
         let name = "O Sotoiirios einai poly kalo paidi alla...plempas"
         c2.globalAlpha = 0.6;
         c2.font = "50px Geneva";
         c2.fillStyle = "white";
         //c2.textAlign = "center";
-        
+
+
+
         c2.fillText(name, 100, 600);
         c2.fillStyle = "yellow";
         c2.fillText(name, 101, 601);
-        
+
         c2.fillText(name, 102, 603);
         c2.fillStyle = "yellow";
         c2.fillText(name, 104, 605);
         ///////////////////////////
 
-
-       
-
-        ///////
-
-       
         c2.arc(500, 200, 100, 0, 1 * Math.PI);
         c2.strokeStyle = "cyan";
         c2.lineWidth = 40;
@@ -301,9 +298,27 @@
         c2.strokeStyle = "white";
         c2.lineWidth = 40;
         c2.stroke();
+
+
+        // PLAYER VISASBILITY 2
+        // disappear
+        $(document).ready(function () {
+            $("#canvasContainer2").click(function () {
+                $(".canvasContainer2").css("left", "99.99%");
+            });
+        });
+
+        // appear
+        $(document).ready(function () {
+            $(".owner").click(function () {
+                $(".canvasContainer2").css("left", "60%");
+            });
+        });
+
        
 
-        // PLAYER VISASBILITY
+
+        // PLAYER VISASBILITY 1
         function appearCanvas2() {
             document.getElementById('canvasContainer2').setAttribute("class", "appearclass");
             console.log("appearclass");
@@ -311,11 +326,7 @@
 
         function disapearCanvas2() {
             document.getElementById('canvasContainer2').setAttribute("class", "disapearclass");
-
         };
-
-
-
 
 
         // SEARCH
