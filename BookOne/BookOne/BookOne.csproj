@@ -176,7 +176,6 @@
     <Compile Include="BookOne_Domain\Book.cs" />
     <Compile Include="BookOne_Domain\BookCirculation.cs" />
     <Compile Include="BookOne_Domain\DatabaseOperations.cs" />
-    <Compile Include="BookOne_Domain\Reaction.cs" />
     <Compile Include="BookOne_Domain\BookNote.cs" />
     <Compile Include="BookOne_Domain\BookRequest.cs" />
     <Compile Include="BookOne_Domain\Club.cs" />
@@ -252,6 +251,10 @@
     <Compile Include="Migrations\201903281232455_AddedUserReactionModel.cs" />
     <Compile Include="Migrations\201903281232455_AddedUserReactionModel.Designer.cs">
       <DependentUpon>201903281232455_AddedUserReactionModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281241267_DroppedOlderReactionsTable.cs" />
+    <Compile Include="Migrations\201903281241267_DroppedOlderReactionsTable.Designer.cs">
+      <DependentUpon>201903281241267_DroppedOlderReactionsTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -411,6 +414,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903281232455_AddedUserReactionModel.resx">
       <DependentUpon>201903281232455_AddedUserReactionModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281241267_DroppedOlderReactionsTable.resx">
+      <DependentUpon>201903281241267_DroppedOlderReactionsTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

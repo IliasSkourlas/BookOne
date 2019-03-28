@@ -10,6 +10,6 @@ namespace BookOne.ViewModels
     {
         public BookCirculation Circulation { get; set; }
 
-        public Reaction ReactionGiven { get; set; }
+        public UserReaction ReactionGiven { get; set; }
     }
 }

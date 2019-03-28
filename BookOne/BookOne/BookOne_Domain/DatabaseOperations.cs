@@ -23,9 +23,9 @@ namespace BookOne.BookOne_Domain
 
 
         //Get Reactions for a user
-        public IEnumerable<Reaction> GetUserReactions(string userId)
+        public IEnumerable<UserReaction> GetUserReactions(string userId)
         {
-            return db.Reactions.Where(r => r.ActionReceiverId == userId);
+            return db.UserReactions.Where(r => r.ActionReceiverId == userId);
         }
         
 
@@ -294,11 +294,10 @@ namespace BookOne.BookOne_Domain
         }
 
 
-        public void InsertReaction(Reaction reaction)
+        public void InsertReaction(UserReaction reaction)
         {
             reaction.CirculationForThisReaction = db.BookCirculations.Find(reaction.CirculationForThisReaction.BookCirculationId);
-            reaction.ReactionId = 1;
-            db.Reactions.Add(reaction);
+            db.UserReactions.Add(reaction);
             db.SaveChanges();
         }
     }

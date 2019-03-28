@@ -227,7 +227,7 @@ namespace BookOne.Controllers
             var model = new ReturnBookViewModel()
             {
                 Circulation = circulation,
-                ReactionGiven = new Reaction()
+                ReactionGiven = new UserReaction()
                 {
                     ActionGiverId = book.Owner.Id,
                     ActionReceiverId = circulation.Borrower.Id,

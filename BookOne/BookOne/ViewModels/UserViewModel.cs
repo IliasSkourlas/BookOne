@@ -13,6 +13,6 @@ namespace BookOne.ViewModels
 
         public IEnumerable<Book> UserBooks { get; set; }
 
-        public IEnumerable<Reaction> UserReactions { get; set; }
+        public IEnumerable<UserReaction> UserReactions { get; set; }
     }
 }
