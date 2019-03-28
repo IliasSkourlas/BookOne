@@ -1,4 +1,4 @@
-﻿@model BookOne.BookOne_Domain.BookCirculation
+﻿@model BookOne.ViewModels.ReturnBookViewModel
 
 @{
     ViewBag.Title = "BorrowerReturnsBook";
@@ -13,44 +13,56 @@
 
 
         <dt>
-            @Html.DisplayNameFor(model => model.BookAssociated.Title)
+            @Html.DisplayNameFor(model => model.Circulation.BookAssociated.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BookAssociated.Title)
+            @Html.DisplayFor(model => model.Circulation.BookAssociated.Title)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Borrower)
+            @Html.DisplayNameFor(model => model.Circulation.Borrower)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Borrower.ActualUsername)
+            @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BorrowedOn)
+            @Html.DisplayNameFor(model => model.Circulation.BorrowedOn)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BorrowedOn)
+            @Html.DisplayFor(model => model.Circulation.BorrowedOn)
         </dd>
     </dl>
 
     @using (Html.BeginForm("OwnerGetsBackHisBook", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.BookCirculationId)
-        @Html.HiddenFor(model => model.BorrowedForXWeeks)
-        @Html.HiddenFor(model => model.Borrower)
-        @Html.HiddenFor(model => model.BorrowerReceivedBook)
-        @Html.HiddenFor(model => model.CirculationStatus)
-        @Html.HiddenFor(model => model.OwnerGaveBook)
-        @Html.HiddenFor(model => model.BookAssociated.BookId)
-        @Html.HiddenFor(model => model.RequestIdForThisCirculation)
+        @Html.HiddenFor(model => model.Circulation.BookCirculationId)
+        @Html.HiddenFor(model => model.Circulation.BorrowedForXWeeks)
+        @Html.HiddenFor(model => model.Circulation.Borrower.Id)
+        @Html.HiddenFor(model => model.Circulation.Borrower)
+        @Html.HiddenFor(model => model.Circulation.BorrowerReceivedBook)
+        @Html.HiddenFor(model => model.Circulation.CirculationStatus)
+        @Html.HiddenFor(model => model.Circulation.OwnerGaveBook)
+        @Html.HiddenFor(model => model.Circulation.BookAssociated.BookId)
+        @Html.HiddenFor(model => model.Circulation.RequestIdForThisCirculation)
+        @Html.HiddenFor(model => model.ReactionGiven.ActionGiverId)
+        @Html.HiddenFor(model => model.ReactionGiven.ActionReceiverId)
+        @Html.HiddenFor(model => model.ReactionGiven.CirculationForThisReaction.BookCirculationId)
+        @Html.HiddenFor(model => model.ReactionGiven.ReactionId)
+        @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
 
+        <hr /><br />
+        <h5>If you are receiving your book in perfect condition, you can thank the borrower by giving him a "Treat"...</h5>
+        <div>
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span> Treat</span> <br />
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span> Poisonous Cookie</span> <br />
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 5) <span> Nothing</span> <br />
 
-        <div class="form-actions no-color">
+            <br />
             <input type="submit" value="Yes" class="btn btn-default" /> |
             @Html.ActionLink("Back to List", "MyBooks", "Books")
         </div>

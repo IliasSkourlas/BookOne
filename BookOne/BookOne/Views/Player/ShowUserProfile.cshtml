@@ -1,45 +1,109 @@
-﻿@model BookOne.Models.ApplicationUser
+﻿@model BookOne.ViewModels.UserViewModel
 
 @{
     ViewBag.Title = "Show User Profile";
 }
 
-<h2>@Html.DisplayFor(model => model.ActualUsername)</h2>
+<h2>@Html.DisplayFor(model => model.User.ActualUsername)</h2>
 
 <div>
     <hr />
     <dl class="dl-horizontal">
-        @Html.HiddenFor(model => model.PostalCode)
-        @Html.HiddenFor(model => model.UserStatus)
-        @Html.HiddenFor(model => model.XP_Points)
-        @Html.HiddenFor(model => model.EmailConfirmed)
-        @Html.HiddenFor(model => model.PasswordHash)
-        @Html.HiddenFor(model => model.SecurityStamp)
-        @Html.HiddenFor(model => model.PhoneNumberConfirmed)
-        @Html.HiddenFor(model => model.TwoFactorEnabled)
-        @Html.HiddenFor(model => model.LockoutEndDateUtc)
-        @Html.HiddenFor(model => model.LockoutEnabled)
-        @Html.HiddenFor(model => model.AccessFailedCount)
-        @Html.HiddenFor(model => model.UserName)
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.PhoneNumber)
+        @Html.HiddenFor(model => model.User.PostalCode)
+        @Html.HiddenFor(model => model.User.UserStatus)
+        @Html.HiddenFor(model => model.User.XP_Points)
+        @Html.HiddenFor(model => model.User.EmailConfirmed)
+        @Html.HiddenFor(model => model.User.PasswordHash)
+        @Html.HiddenFor(model => model.User.SecurityStamp)
+        @Html.HiddenFor(model => model.User.PhoneNumberConfirmed)
+        @Html.HiddenFor(model => model.User.TwoFactorEnabled)
+        @Html.HiddenFor(model => model.User.LockoutEndDateUtc)
+        @Html.HiddenFor(model => model.User.LockoutEnabled)
+        @Html.HiddenFor(model => model.User.AccessFailedCount)
+        @Html.HiddenFor(model => model.User.UserName)
+        @Html.HiddenFor(model => model.User.Id)
+        @Html.HiddenFor(model => model.User.PhoneNumber)
 
         <dt>
-            @Html.DisplayNameFor(model => model.RegisteredOn)
+            @Html.DisplayNameFor(model => model.User.RegisteredOn)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.RegisteredOn)
+            @Html.DisplayFor(model => model.User.RegisteredOn)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.User.Email)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Html.DisplayFor(model => model.User.Email)
         </dd>
 
     </dl>
 </div>
+
+
+<table id="listOfBooks" class="table">
+    <tr class="header">
+        <th>
+            Title
+        </th>
+        <th class="author">
+            Author
+        </th>
+        <th class="thisStatus">
+            Status
+        </th>
+        <th class="carrier">
+            Carrier
+        </th>
+        <th class="editDelete">
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model.UserBooks)
+    {
+        <tr class="bookTitle">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td class="author">
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td class="thisStatus">
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td class="carrier">
+                @if (item.AvailabilityStatus == false)
+                {
+                    @Html.DisplayFor(modelItem => item.Carrier.ActualUsername)
+                }
+                @if (item.AvailabilityStatus == true)
+                {
+                    <span>- - -</span>
+                }
+            </td>
+            <td class="editDelete">
+                @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
+                @if (item.AvailabilityStatus == true)
+                {
+                    <span> &emsp; </span>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
+                    <span> &emsp; </span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
+                }
+                @if (item.AvailabilityStatus == false)
+                {
+                    <span>&emsp;</span>
+                    @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
 
 <div>
     @Html.ActionLink("Back to List", "Index", "Books")
