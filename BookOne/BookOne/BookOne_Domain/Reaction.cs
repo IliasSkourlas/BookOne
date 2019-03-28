@@ -18,7 +18,7 @@ namespace BookOne.BookOne_Domain
 
         public string ActionReceiverId { get; set; }
 
-        public BookCirculation CirculationForThisReaction { get; set; }
+        public int CirculationIdForThisReaction { get; set; }
 
         public ReactionChoices Choice { get; set; }
 

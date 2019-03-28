@@ -231,7 +231,7 @@ namespace BookOne.Controllers
                 {
                     ActionGiverId = book.Owner.Id,
                     ActionReceiverId = circulation.Borrower.Id,
-                    CirculationForThisReaction = circulation
+                    CirculationIdForThisReaction = circulation.BookCirculationId
                 }
             };
 

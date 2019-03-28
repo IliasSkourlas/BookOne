@@ -240,6 +240,10 @@
     <Compile Include="Migrations\201903281109251_ReplacedGiverAndReceiverIdInReactionModel.Designer.cs">
       <DependentUpon>201903281109251_ReplacedGiverAndReceiverIdInReactionModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903281127361_ReplacedCirculationIdInReactionModel.cs" />
+    <Compile Include="Migrations\201903281127361_ReplacedCirculationIdInReactionModel.Designer.cs">
+      <DependentUpon>201903281127361_ReplacedCirculationIdInReactionModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -389,6 +393,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903281109251_ReplacedGiverAndReceiverIdInReactionModel.resx">
       <DependentUpon>201903281109251_ReplacedGiverAndReceiverIdInReactionModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281127361_ReplacedCirculationIdInReactionModel.resx">
+      <DependentUpon>201903281127361_ReplacedCirculationIdInReactionModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
