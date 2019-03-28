@@ -54,11 +54,13 @@
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
+
+
             @*<td class="owner">
                 @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
             </td>*@
-
-            <td class="owner" onclick="appearCanvas2()">
+            
+            <td class="owner">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
 
