@@ -12,13 +12,13 @@ namespace BookOne.BookOne_Domain
         }
 
 
-        public string ReactionId { get; set; }
+        public int ReactionId { get; set; }
 
-        public ApplicationUser ActionGiver { get; set; }
+        public string ActionGiverId { get; set; }
 
-        public ApplicationUser ActionReceiver { get; set; }
+        public string ActionReceiverId { get; set; }
 
-        public Book ForBook { get; set; }
+        public int CirculationIdForThisReaction { get; set; }
 
         public ReactionChoices Choice { get; set; }
 

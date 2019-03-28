@@ -47,36 +47,41 @@
 
     @foreach (var item in Model)
     {
-    <tr class="bookTitle">
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td class="author">
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
+        <tr class="bookTitle">
+            <td >
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td class="author">
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td class="owner">
+                @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
+            </td>
 
-        @*onclick="appearCanvas2()"*@
-        <td class="owner">
-            @*@Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)*@
-            @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
-        </td>
-        <td class="Status">
-            @if (item.AvailabilityStatus == true)
-            {
-                @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
-            }
-            else
-            {
-                <span>Unavailable</span>
-            }
-        </td>
-    </tr>
+            @*<td class="owner" onclick="appearCanvas2()">
+                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
+            </td>*@
+
+            <td class="Status">
+                @if (item.AvailabilityStatus == true)
+                {
+                    @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
+                }
+                else
+                {
+                    <span>Unavailable</span>
+                }
+            </td>
+        </tr>
     }
 </table>
 
 
 
 <script>
+
+    // Player Text
+
 
 
 

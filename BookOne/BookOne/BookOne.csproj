@@ -228,12 +228,30 @@
     <Compile Include="Migrations\201903271641378_ReplacedCarrierUsernameInBookModel.Designer.cs">
       <DependentUpon>201903271641378_ReplacedCarrierUsernameInBookModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903280909364_ReplacedBookInReactionModel.cs" />
+    <Compile Include="Migrations\201903280909364_ReplacedBookInReactionModel.Designer.cs">
+      <DependentUpon>201903280909364_ReplacedBookInReactionModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281029584_ReplacedReactionIdInReactionModel.cs" />
+    <Compile Include="Migrations\201903281029584_ReplacedReactionIdInReactionModel.Designer.cs">
+      <DependentUpon>201903281029584_ReplacedReactionIdInReactionModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281109251_ReplacedGiverAndReceiverIdInReactionModel.cs" />
+    <Compile Include="Migrations\201903281109251_ReplacedGiverAndReceiverIdInReactionModel.Designer.cs">
+      <DependentUpon>201903281109251_ReplacedGiverAndReceiverIdInReactionModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903281127361_ReplacedCirculationIdInReactionModel.cs" />
+    <Compile Include="Migrations\201903281127361_ReplacedCirculationIdInReactionModel.Designer.cs">
+      <DependentUpon>201903281127361_ReplacedCirculationIdInReactionModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ReturnBookViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -313,14 +331,15 @@
     <Content Include="Views\Shared\_Layout - Contact - TheHappy.cshtml" />
     <Content Include="Views\Shared\_Layout - MyHand.cshtml" />
     <Content Include="Views\Player\BorrowedBookConfirmation.cshtml" />
-    <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
+    <Content Include="Views\Player\BorrowerReturnsBook%28old%29.cshtml" />
     <Content Include="Views\Shared\_Layout - AddBook.cshtml" />
     <Content Include="Views\Shared\_Layout - My.cshtml" />
     <Content Include="Views\Shared\_VideoPartial.cshtml" />
     <Content Include="Views\Shared\_weAreHerePatial.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
-    <Content Include="Views\Player\CancelConfirmation.cshtml" />
+    <Content Include="Views\Player\ShowUserProfile%28old%29.cshtml" />
     <Content Include="Views\Player\ShowUserProfile.cshtml" />
+    <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -365,6 +384,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903271641378_ReplacedCarrierUsernameInBookModel.resx">
       <DependentUpon>201903271641378_ReplacedCarrierUsernameInBookModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903280909364_ReplacedBookInReactionModel.resx">
+      <DependentUpon>201903280909364_ReplacedBookInReactionModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281029584_ReplacedReactionIdInReactionModel.resx">
+      <DependentUpon>201903281029584_ReplacedReactionIdInReactionModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281109251_ReplacedGiverAndReceiverIdInReactionModel.resx">
+      <DependentUpon>201903281109251_ReplacedGiverAndReceiverIdInReactionModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903281127361_ReplacedCirculationIdInReactionModel.resx">
+      <DependentUpon>201903281127361_ReplacedCirculationIdInReactionModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

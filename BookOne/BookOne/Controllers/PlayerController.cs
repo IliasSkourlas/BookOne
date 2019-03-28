@@ -1,5 +1,6 @@
 ﻿using BookOne.BookOne_Domain;
 using BookOne.Models;
+using BookOne.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Net;
 using System.Web.Mvc;
@@ -18,7 +19,18 @@ namespace BookOne.Controllers
         }
 
 
-        //Display another user's details view
+        //Display another user's details view (WITHOUT VIEWMODEL)
+        //public ActionResult ShowUserProfile(string userId)
+        //{
+        //    ApplicationUser user = dbOps.GetUser(userId);
+        //    if (user == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View("ShowUserProfile(old)", user);
+        //}
+
+
         public ActionResult ShowUserProfile(string userId)
         {
             ApplicationUser user = dbOps.GetUser(userId);
@@ -26,7 +38,15 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
-            return View(user);
+
+            UserViewModel model = new UserViewModel()
+            {
+                User = user,
+                UserBooks = dbOps.MyBooks(userId)
+                //UserReactions
+            };
+
+            return View(model);
         }
 
 
@@ -193,21 +213,40 @@ namespace BookOne.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var book = dbOps.GetBook(bookId);
+            if (book == null)
+            {
+                return HttpNotFound();
+            }
             var circulation = dbOps.GetBookLatestOnGoingCirculation(bookId);
             if (circulation == null)
             {
                 return HttpNotFound();
             }
-            return View("BorrowerReturnsBook", circulation);
+
+            var model = new ReturnBookViewModel()
+            {
+                Circulation = circulation,
+                ReactionGiven = new Reaction()
+                {
+                    ActionGiverId = book.Owner.Id,
+                    ActionReceiverId = circulation.Borrower.Id,
+                    CirculationIdForThisReaction = circulation.BookCirculationId
+                }
+            };
+
+            return View("BorrowerReturnsBook", model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult OwnerGetsBackHisBook(BookCirculation circulation)
+        public ActionResult OwnerGetsBackHisBook(ReturnBookViewModel model)
         {
-            dbOps.OwnerReceivedBookBack(circulation);
+            dbOps.OwnerReceivedBookBack(model.Circulation);
 
-            return RedirectToAction("Requests");
+            dbOps.OwnerGivesAReaction(model.ReactionGiven);
+
+            return RedirectToAction("MyBooks", "Books");
         }
     }
 }

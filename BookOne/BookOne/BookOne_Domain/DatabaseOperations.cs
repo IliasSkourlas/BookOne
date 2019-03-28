@@ -20,6 +20,13 @@ namespace BookOne.BookOne_Domain
                 .Where(u => u.Id == userId)
                 .SingleOrDefault();
         }
+
+
+        //Get Reactions for a user
+        public IEnumerable<Reaction> GetUserReactions(string userId)
+        {
+            return db.Reactions.Where(r => r.ActionReceiverId == userId);
+        }
         
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,8 +279,9 @@ namespace BookOne.BookOne_Domain
         //Book returns to the owner
         public void OwnerReceivedBookBack(BookCirculation circulation)
         {
-            var book = db.Books.Where(b => b.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
+            var book = db.Books.Include(b => b.Owner).Where(b => b.BookId == circulation.BookAssociated.BookId).SingleOrDefault();
             var requestForThisCirculation = db.BookRequests.Find(circulation.RequestIdForThisCirculation);
+
             var borrower = requestForThisCirculation.RequestedBy;
 
             var circulationForThisBook = db.BookCirculations.Find(circulation.BookCirculationId);
@@ -282,6 +290,14 @@ namespace BookOne.BookOne_Domain
             book.AvailabilityStatus = true;
             book.Carrier = db.Users.Find(book.Owner.Id);
             circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
+            db.SaveChanges();
+        }
+
+
+        public void OwnerGivesAReaction(Reaction reaction)
+        {
+
+            db.Reactions.Add(reaction);
             db.SaveChanges();
         }
     }

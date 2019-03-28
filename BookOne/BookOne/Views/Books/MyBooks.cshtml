@@ -52,42 +52,42 @@
 
     @foreach (var item in Model)
     {
-    <tr class="bookTitle">
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td class="author">
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td class="thisStatus">
-            @Html.DisplayFor(modelItem => item.BookStatus)
-        </td>
-        <td class="carrier">
-            @if (item.AvailabilityStatus == false)
-            {
-                @Html.DisplayFor(modelItem => item.Carrier.ActualUsername)
-            }
-            @if (item.AvailabilityStatus == true)
-            {
-                <span>- - -</span>
-            }
-        </td>
-        <td class="editDelete">
-            @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
-            @if (item.AvailabilityStatus == true)
-            {
-                <span> &emsp; </span>
-                @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
-                <span> &emsp; </span>
-                @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
-            }
-            @if (item.AvailabilityStatus == false)
-            {
-                <span>&emsp;</span>
-                @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
-            }
-        </td>
-    </tr>
+        <tr class="bookTitle">
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td class="author">
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td class="thisStatus">
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td class="carrier">
+                @if (item.AvailabilityStatus == false)
+                {
+                    @Html.DisplayFor(modelItem => item.Carrier.ActualUsername)
+                }
+                @if (item.AvailabilityStatus == true)
+                {
+                    <span>- - -</span>
+                }
+            </td>
+            <td class="editDelete">
+                @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
+                @if (item.AvailabilityStatus == true)
+                {
+                    <span> &emsp; </span>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
+                    <span> &emsp; </span>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
+                }
+                @if (item.AvailabilityStatus == false)
+                {
+                    <span>&emsp;</span>
+                    @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
+                }
+            </td>
+        </tr>
     }
 
 </table>
