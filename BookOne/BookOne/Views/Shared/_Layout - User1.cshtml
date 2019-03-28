@@ -102,7 +102,7 @@
         }
         .canvasContainer2 {
             transition: left 1s;
-
+            transition: opacity 1s;
             position: fixed;
             left: 100%;
             right: 0%;
@@ -111,6 +111,7 @@
             bottom: 0px;
             z-index: 1;
             background-color: transparent;
+            opacity: 0;
         }
         .contextCanvas2 {
             position: absolute;
@@ -305,6 +306,7 @@
         $(document).ready(function () {
             $("#canvasContainer2").click(function () {
                 $(".canvasContainer2").css("left", "99.99%");
+                $(".canvasContainer2").css("opacity", 0);
             });
         });
 
@@ -312,6 +314,7 @@
         $(document).ready(function () {
             $(".owner").click(function () {
                 $(".canvasContainer2").css("left", "57%");
+                $(".canvasContainer2").css("opacity", 1);
             });
         });
 
