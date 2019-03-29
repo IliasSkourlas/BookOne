@@ -28,17 +28,17 @@
 <div> msg for developers......................click inside the yellow area </div>
 <table id="listOfBooks" class="table">
     <tr class="header" >
-        <th  onclick="document.getElementById('searchInput').placeholder='Book'">
+        <th class="col-md-8" onclick="document.getElementById('searchInput').placeholder='Book'">
            
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th class="author" onclick="document.getElementById('searchInput').placeholder='Author'">
+        <th class="author col-md-4" onclick="document.getElementById('searchInput').placeholder='Author'">
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th class="owner" onclick="document.getElementById('searchInput').placeholder='Owner'">
+        <th class="owner col-md-4" onclick="document.getElementById('searchInput').placeholder='Owner'">
             Owner
         </th>
-        <th class="Status" onclick="document.getElementById('searchInput').placeholder='Availability'">
+        <th class="Status col-md-4" onclick="document.getElementById('searchInput').placeholder='Availability'">
             Availability
         </th>
     </tr>
