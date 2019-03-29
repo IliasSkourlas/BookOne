@@ -78,10 +78,17 @@ namespace BookOne.BookOne_Domain
         {
             return db.Books.Where(b => b.Owner.Id == loggedInUserId).Include(b => b.Carrier).ToList();
         }
+
         //Returns all circulations for the books owned by the logged in user
         public IEnumerable<BookCirculation> MyBooksCirculations(string loggedInUserId)
         {
             return db.BookCirculations.Where(c => c.BookAssociated.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed).ToList();
+        }
+
+        //Returns all circulations for the books borrowed by the logged in user
+        public IEnumerable<BookCirculation> BooksInMyHandCirculations(string loggedInUserId)
+        {
+            return db.BookCirculations.Where(c => c.Borrower.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed).ToList();
         }
 
 
@@ -267,21 +274,21 @@ namespace BookOne.BookOne_Domain
 
             return circulation;
         }
-        
+
 
         //DaysRemaining counter for borrowed book
-        //public int DaysRemainingCounter(BookCirculation circulation)
-        //{
-        //    //For testing purposes, borrowing time is set to 14 days(2 weeks)
-        //    int weeksRemaining = circulation.BorrowedForXWeeks;
-        //    int daysInTheseWeeks = weeksRemaining * 7;
+        public int DaysRemainingCounter(BookCirculation circulation)
+        {
+            //For testing purposes, borrowing time is set to 14 days(2 weeks)
+            int weeksRemaining = circulation.BorrowedForXWeeks;
+            int daysInTheseWeeks = weeksRemaining * 7;
 
-        //    DateTime today = DateTime.Today;
-        //    DateTime returnBookDate = circulation.BorrowedOn.AddDays(daysInTheseWeeks);
+            DateTime today = DateTime.Today;
+            DateTime returnBookDate = circulation.BorrowedOn.AddDays(daysInTheseWeeks);
 
-        //    return (returnBookDate - today).Days;
-        //}
-        
+            return (returnBookDate - today).Days;
+        }
+
 
         //Book returns to the owner
         public void OwnerReceivedBookBack(BookCirculation circulation)

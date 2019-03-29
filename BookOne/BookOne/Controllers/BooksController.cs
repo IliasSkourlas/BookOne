@@ -45,10 +45,17 @@ namespace BookOne.Controllers
         {
             //Displays all Books that the logged in user currently holds
             var loggedInUserId = User.Identity.GetUserId();
+            
+            var model = new BooksViewModel()
+            {
+                Books = dbOps.MyHand(loggedInUserId),
+                BookCirculations = dbOps.BooksInMyHandCirculations(loggedInUserId)
+            };
 
-            var booksInUserHand = dbOps.MyHand(loggedInUserId);
+            foreach (var circulation in model.BookCirculations)
+                circulation.DaysRemaining = dbOps.DaysRemainingCounter(circulation);
 
-            return View(booksInUserHand);
+            return View(model);
         }
 
 

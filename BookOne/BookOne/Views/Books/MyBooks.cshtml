@@ -2,12 +2,8 @@
 
 @{
     ViewBag.Title = "MyBooks";
-}
-
-@{
     Layout = "~/Views/Shared/_Layout - My.cshtml";
 }
-
 
 <style type="text/css">
 
@@ -25,6 +21,7 @@
 
 <br />
 <br />
+<br />
 
 <p>
     @Html.ActionLink("Add new", "Create")
@@ -33,19 +30,19 @@
 <h2>My Books</h2>
 <table id="listOfBooks" class="table">
     <tr class="header">
-        <th class="col-md-4">
+        <th class="col-md-6">
             Title
         </th>
-        <th class="author col-md-8">
+        <th class="author col-md-6">
             Author
         </th>
-        <th class="thisStatus col-md-4">
+        <th class="thisStatus col-md-3">
             Status
         </th>
-        <th class="carrier">
+        <th class="carrier col-md-6">
             
         </th>
-        <th class="editDelete col-md-4">
+        <th class="editDelete col-md-3">
             Actions
         </th>
     </tr>
@@ -64,32 +61,31 @@
                 @Html.DisplayFor(modelItem => item.BookStatus)
             </td>
             <td class="carrier"></td>
-
             <td class="editDelete">
                 @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
-                <span> &emsp; </span>
+                <span> | </span>
                 @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
             </td>
         </tr>
     }
 </table>
 
-<h2>My Borrowed Books</h2>
+<h2>Borrowed Books to other Users</h2>
 <table id="listOfBooks" class="table">
     <tr class="header">
-        <th class="col-md-4">
+        <th class="col-md-6">
             Title
         </th>
-        <th class="author col-md-8">
+        <th class="author col-md-6">
             Author
         </th>
-        <th class="thisStatus col-md-4">
+        <th class="thisStatus col-md-3">
             Borrowed On
         </th>
-        <th class="carrier col-md-8">
+        <th class="carrier col-md-6">
             Carrier
         </th>
-        <th class="editDelete col-md-4">
+        <th class="editDelete col-md-3">
             Actions
         </th>
     </tr>
@@ -108,12 +104,9 @@
                 @Html.DisplayFor(modelItem => item.BorrowedOn)
             </td>
             <td class="carrier">
-                
                 @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
-                
             </td>
             <td class="editDelete">
-                
                 @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
             </td>
         </tr>

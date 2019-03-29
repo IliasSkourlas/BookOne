@@ -1,6 +1,4 @@
-﻿@using Microsoft.AspNet.Identity
-
-@model IEnumerable<BookOne.BookOne_Domain.Book>
+﻿@model BookOne.ViewModels.BooksViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout - MyHand.cshtml";
@@ -18,54 +16,82 @@
     }
 </style>
 
+<br />
+<br />
 
-
-
-
-
+<h2>My Unborrowed Books</h2>
 <table id="listOfBooks" class="table">
     <tr class="header">
-        <th >
-            @Html.DisplayNameFor(model => model.Title)
+        <th class="col-md-6">
+            Title
         </th>
-        <th class="author">
-            @Html.DisplayNameFor(model => model.Author)
+        <th class="author col-md-6">
+            Author
         </th>
-        <th class="owner">
-            @Html.DisplayNameFor(model => model.Owner)
-        </th>
-        <th class="timeLeft">
-            Time left
-        </th>
-        <th></th>
+        <th class="owner col-md-6"></th>
+        <th class="timeLeft col-md-3"></th>
+        <th class="timeLeft col-md-3"></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Books)
     {
+        if (item.AvailabilityStatus == false) { continue; }
         <tr class="bookTitle">
-            <td >
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
-            
-            <td class="owner">
-                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
-            </td>
+            <td class="owner"></td>
+            <td class="timeLeft"></td>
+            <td class="timeLeft"></td>
+        </tr>
+    }
+</table>
 
-            <td class="timeLeft">
-               
-            </td>
+
+<h2>Borrowed Books from other Users</h2>
+<table id="listOfBooks" class="table">
+    <tr class="header">
+        <th class="col-md-6">
+            Title
+        </th>
+        <th class="author col-md-6">
+            Author
+        </th>
+        <th class="owner col-md-6">
+            Owner
+        </th>
+        <th class="timeLeft col-md-3">
+            Borrowed On
+        </th>
+        <th class="timeLeft col-md-3">
+            Remaining Days
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookCirculations)
+    {
+        if (item.BookAssociated.AvailabilityStatus == true) { continue; }
+        <tr class="bookTitle">
             <td>
-                @if (item.Owner.Id != User.Identity.GetUserId() && item.AvailabilityStatus == false)
-                {
-                    <span>Borrowed</span>
-                }
+                @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+            </td>
+            <td class="author">
+                @Html.DisplayFor(modelItem => item.BookAssociated.Author)
+            </td>
+            <td class="owner">
+                @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
+            </td>
+            <td class="timeLeft">
+                @Html.DisplayFor(modelItem => item.BorrowedOn)
+            </td>
+            <td class="timeLeft">
+                @Html.DisplayFor(modelItem => item.DaysRemaining)
             </td>
         </tr>
     }
-
 </table>
 
 
@@ -87,9 +113,9 @@
         }
         if (n === 1) {
             new function () {
-                
+
                 $('.author').show();
-               
+
             }
         }
         if (n === 2) {
