@@ -19,18 +19,6 @@ namespace BookOne.Controllers
         }
 
 
-        //Display another user's details view (WITHOUT VIEWMODEL)
-        //public ActionResult ShowUserProfile(string userId)
-        //{
-        //    ApplicationUser user = dbOps.GetUser(userId);
-        //    if (user == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View("ShowUserProfile(old)", user);
-        //}
-
-
         public ActionResult ShowUserProfile(string userId)
         {
             ApplicationUser user = dbOps.GetUser(userId);
@@ -43,7 +31,7 @@ namespace BookOne.Controllers
             {
                 User = user,
                 UserBooks = dbOps.MyBooks(userId)
-                //UserReactions
+                //UserReactions ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             };
 
             return View(model);

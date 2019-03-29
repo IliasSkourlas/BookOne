@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using BookOne.BookOne_Domain;
 using BookOne.Models;
+using BookOne.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace BookOne.Controllers
@@ -29,7 +30,13 @@ namespace BookOne.Controllers
             //Displays all Books owned by the logged in user
             var loggedInUserId = User.Identity.GetUserId();
 
-            return View(dbOps.MyBooks(loggedInUserId));
+            var model = new BooksViewModel()
+            {
+                Books = dbOps.MyBooks(loggedInUserId),
+                BookCirculations = dbOps.MyBooksCirculations(loggedInUserId)
+            };
+
+            return View(model);
         }
 
 
@@ -38,10 +45,17 @@ namespace BookOne.Controllers
         {
             //Displays all Books that the logged in user currently holds
             var loggedInUserId = User.Identity.GetUserId();
+            
+            var model = new BooksViewModel()
+            {
+                Books = dbOps.MyHand(loggedInUserId),
+                BookCirculations = dbOps.BooksInMyHandCirculations(loggedInUserId)
+            };
 
-            var booksInUserHand = dbOps.MyHand(loggedInUserId);
+            foreach (var circulation in model.BookCirculations)
+                circulation.DaysRemaining = dbOps.DaysRemainingCounter(circulation);
 
-            return View(booksInUserHand);
+            return View(model);
         }
 
 

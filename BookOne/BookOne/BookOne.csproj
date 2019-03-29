@@ -262,6 +262,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BooksViewModel.cs" />
     <Compile Include="ViewModels\ReturnBookViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
@@ -343,13 +344,11 @@
     <Content Include="Views\Shared\_Layout - Contact - TheHappy.cshtml" />
     <Content Include="Views\Shared\_Layout - MyHand.cshtml" />
     <Content Include="Views\Player\BorrowedBookConfirmation.cshtml" />
-    <Content Include="Views\Player\BorrowerReturnsBook%28old%29.cshtml" />
     <Content Include="Views\Shared\_Layout - AddBook.cshtml" />
     <Content Include="Views\Shared\_Layout - My.cshtml" />
     <Content Include="Views\Shared\_VideoPartial.cshtml" />
     <Content Include="Views\Shared\_weAreHerePatial.cshtml" />
     <Content Include="Views\Player\Index.cshtml" />
-    <Content Include="Views\Player\ShowUserProfile%28old%29.cshtml" />
     <Content Include="Views\Player\ShowUserProfile.cshtml" />
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
   </ItemGroup>

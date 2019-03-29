@@ -1,7 +1,9 @@
 ﻿using BookOne.Models;
+using BookOne.BookOne_Domain;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookOne.BookOne_Domain
 {
@@ -25,7 +27,10 @@ namespace BookOne.BookOne_Domain
 
         [Required(ErrorMessage = "A number of weeks is required")]
         public int BorrowedForXWeeks { get; set; }
-        
+
+        [NotMapped]
+        public int DaysRemaining { get; set; }
+
         public bool OwnerGaveBook { get; set; }
         
         public bool BorrowerReceivedBook { get; set; }
