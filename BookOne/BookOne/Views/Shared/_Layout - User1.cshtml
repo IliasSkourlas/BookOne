@@ -20,6 +20,9 @@
             opacity: 0.89;
             filter: alpha(opacity=30);
         }
+        #searchFilter {
+            display: none;
+        }
 
         .video-container {
             position: absolute;
@@ -232,20 +235,21 @@
                     @Html.Partial("_weAreHerePatial")
                 </ul>
 
-                @*Search form*@
+               
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
                     </div>
+                    @*This Search form must be bypased ...later...and for now it will just be invisible*@
                     <select id="searchFilter">
-                        <option value=""disabled selected style="display: none;">Select a Filter</option>
-                        <option value="BookTitles">Book Titles</option>
-                        <option value="Authors">Authors</option>
-                        <option value="Users">Users</option>
+                        <option value="" disabled selected style="display: none;">Select a Filter</option>
+                        <option value="BookTitles">Book</option>
+                        <option value="Authors">Author</option>
+                        <option value="Users">Owner</option>
                         <option value="Availability">Availability</option>
                     </select>
                 </form>
-
+               
             </div>
         </div>
     </div>
@@ -376,6 +380,28 @@
         //c2.lineWidth = 40;
         //c2.stroke();
 
+        /////// Chainge searchInput by clicking in to Headers
+        $(document).ready(function () {
+            $("#Author").click(function () {
+                $("#searchInput").attr("placeholder","Author");
+                $("#searchFilter").val("Authors");
+            })
+            $("#Title").click(function () {
+                $("#searchInput").attr("placeholder", "Book");
+                $("#searchFilter").val("BookTitles");
+            })
+            $("#Owner").click(function () {
+                $("#searchInput").attr("placeholder", "Owner");
+                $("#searchFilter").val("Users");
+            })
+            $("#Availability").click(function () {
+                $("#searchInput").attr("placeholder", "Availability");
+                $("#searchFilter").val("Availability");
+            })
+
+        });
+     
+       
 
         ////// PLAYER VISASBILITY 2
         ////// disappear

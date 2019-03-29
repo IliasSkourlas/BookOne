@@ -27,17 +27,17 @@
 
 <table id="listOfBooks" class="table">
     <tr class="header" >
-        <th class="col-md-8" onclick="document.getElementById('searchInput').placeholder='Book'">
+        <th id="Title" class="col-md-8">
            
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th class="author col-md-4" onclick="document.getElementById('searchInput').placeholder='Author'">
+        <th id="Author" class="author col-md-4" >
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th class="owner col-md-4" onclick="document.getElementById('searchInput').placeholder='Owner'">
+        <th id="Owner" class="owner col-md-4">
             Owner
         </th>
-        <th class="Status col-md-4" onclick="document.getElementById('searchInput').placeholder='Availability'">
+        <th id="Availability" class="Status col-md-4">
             Availability
         </th>
     </tr>
