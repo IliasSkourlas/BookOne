@@ -78,11 +78,18 @@ namespace BookOne.BookOne_Domain
         {
             return db.Books.Where(b => b.Owner.Id == loggedInUserId).Include(b => b.Carrier).ToList();
         }
+        //Returns all circulations for the books owned by the logged in user
+        public IEnumerable<BookCirculation> MyBooksCirculations(string loggedInUserId)
+        {
+            return db.BookCirculations.Where(c => c.BookAssociated.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed).ToList();
+        }
 
 
         //Returns All books that the user currently holds
         public IEnumerable<Book> MyHand(string loggedInUserId)
         {
+            //This method could just work by checking which books have the loggedInUser's Id in their Carrier field.
+
             // my books not currently borrowed by anyone
             var ownedBooksNotCurrentlyBorrowed =
                 db.Books.Where(b => b.Owner.Id == loggedInUserId).Except(
@@ -294,6 +301,7 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        //User gives a reaction(rating) to the borrower of one of his books.
         public void InsertReaction(UserReaction reaction)
         {
             reaction.CirculationForThisReaction = db.BookCirculations.Find(reaction.CirculationForThisReaction.BookCirculationId);

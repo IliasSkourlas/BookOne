@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookOne.BookOne_Domain.Book>
+﻿@model BookOne.ViewModels.BooksViewModel
 
 @{
     ViewBag.Title = "MyBooks";
@@ -21,40 +21,41 @@
     #weAreHere a {
         color: rgb(0, 255, 255);
     }
-
-   
 </style>
 
+<br />
+<br />
 
 <p>
     @Html.ActionLink("Add new", "Create")
 </p>
 
-
+<h2>My Books</h2>
 <table id="listOfBooks" class="table">
     <tr class="header">
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
+        <th class="col-md-4">
+            Title
         </th>
-        <th class="author">
-            @Html.DisplayNameFor(model => model.Author)
+        <th class="author col-md-8">
+            Author
         </th>
-        <th class="thisStatus">
+        <th class="thisStatus col-md-4">
             Status
         </th>
         <th class="carrier">
-            Carrier
-        </th>
-        <th class="editDelete">
             
+        </th>
+        <th class="editDelete col-md-4">
+            Actions
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Books)
     {
+        if (item.AvailabilityStatus == false) { continue; }
         <tr class="bookTitle">
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.ActionLink( item.Title, "Details", new { id = item.BookId })
             </td>
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
@@ -62,87 +63,113 @@
             <td class="thisStatus">
                 @Html.DisplayFor(modelItem => item.BookStatus)
             </td>
-            <td class="carrier">
-                @if (item.AvailabilityStatus == false)
-                {
-                    @Html.DisplayFor(modelItem => item.Carrier.ActualUsername)
-                }
-                @if (item.AvailabilityStatus == true)
-                {
-                    <span>- - -</span>
-                }
-            </td>
+            <td class="carrier"></td>
+
             <td class="editDelete">
-                @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
-                @if (item.AvailabilityStatus == true)
-                {
-                    <span> &emsp; </span>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
-                    <span> &emsp; </span>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
-                }
-                @if (item.AvailabilityStatus == false)
-                {
-                    <span>&emsp;</span>
-                    @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
-                }
+                @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
+                <span> &emsp; </span>
+                @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
             </td>
         </tr>
     }
-
 </table>
 
+<h2>My Borrowed Books</h2>
+<table id="listOfBooks" class="table">
+    <tr class="header">
+        <th class="col-md-4">
+            Title
+        </th>
+        <th class="author col-md-8">
+            Author
+        </th>
+        <th class="thisStatus col-md-4">
+            Borrowed On
+        </th>
+        <th class="carrier col-md-8">
+            Carrier
+        </th>
+        <th class="editDelete col-md-4">
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookCirculations)
+    {
+        if (item.BookAssociated.AvailabilityStatus == true) { continue; }
+        <tr class="bookTitle">
+            <td>
+                @Html.ActionLink(item.BookAssociated.Title, "Details", new { id = item.BookAssociated.BookId })
+            </td>
+            <td class="author">
+                @Html.DisplayFor(modelItem => item.BookAssociated.Author)
+            </td>
+            <td class="thisStatus">
+                @Html.DisplayFor(modelItem => item.BorrowedOn)
+            </td>
+            <td class="carrier">
+                
+                @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
+                
+            </td>
+            <td class="editDelete">
+                
+                @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
+            </td>
+        </tr>
+    }
+</table>
 
 
 <script>
 
-        function hideAll() {
-            $('.editDelete').hide();
-            $('.author').hide();
-            $('.thisStatus').hide();
-            $('.carrier').hide();
+    function hideAll() {
+        $('.editDelete').hide();
+        $('.author').hide();
+        $('.thisStatus').hide();
+        $('.carrier').hide();
+    }
+
+    var n = 0;
+    var i = 1;
+
+    function rotate() {
+        n = n + i;
+        if (n === 0) {
+            i = 1;
+        }
+        if (n === 1) {
+            new function () {
+                $('.author').show();
+                $('.thisStatus').hide();
+            }
+        }
+        if (n === 2) {
+            new function () {
+                $('.author').hide();
+                $('.carrier').show();
+            }
+        }
+        if (n === 3) {
+            new function () {
+                $('.editDelete').show();
+                $('.thisStatus').show();
+                $('.carrier').hide()
+
+
+            }
+        }
+        if (n === 4) {
+            n = 1;
+            new function () {
+                $('.author').show();
+                $('.editDelete').hide()
+                $('.thisStatus').hide();
+
+            }
         }
 
-        var n = 0;
-        var i = 1;
-
-        function rotate() {
-            n = n + i;
-            if (n === 0) {
-                i = 1;
-            }
-            if (n === 1) {
-                new function () {
-                    $('.author').show();
-                    $('.thisStatus').hide();
-                }
-            }
-            if (n === 2) {
-                new function () {
-                    $('.author').hide();
-                    $('.carrier').show();
-                }
-            }
-            if (n === 3) {
-                new function () {
-                    $('.editDelete').show();
-                    $('.thisStatus').show();
-                    $('.carrier').hide()
-
-
-                }
-            }
-            if (n === 4) {
-                n = 1;
-                new function () {
-                    $('.author').show();
-                    $('.editDelete').hide()
-                    $('.thisStatus').hide();
-
-                }
-            }
-
-            console.log("new", n);
-        }
+        console.log("new", n);
+    }
 
 </script>
