@@ -34,7 +34,7 @@
         <th id="Author" class="author col-md-4" >
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th id="Owner" class="owner col-md-4">
+        <th id="Owner" col-md-4">
             Owner
         </th>
         <th id="Availability" class="Status col-md-4">
@@ -58,7 +58,7 @@
                 @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
             </td>*@
             
-            <td class="owner">
+            <td   class="owner">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
 
@@ -89,8 +89,8 @@
 
     function hideAll() {
         $('.author').hide();
+        $('#Owner').hide();
         $('.owner').hide();
-       
     }
 
     var n = 0;
@@ -113,12 +113,14 @@
             console.log("new", n);
             new function () {
                 $('.author').hide();
+                $('#Owner').show();
                 $('.owner').show();
             }
         }
         if (n === 3) {
             console.log("new", n);
             new function () {
+                $('#Owner').hide();
                 $('.owner').hide();
                 $('.Status').show();
                 
