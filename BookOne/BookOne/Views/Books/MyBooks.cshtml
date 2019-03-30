@@ -6,6 +6,9 @@
 }
 
 <style type="text/css">
+    :root {
+        --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+    }
 
     body {
         background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
@@ -13,14 +16,26 @@
         background-size: cover;
         background-attachment: fixed;
     }
-    .table > tbody > tr > td, .table > tfoot > tr > td {
+    .table > tbody > tr > td {
         padding: 8px;
         line-height: 1.42857143;
         vertical-align: top;
-        border-top: none;
-        /*border-top: 1px solid #ddd;*/
+        /*border-top: none;*/
+        border-top: var(--main-border-top-color);
+    }
+    #listOfBooks > tbody > tr.header > th {
+        border-top: var(--main-border-top-color);
     }
 
+    .table {
+        margin-bottom: 0px;
+    }
+    div .borrowed .table > tbody > tr > th {
+        padding: 0px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: var(--main-border-top-color);
+    }
     #weAreHere a {
         color: rgb(0, 255, 255);
     }
@@ -32,6 +47,23 @@
     }
     .editDelete a {
         color: rgba(0, 255, 255, 0.68);
+    }
+    tr:hover {
+        background: rgba(255, 255, 255, 0.08);
+    }
+    div .borrowed tr:hover {
+        background: rgba(17, 15, 3, 0.16);
+    }
+
+    #listOfBooks > tbody:nth-child(1) > tr > th:nth-child(1) {
+        border-top: var(--main-border-top-color);
+    }
+    #listOfBooks > tbody {
+        border-top: var(--main-border-top-color);
+    }
+    body > div.container.body-content > hr {
+        border-top: var(--main-border-top-color);
+        border-bottom: var(--main-border-top-color);
     }
    
     
@@ -62,7 +94,7 @@
             Carrier
         </th>
         <th class="editDelete col-md-3">
-            Actions
+            @*Actions*@
         </th>
     </tr>
 
@@ -81,8 +113,8 @@
             </td>
             <td class="carrier"></td>
             <td class="editDelete">
-                @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
-                <span> | </span>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.BookId })
+                <span> | </span>*@
                 @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
             </td>
         </tr>
@@ -94,7 +126,7 @@
 
     <table id="listOfBooks" class="table table-hover">
 
-        <thead class="thead-dark">
+        
 
             <tr class="header">
                 <th class="col-md-6">
@@ -119,32 +151,32 @@
                 if (item.BookAssociated.AvailabilityStatus == true) { continue; }
 
 
-            <tbody>
-                <tr class="bookTitle">
+                <tbody>
+                    <tr class="bookTitle">
 
 
-                    <td>
-                        @Html.ActionLink(item.BookAssociated.Title, "Details", new { id = item.BookAssociated.BookId })
-                    </td>
-                    <td class="author">
-                        @Html.DisplayFor(modelItem => item.BookAssociated.Author)
-                    </td>
-                    <td class="thisStatus">
-                        @Html.DisplayFor(modelItem => item.BorrowedOn)
-                    </td>
-                    <td class="carrier">
-                        @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
-                    </td>
-                    <td id="excludedColor" class="editDelete">
-                        @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
-                    </td>
+                        <td>
+                            @Html.ActionLink(item.BookAssociated.Title, "Details", new { id = item.BookAssociated.BookId })
+                        </td>
+                        <td class="author">
+                            @Html.DisplayFor(modelItem => item.BookAssociated.Author)
+                        </td>
+                        <td class="thisStatus">
+                            @Html.DisplayFor(modelItem => item.BorrowedOn)
+                        </td>
+                        <td class="carrier">
+                            @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
+                        </td>
+                        <td id="excludedColor" class="editDelete">
+                            @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
+                        </td>
 
-                </tr>
-            </tbody>
-                }
-                </thead>
+                    </tr>
+                </tbody>
+            }
 
-        </table>
+       
+     </table>
 
 </div>
 
