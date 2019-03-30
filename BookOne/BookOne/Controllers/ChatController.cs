@@ -10,6 +10,8 @@ namespace BookOne.Controllers
 {
     public class ChatController : Controller
     {       
+
+        //view users to chat with
         public ActionResult Index()
         {
             if (Session["user"] == null)
@@ -33,7 +35,8 @@ namespace BookOne.Controllers
             return View();
         }
 
-        public JsonResult ConversationWithContact(ApplicationUser contact)
+        //view the chat history between you and the selected user
+        public JsonResult ChatWithContact(ApplicationUser contact)
         {
             if (Session["user"] == null)
             {
@@ -61,6 +64,7 @@ namespace BookOne.Controllers
             );
         }
 
+        //send a new message to selected user and store it in the database
         [HttpPost]
         public JsonResult SendMessage(ApplicationUser contact)
         {

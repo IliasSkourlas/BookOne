@@ -1,84 +1,88 @@
-﻿ <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Chat</title>
-        <link rel="stylesheet" href="@Url.Content("~/Content/app.css")">
-      </head>
-      <body>
-        <!-- Navigation Bar -->
-        <nav class="navbar navbar-inverse">
-          <div class="container-fluid">
+﻿<!DOCTYPE html>
+<!-- / Lines 4 - 79 display the contacts retrieved by the Chat Controller
+    and the rest of the chat page to the user. -->
+<html>
+<head>
+    <title>Chat</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/app.css")">r
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">pChat - @ViewBag.currentUser.name </a>
+                <a class="navbar-brand" href="#">pChat - @ViewBag.currentUser.name </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Log Out</a></li>
+                <li><a href="#">Log Out</a></li>
             </ul>
-          </div>
-        </nav>
-        <!-- / Navigation Bar -->
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-3">
-                    <aside class="main visible-md visible-lg">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="panel panel-default users__bar">
-                                    <div class="panel-heading users__heading">
-                                        Contacts (@ViewBag.allUsers.Count)
-                                    </div>
-                                    <div class="__no__chat__">
-                                        <p>Select a contact to chat with</p>
-                                    </div>
-                                    <div class="panel-body users__body">
-                                        <ul id="contacts" class="list-group">
+        </div>
+    </nav>
+    <!-- / Navigation Bar -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <aside class="main visible-md visible-lg">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel panel-default users__bar">
+                                <div class="panel-heading users__heading">
+                                    Contacts (@ViewBag.allUsers.Count)
+                                </div>
+                                <div class="__no__chat__">
+                                    <p>Select a contact to chat with</p>
+                                </div>
+                                <div class="panel-body users__body">
+                                    <ul id="contacts" class="list-group">
 
-                                            @foreach (var user in @ViewBag.allUsers)
-                                            {
-                                                <a class="user__item contact-@user.id" href="#" data-contact-id="@user.id" data-contact-name="@user.name">
-                                                    <li>
-                                                        <div class="avatar">
-                                                            <img src="@Url.Content("~/Content/no_avatar.png")">
-                                                        </div>
-                                                        <span>@user.name</span>
-                                                        <div class="status-bar"></div>
-                                                    </li>
-                                                </a>
-                                            }
-                                        </ul>
-                                    </div>
+                                        @foreach (var user in @ViewBag.allUsers)
+                                        {
+                                            <a class="user__item contact-@user.id" href="#" data-contact-id="@user.id" data-contact-name="@user.name">
+                                                <li>
+                                                    <div class="avatar">
+                                                        <img src="@Url.Content("~/Content/no_avatar.png")">
+                                                    </div>
+                                                    <span>@user.name</span>
+                                                    <div class="status-bar"></div>
+                                                </li>
+                                            </a>
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </aside>
+                    </div>
+                </aside>
 
 
-                </div>
-                <div class="col-xs-12 col-md-9 chat__body">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <ul class="list-group chat__main"></ul>
+            </div>
+            <div class="col-xs-12 col-md-9 chat__body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul class="list-group chat__main"></ul>
+                    </div>
+                    <div class="chat__type__body">
+                        <div class="chat__type">
+                            <textarea id="msg_box" placeholder="Type your message"></textarea>
+                            <button class="btn btn-primary" id="sendMessage">Send</button>
                         </div>
-                        <div class="chat__type__body">
-                            <div class="chat__type">
-                                <textarea id="msg_box" placeholder="Type your message"></textarea>
-                                <button class="btn btn-primary" id="sendMessage">Send</button>
-                            </div>
-                        </div>
-                        <div class="chat__typing">
-                            <span id="typerDisplay"></span>
-                        </div>
+                    </div>
+                    <div class="chat__typing">
+                        <span id="typerDisplay"></span>
                     </div>
                 </div>
             </div>
         </div>
-        <script src="@Url.Content("~/Content/app.js")"></script>
-      </body>
-    </html>
+    </div>
+    <script src="@Url.Content("~/Content/app.js")"></script>
+</body>
+</html>
 
 
+// The following contains jQuery and JS functions that select the user to chat with
+// then fetch and display the chat history with the current user
 
-    <script>
+<script>
     let currentContact = null; // Holds current contact
     let newMessageTpl =
     `<div>
@@ -89,7 +93,7 @@
           </div>
         </div>
      </div>`;
-    ...
+
     // select contact to chat with
     $('.user__item').click( function(e) {
         e.preventDefault();
@@ -148,3 +152,4 @@
 
         $('.chat__main').append(template);
     }
+</script>
