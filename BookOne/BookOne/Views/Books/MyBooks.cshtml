@@ -101,6 +101,7 @@
     @foreach (var item in Model.Books)
     {
         if (item.AvailabilityStatus == false) { continue; }
+
         <tr class="bookTitle">
             <td>
                 @Html.ActionLink( item.Title, "Details", new { id = item.BookId })
@@ -112,11 +113,7 @@
                 @Html.DisplayFor(modelItem => item.BookStatus)
             </td>
             <td class="carrier"></td>
-            <td class="editDelete">
-                @*@Html.ActionLink("Edit", "Edit", new { id = item.BookId })
-                <span> | </span>*@
-                @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
-            </td>
+            <td class="editDelete"></td>
         </tr>
     }
 </table>
@@ -125,8 +122,6 @@
 <div  class="borrowed">
 
     <table id="listOfBooks" class="table table-hover">
-
-        
 
             <tr class="header">
                 <th class="col-md-6">
@@ -150,19 +145,16 @@
             {
                 if (item.BookAssociated.AvailabilityStatus == true) { continue; }
 
-
                 <tbody>
                     <tr class="bookTitle">
-
-
                         <td>
-                            @Html.ActionLink(item.BookAssociated.Title, "Details", new { id = item.BookAssociated.BookId })
+                            @Html.ActionLink(item.BookAssociated.Title, "BorrowedBookDetails", new { id = item.BookAssociated.BookId })
                         </td>
                         <td class="author">
                             @Html.DisplayFor(modelItem => item.BookAssociated.Author)
                         </td>
                         <td class="thisStatus">
-                            @Html.DisplayFor(modelItem => item.BorrowedOn)
+                            @Html.DisplayFor(modelItem => item.DaysRemaining)
                         </td>
                         <td class="carrier">
                             @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
@@ -170,15 +162,12 @@
                         <td id="excludedColor" class="editDelete">
                             @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
                         </td>
-
                     </tr>
                 </tbody>
             }
-
-       
      </table>
-
 </div>
+
 
 
 <script>

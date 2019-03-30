@@ -351,6 +351,7 @@
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Player\ShowUserProfile.cshtml" />
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
+    <Content Include="Views\Books\BorrowedBookDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

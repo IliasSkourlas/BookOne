@@ -55,9 +55,11 @@
         @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
 
         <hr /><br />
-        <h5>If you are receiving your book in perfect condition, you can thank the borrower by giving him a "Treat"...</h5>
+        <h5>If you are receiving your book in perfect condition, you can thank the borrower by giving him a "Clap"...</h5>
         <div>
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3, new { @checked = true }) <span> Treat</span> <br />
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1, new { @checked = true }) <span> Clap</span> <br />
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span> Shovel</span> <br />
+            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span> Treat</span> <br />
             @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span> Poisonous Cookie</span> <br />
             @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0) <span> Nothing</span> <br />
 
