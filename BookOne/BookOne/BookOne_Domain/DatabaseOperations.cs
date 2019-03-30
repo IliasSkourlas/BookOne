@@ -22,6 +22,12 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        public IEnumerable<ApplicationUser> GetAllOtherUsers(string userId)
+        {
+            return db.Users.Where(u => u.Id != userId).ToList();
+        }
+
+
         //Get Reactions for a user
         public IEnumerable<UserReaction> GetUserReactions(string userId)
         {
@@ -312,20 +318,6 @@ namespace BookOne.BookOne_Domain
         }
 
 
-        //DaysRemaining counter for borrowed book
-        public int DaysRemainingCounter(BookCirculation circulation)
-        {
-            //For testing purposes, borrowing time is set to 14 days(2 weeks)
-            int weeksRemaining = circulation.BorrowedForXWeeks;
-            int daysInTheseWeeks = weeksRemaining * 7;
-
-            DateTime today = DateTime.Today;
-            DateTime returnBookDate = circulation.BorrowedOn.AddDays(daysInTheseWeeks);
-
-            return (returnBookDate - today).Days;
-        }
-
-
         //Book returns to the owner
         public void OwnerReceivedBookBack(BookCirculation circulation)
         {
@@ -379,5 +371,15 @@ namespace BookOne.BookOne_Domain
         {
             return db.BookCirculations.Where(c => c.Borrower.Id == userId && c.CirculationStatus == CirculationStatuses.Borrowed).Count();
         }
+
+
+
+        //Returns user's number of unanswered requests
+        //public int NewRequestsCounter(string userId)
+        //{
+        //    var meh = db.BookRequests.Where(r => r.BookRequested.Owner.Id == userId && r.RequestStatus == RequestStatuses.Unanswered).Count();
+
+        //    var meh2 = db.BookRequests.Where(r => r.RequestedBy.Id == userId && r.RequestStatus == RequestStatuses.Accepted).Count();
+        //}
     }
 }

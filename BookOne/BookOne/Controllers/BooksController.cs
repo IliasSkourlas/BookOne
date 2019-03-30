@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Web.Mvc;
 using BookOne.BookOne_Domain;
 using BookOne.Models;
@@ -37,7 +38,7 @@ namespace BookOne.Controllers
             };
 
             foreach (var circulation in model.BookCirculations)
-                circulation.DaysRemaining = dbOps.DaysRemainingCounter(circulation);
+                circulation.DaysRemaining = DaysRemainingCounter(circulation);
 
             return View(model);
         }
@@ -56,7 +57,7 @@ namespace BookOne.Controllers
             };
 
             foreach (var circulation in model.BookCirculations)
-                circulation.DaysRemaining = dbOps.DaysRemainingCounter(circulation);
+                circulation.DaysRemaining = DaysRemainingCounter(circulation);
 
             return View(model);
         }
@@ -93,7 +94,7 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
-            circulation.DaysRemaining = dbOps.DaysRemainingCounter(circulation);
+            circulation.DaysRemaining = DaysRemainingCounter(circulation);
             circulation.BookAssociated.CompletedCirculationsForThisBook = dbOps.BookCirculationsCounter(id);
 
             return View(circulation);
@@ -185,6 +186,20 @@ namespace BookOne.Controllers
             Book book = dbOps.GetBook(id);
             dbOps.DeleteBook(book);
             return RedirectToAction("MyBooks");
+        }
+
+
+        //DaysRemaining counter for borrowed book
+        public int DaysRemainingCounter(BookCirculation circulation)
+        {
+            //For testing purposes, borrowing time is set to 14 days(2 weeks)
+            int weeksRemaining = circulation.BorrowedForXWeeks;
+            int daysInTheseWeeks = weeksRemaining * 7;
+
+            DateTime today = DateTime.Today;
+            DateTime returnBookDate = circulation.BorrowedOn.AddDays(daysInTheseWeeks);
+
+            return (returnBookDate - today).Days;
         }
 
 

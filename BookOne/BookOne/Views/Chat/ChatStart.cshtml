@@ -9,7 +9,7 @@
         <nav class="navbar navbar-inverse">
           <div class="container-fluid">
             <div class="navbar-header">
-              <a class="navbar-brand" href="#">pChat - @ViewBag.currentUser.name </a>
+              <a class="navbar-brand" href="#">pChat - @ViewBag.currentUser.ActualUsername </a>
             </div>
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#">Log Out</a></li>
@@ -35,15 +35,17 @@
 
                                             @foreach (var user in @ViewBag.allUsers)
                                             {
-                                                <a class="user__item contact-@user.id" href="#" data-contact-id="@user.id" data-contact-name="@user.name">
-                                                    <li>
+                                                <li>
+                                                    <a class="user__item contact-@user.Id" href="#" data-contact-id="@user.Id" data-contact-name="@user.ActualUsername">
+
                                                         <div class="avatar">
                                                             <img src="@Url.Content("~/Content/no_avatar.png")">
                                                         </div>
-                                                        <span>@user.name</span>
+                                                        <span>@user.ActualUsername</span>
                                                         <div class="status-bar"></div>
-                                                    </li>
-                                                </a>
+
+                                                    </a>
+                                                </li>
                                             }
                                         </ul>
                                     </div>
@@ -89,7 +91,8 @@
           </div>
         </div>
      </div>`;
-    ...
+
+    
     // select contact to chat with
     $('.user__item').click( function(e) {
         e.preventDefault();
@@ -136,7 +139,7 @@
 
         template = $(template);
 
-        if ( message_obj.sender_id == @ViewBag.currentUser.id ) {
+        if ( message_obj.sender_id == @ViewBag.currentUser.Id ) {
             template.find('.__chat__').addClass('from__chat');
         } else {
             template.find('.__chat__').addClass('receive__chat');
@@ -147,4 +150,5 @@
         }
 
         $('.chat__main').append(template);
+        </script>
     }

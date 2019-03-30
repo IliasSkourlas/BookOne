@@ -5,32 +5,27 @@ using System.Web;
 using System.Web.Mvc;
 using BookOne.Models;
 using BookOne.BookOne_Domain;
+using Microsoft.AspNet.Identity;
 
 namespace BookOne.Controllers
 {
+    [Authorize]
     public class ChatController : Controller
-    {       
+    {
+        DatabaseOperations dbOps = new DatabaseOperations();
+
+
         public ActionResult Index()
         {
-            if (Session["user"] == null)
-            {
-                return Redirect("/");
-            }
+            //if (Session["user"] == null)
+            //{
+            //    return Redirect("/");
+            //}
 
-            var currentUser = (ApplicationUser)Session["user"];
+            ViewBag.allUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
+            ViewBag.currentUser = dbOps.GetUser(User.Identity.GetUserId());
 
-            using (var db = new Models.ApplicationDbContext())
-            {
-
-                ViewBag.allUsers = db.Users.Where(u => u.ActualUsername != currentUser.ActualUsername)
-                                    .ToList();
-            }
-
-
-            ViewBag.currentUser = currentUser;
-
-
-            return View();
+            return View("ChatStart");
         }
 
         public JsonResult ConversationWithContact(ApplicationUser contact)
