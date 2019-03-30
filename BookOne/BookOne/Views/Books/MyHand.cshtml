@@ -88,7 +88,7 @@
             <td class="timeLeft">
                 @if (item.BookAssociated.BorrowerAskedToReturnThisBook == false)
                 {
-                    @Html.ActionLink("Return Book", "ReturnBookRequest", "Player", new { RequestId = item.BookCirculationId }, null)
+                    @Html.ActionLink("Return Book", "ReturnBookRequest", "Player", new { CirculationId = item.BookCirculationId }, null)
                 }
                 @if(item.BookAssociated.BorrowerAskedToReturnThisBook == true)
                 {

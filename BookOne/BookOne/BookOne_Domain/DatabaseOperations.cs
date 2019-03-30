@@ -202,10 +202,22 @@ namespace BookOne.BookOne_Domain
                 db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Declined)
                 .Include(r => r.BookRequested.Owner);
 
+            // pending BookRequests to be approved by the logged in user for books returning(user is the owner of these book)
+            var bookRequests_BorrowerWantsToReturnBook =
+                db.BookRequests.Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Returning)
+                .Include(r => r.BookRequested.Owner);
+
+            // pending BookRequests to be approved by the logged in user for books returning(user is the borrower of these book)
+            var bookRequests_BorrowerAskedToReturnBook =
+                db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Returning)
+                .Include(r => r.BookRequested.Owner);
+
             return booksRequestedFromTheLoggedInUser
                 .Union(bookRequests_OwnerHasNotAnswered)
                 .Union(bookRequests_OwnerApproved)
                 .Union(bookRequests_OwnerDeclined)
+                .Union(bookRequests_BorrowerWantsToReturnBook)
+                .Union(bookRequests_BorrowerAskedToReturnBook)
                 .ToList();
         }
 
@@ -271,6 +283,11 @@ namespace BookOne.BookOne_Domain
             bookToBeBorrowed.AvailabilityStatus = false;
             bookToBeBorrowed.Carrier = db.Users.Find(request.RequestedBy.Id);
             db.SaveChanges();
+        }
+
+        public BookCirculation GetBookCirculation(int? CirculationId)
+        {
+            return db.BookCirculations.Find(CirculationId);
         }
 
 
