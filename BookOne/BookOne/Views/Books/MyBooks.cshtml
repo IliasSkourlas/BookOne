@@ -65,8 +65,7 @@
         border-top: var(--main-border-top-color);
         border-bottom: var(--main-border-top-color);
     }
-   
-    
+
 </style>
 
 <br />
@@ -162,6 +161,18 @@
                             {
                                 @Html.DisplayFor(modelItem => item.DaysRemaining) <span> day remaining</span>
                             }
+                            @if (item.DaysRemaining == 14)
+                            {
+                                <script>
+                                    
+                                    myFunction();
+                                    function myFunction() {
+                                        setInterval(function () { $("#blink a").css("color", "red"); }, 500);
+                                        setInterval(function () { $("#blink a").css("color", " #9d9d9d"); }, 1010);
+                                        }
+  
+                                </script>
+                            }
 
 
                         </td>
@@ -180,6 +191,11 @@
 
 
 <script>
+
+    //function Blink() {
+    //    console.log("Blink");
+    //    $("#blink a").attr("color", "red");
+    //}
 
     var n = 0;
     var i = 1;
@@ -224,5 +240,6 @@
 
         console.log("new", n);
     }
+
 
 </script>
