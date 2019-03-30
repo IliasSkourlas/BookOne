@@ -87,15 +87,15 @@
         <th class="author col-md-6">
             Author
         </th>
-        <th class="thisStatus col-md-3">
+        <th class="thisStatus col-md-6">
             Status
         </th>
         <th class="carrier col-md-6">
             Carrier
         </th>
-        <th class="editDelete col-md-3">
+        @*<th class="editDelete col-md-3">
             Actions
-        </th>
+        </th>*@
     </tr>
 
     @foreach (var item in Model.Books)
@@ -113,7 +113,7 @@
                 @Html.DisplayFor(modelItem => item.BookStatus)
             </td>
             <td class="carrier"></td>
-            <td class="editDelete"></td>
+            @*<td class="editDelete"></td>*@
         </tr>
     }
 </table>
@@ -130,15 +130,15 @@
                 <th class="author col-md-6">
                     @*Author*@
                 </th>
-                <th class="thisStatus col-md-3">
+                <th class="thisStatus col-md-6">
                     @*Borrowed On*@
                 </th>
                 <th class="carrier col-md-6">
                     @*Carrier*@
                 </th>
-                <th class="editDelete col-md-3">
-                    @*Actions*@
-                </th>
+                @*<th class="editDelete col-md-3">
+                    Actions
+                </th>*@
             </tr>
 
             @foreach (var item in Model.BookCirculations)
@@ -154,14 +154,23 @@
                             @Html.DisplayFor(modelItem => item.BookAssociated.Author)
                         </td>
                         <td class="thisStatus">
-                            @Html.DisplayFor(modelItem => item.DaysRemaining)
+                            @if (item.DaysRemaining > 1 || item.DaysRemaining == 0)
+                            {
+                                @Html.DisplayFor(modelItem => item.DaysRemaining) <span> days remaining</span>
+                            }
+                            @if (item.DaysRemaining == 1)
+                            {
+                                @Html.DisplayFor(modelItem => item.DaysRemaining) <span> day remaining</span>
+                            }
+
+
                         </td>
                         <td class="carrier">
                             @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
                         </td>
-                        <td id="excludedColor" class="editDelete">
+                        @*<td id="excludedColor" class="editDelete">
                             @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
-                        </td>
+                        </td>*@
                     </tr>
                 </tbody>
             }
@@ -171,13 +180,6 @@
 
 
 <script>
-
-    function hideAll() {
-        $('.editDelete').hide();
-        $('.author').hide();
-        $('.thisStatus').hide();
-        $('.carrier').hide();
-    }
 
     var n = 0;
     var i = 1;
@@ -191,6 +193,8 @@
             new function () {
                 $('.author').show();
                 $('.thisStatus').hide();
+                $('.carrier').hide();
+                $('.editDelete').hide();
             }
         }
         if (n === 2) {
