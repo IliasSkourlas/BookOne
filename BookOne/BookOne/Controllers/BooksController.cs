@@ -75,7 +75,28 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
+
+            book.CompletedCirculationsForThisBook = dbOps.BookCirculationsCounter(id);
+
             return View(book);
+        }
+
+        // GET: Books/BorrowedBookDetails/5
+        public ActionResult BorrowedBookDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BookCirculation circulation = dbOps.GetBookLatestOnGoingCirculation(id);
+            if (circulation == null)
+            {
+                return HttpNotFound();
+            }
+            circulation.DaysRemaining = dbOps.DaysRemainingCounter(circulation);
+            circulation.BookAssociated.CompletedCirculationsForThisBook = dbOps.BookCirculationsCounter(id);
+
+            return View(circulation);
         }
 
         // GET: Books/Create

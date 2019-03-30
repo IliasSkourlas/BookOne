@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace BookOne.BookOne_Domain
@@ -36,6 +37,9 @@ namespace BookOne.BookOne_Domain
         public BookStatuses BookStatus { get; set; }
 
         public bool AvailabilityStatus { get; set; }
+
+        [NotMapped]
+        public int CompletedCirculationsForThisBook { get; set; }
     }
 
     public enum BookStatuses

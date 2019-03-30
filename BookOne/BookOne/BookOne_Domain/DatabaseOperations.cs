@@ -315,5 +315,15 @@ namespace BookOne.BookOne_Domain
             db.UserReactions.Add(reaction);
             db.SaveChanges();
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        //Returns number of times a book was in a succesfull circulation
+        public int BookCirculationsCounter(int? bookId)
+        {
+            return db.BookCirculations.Where(c => c.BookAssociated.BookId == bookId && c.CirculationStatus == CirculationStatuses.Completed).Count();
+        }
     }
 }
