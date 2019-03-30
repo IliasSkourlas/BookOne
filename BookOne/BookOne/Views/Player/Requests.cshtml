@@ -67,13 +67,13 @@
 
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted)
                 {
-                    @if (item.BookRequested.AvailabilityStatus == true)
+                    if (item.BookRequested.AvailabilityStatus == true)
                     {
                         @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId }) <span>|</span>
 
                         @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
                     }
-                    @if (item.BookRequested.AvailabilityStatus == false)
+                    if (item.BookRequested.AvailabilityStatus == false)
                     {
                         <span>You have this book</span>
                     }
@@ -81,11 +81,11 @@
 
                 @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
                 {
-                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId())
+                    if (item.BookRequested.Owner.Id == User.Identity.GetUserId())
                     {
                         @Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })
                     }
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId())
+                    if (item.RequestedBy.Id == User.Identity.GetUserId())
                     {
                         <span>You asked to return this book</span>
                     }

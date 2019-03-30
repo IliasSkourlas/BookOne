@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BookOne.BookOne_Domain.Book>
+﻿@using Microsoft.AspNet.Identity;
+@model IEnumerable<BookOne.BookOne_Domain.Book>
 
 @{
     Layout = "~/Views/Shared/_Layout - User1.cshtml";
@@ -61,11 +62,11 @@
             </td>
 
             <td class="Status">
-                @if (item.AvailabilityStatus == true)
+                @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
                 {
                     @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
                 }
-                else
+                @if (item.AvailabilityStatus == false || item.Owner.Id == User.Identity.GetUserId())
                 {
                     <span>Unavailable</span>
                 }
