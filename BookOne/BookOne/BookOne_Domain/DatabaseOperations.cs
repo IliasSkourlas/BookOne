@@ -65,9 +65,17 @@ namespace BookOne.BookOne_Domain
 
 
         //Returns All books inserted to the application except logged in user's books
-        public IEnumerable<Book> AllBooksExceptOwners(string loggedInUserId)
+        //public IEnumerable<Book> AllBooksExceptOwners(string loggedInUserId)
+        //{
+        //    return db.Books.Where(b => b.Owner.Id != loggedInUserId && b.BookStatus == BookStatuses.Public)
+        //        .Include(b => b.Owner)
+        //        .ToList();
+        //}
+
+        //Returns All books inserted to the application except logged in user's books
+        public IEnumerable<Book> AllBooks(string loggedInUserId)
         {
-            return db.Books.Where(b => b.Owner.Id != loggedInUserId && b.BookStatus == BookStatuses.Public)
+            return db.Books.Where(b.BookStatus == BookStatuses.Public)
                 .Include(b => b.Owner)
                 .ToList();
         }

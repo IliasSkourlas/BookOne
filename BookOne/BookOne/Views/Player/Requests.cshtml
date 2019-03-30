@@ -57,38 +57,50 @@
 
                     //Change color at MyBooks
                 }
+
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
                 {
                     <span>Waiting for owner's response | </span>
 
                     @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
                 }
-                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
-                {
-                    @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId }) <span>|</span>
 
-                    @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
-                }
-                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
+                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted)
                 {
-                    <span>You have this book</span>
+                    @if (item.BookRequested.AvailabilityStatus == true)
+                    {
+                        @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId }) <span>|</span>
+
+                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
+                    }
+                    @if (item.BookRequested.AvailabilityStatus == false)
+                    {
+                        <span>You have this book</span>
+                    }
                 }
-                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
+
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
                 {
-                    <span>You asked to return this book</span>
+                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId())
+                    {
+                        @Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })
+                    }
+                    @if (item.RequestedBy.Id == User.Identity.GetUserId())
+                    {
+                        <span>You asked to return this book</span>
+                    }
                 }
-                @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
-                {
-                    @Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })
-                }
+
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
                 {
                     <span>You returned this book</span>
                 }
+
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Canceled)
                 {
                     <span>Request Canceled</span>
                 }
+
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
                 {
                     <span>Request Declined</span>
