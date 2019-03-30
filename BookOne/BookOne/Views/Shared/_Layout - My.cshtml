@@ -63,6 +63,10 @@
         a {
             color: rgba(255, 255, 255, 0.8);
         }
+
+        #blink a {
+            color: #9d9d9d;
+        }
         
     </style>
 
@@ -96,7 +100,7 @@
                     }
                     <li id="weAreHere">@Html.ActionLink("My", "MyBooks", "Books")</li>
                     <li>@Html.ActionLink("Hand", "MyHand", "Books")</li>
-                    <li>@Html.ActionLink("Requests", "Requests", "Player")</li>
+                    <li id="blink">@Html.ActionLink("Requests", "Requests", "Player")</li>
                 </ul>
 
 

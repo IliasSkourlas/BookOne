@@ -116,13 +116,15 @@ namespace BookOne.Controllers
 
 
         //Borrower wants to return a book
-        public ActionResult ReturnBookRequest(int? RequestId)
+        public ActionResult ReturnBookRequest(int? CirculationId)
         {
-            if (RequestId == null)
+            if (CirculationId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BookRequest request = dbOps.GetBookRequest(RequestId);
+            BookCirculation circulation = dbOps.GetBookCirculation(CirculationId);
+
+            BookRequest request = dbOps.GetBookRequest(circulation.RequestIdForThisCirculation);
             if (request == null)
             {
                 return HttpNotFound();
@@ -146,8 +148,27 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
-            
-            return RedirectToAction("ReturnBook", request);
+
+            var book = dbOps.GetBook(request.BookRequested.BookId);
+
+            var circulation = dbOps.GetBookLatestOnGoingCirculation(book.BookId);
+            if (circulation == null)
+            {
+                return HttpNotFound();
+            }
+
+            var model = new ReturnBookViewModel()
+            {
+                Circulation = circulation,
+                ReactionGiven = new UserReaction()
+                {
+                    ActionGiverId = request.BookRequested.Owner.Id,
+                    ActionReceiverId = circulation.Borrower.Id,
+                    CirculationForThisReaction = circulation
+                }
+            };
+
+            return View("BorrowerReturnsBook", model);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,30 +247,7 @@ namespace BookOne.Controllers
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        //Owner is receiving a book from its borrower
-        public ActionResult ReturnBook(BookRequest request)
-        {
-            var circulation = dbOps.GetBookLatestOnGoingCirculation(request.BookRequested.BookId);
-            if (circulation == null)
-            {
-                return HttpNotFound();
-            }
-
-            var model = new ReturnBookViewModel()
-            {
-                Circulation = circulation,
-                ReactionGiven = new UserReaction()
-                {
-                    ActionGiverId = request.BookRequested.Owner.Id,
-                    ActionReceiverId = circulation.Borrower.Id,
-                    CirculationForThisReaction = circulation
-                }
-            };
-
-            return View("BorrowerReturnsBook", model);
-        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]

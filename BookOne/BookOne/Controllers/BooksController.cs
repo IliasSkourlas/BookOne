@@ -20,7 +20,7 @@ namespace BookOne.Controllers
             //Displays all Books not owned by the logged in user
             var loggedInUserId = User.Identity.GetUserId();
 
-            return View(dbOps.AllBooksExceptOwners(loggedInUserId));
+            return View(dbOps.AllBooks(loggedInUserId));
         }
 
 
