@@ -159,9 +159,7 @@
                         <td class="carrier">
                             @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
                         </td>
-                        <td id="excludedColor" class="editDelete">
-                            @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
-                        </td>
+                        <td id="excludedColor" class="editDelete"></td>
                     </tr>
                 </tbody>
             }

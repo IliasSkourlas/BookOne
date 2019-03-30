@@ -64,11 +64,9 @@
             Owner
         </th>
         <th class="timeLeft col-md-3">
-            Borrowed On
-        </th>
-        <th class="timeLeft col-md-3">
             Remaining Days
         </th>
+        <th class="timeLeft col-md-3"></th>
     </tr>
 
     @foreach (var item in Model.BookCirculations)
@@ -85,10 +83,17 @@
                 @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
             </td>
             <td class="timeLeft">
-                @Html.DisplayFor(modelItem => item.BorrowedOn)
+                @Html.DisplayFor(modelItem => item.DaysRemaining)
             </td>
             <td class="timeLeft">
-                @Html.DisplayFor(modelItem => item.DaysRemaining)
+                @if (item.BookAssociated.BorrowerAskedToReturnThisBook == false)
+                {
+                    @Html.ActionLink("Return Book", "ReturnBookRequest", "Player", new { RequestId = item.BookCirculationId }, null)
+                }
+                @if(item.BookAssociated.BorrowerAskedToReturnThisBook == true)
+                {
+                    <span>You asked to return this book</span>
+                }
             </td>
         </tr>
     }

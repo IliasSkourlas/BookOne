@@ -87,11 +87,6 @@ namespace BookOne.Controllers
                 return HttpNotFound();
             }
 
-            return RedirectToAction("RequestConfirmed", book);
-        }
-
-        public ActionResult RequestConfirmed(Book book)
-        {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
             var bookRequested = dbOps.GetBook(book.BookId);
 
@@ -114,16 +109,46 @@ namespace BookOne.Controllers
                 return HttpNotFound();
             }
 
-            return RedirectToAction("CancelConfirmed", request);
-        }
-        
-        public ActionResult CancelConfirmed(BookRequest request)
-        {
             dbOps.CancelRequest(request);
 
             return RedirectToAction("Requests");
         }
 
+
+        //Borrower wants to return a book
+        public ActionResult ReturnBookRequest(int? RequestId)
+        {
+            if (RequestId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BookRequest request = dbOps.GetBookRequest(RequestId);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+
+            dbOps.ReturnBookRequest(request);
+
+            return RedirectToAction("MyHand", "Books");
+        }
+
+
+        //Owner Takes Back His Book
+        public ActionResult OwnerTakesBackHisBook(int? RequestId)
+        {
+            if (RequestId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BookRequest request = dbOps.GetBookRequest(RequestId);
+            if (request == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return RedirectToAction("ReturnBook", request);
+        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -204,18 +229,9 @@ namespace BookOne.Controllers
 
 
         //Owner is receiving a book from its borrower
-        public ActionResult ReturnBook(int? bookId)
+        public ActionResult ReturnBook(BookRequest request)
         {
-            if (bookId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var book = dbOps.GetBook(bookId);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-            var circulation = dbOps.GetBookLatestOnGoingCirculation(bookId);
+            var circulation = dbOps.GetBookLatestOnGoingCirculation(request.BookRequested.BookId);
             if (circulation == null)
             {
                 return HttpNotFound();
@@ -226,7 +242,7 @@ namespace BookOne.Controllers
                 Circulation = circulation,
                 ReactionGiven = new UserReaction()
                 {
-                    ActionGiverId = book.Owner.Id,
+                    ActionGiverId = request.BookRequested.Owner.Id,
                     ActionReceiverId = circulation.Borrower.Id,
                     CirculationForThisReaction = circulation
                 }

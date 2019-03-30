@@ -15,6 +15,7 @@ namespace BookOne.BookOne_Domain
             BookStatus = BookStatuses.Public;
             AvailabilityStatus = true;
             Carrier = Owner;
+            BorrowerAskedToReturnThisBook = false;
         }
 
         
@@ -40,6 +41,8 @@ namespace BookOne.BookOne_Domain
 
         [NotMapped]
         public int CompletedCirculationsForThisBook { get; set; }
+        
+        public bool BorrowerAskedToReturnThisBook { get; set; }
     }
 
     public enum BookStatuses

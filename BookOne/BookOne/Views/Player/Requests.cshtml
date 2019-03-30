@@ -73,6 +73,14 @@
                 {
                     <span>You have this book</span>
                 }
+                @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
+                {
+                    <span>You asked to return this book</span>
+                }
+                @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
+                {
+                    @Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })
+                }
                 @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
                 {
                     <span>You returned this book</span>

@@ -32,6 +32,7 @@ namespace BookOne.BookOne_Domain
         Accepted,
         Declined,
         Canceled,
-        Closed
+        Closed,
+        Returning
     }
 }

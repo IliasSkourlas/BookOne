@@ -220,6 +220,17 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        //Borrower wants to return a book
+        public void ReturnBookRequest(BookRequest request)
+        {
+            var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
+
+            requestToBeChanged.RequestStatus = RequestStatuses.Returning;
+            request.BookRequested.BorrowerAskedToReturnThisBook = true;
+            db.SaveChanges();
+        }
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
