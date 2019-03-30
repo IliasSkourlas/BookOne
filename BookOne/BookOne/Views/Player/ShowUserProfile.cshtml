@@ -37,11 +37,12 @@
         <dd>
             @Html.DisplayFor(model => model.User.Email)
         </dd>
-
     </dl>
 </div>
 
 
+<br />
+<h3>User's Books</h3>
 <table id="listOfBooks" class="table">
     <tr class="header">
         <th>
@@ -56,9 +57,7 @@
         <th class="carrier">
             Carrier
         </th>
-        <th class="editDelete">
-
-        </th>
+        <th class="editDelete"></th>
     </tr>
 
     @foreach (var item in Model.UserBooks)
@@ -85,7 +84,7 @@
             </td>
             <td class="editDelete">
                 @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
-                @if (item.AvailabilityStatus == true)
+                @*@if (item.AvailabilityStatus == true)
                 {
                     <span> &emsp; </span>
                     @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
@@ -96,11 +95,60 @@
                 {
                     <span>&emsp;</span>
                     @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
-                }
+                }*@
             </td>
         </tr>
     }
+</table>
 
+
+<br />
+<h3>Reactions Received</h3>
+<table class="table">
+    <tr>
+        <th class="col-md-2">
+            Claps
+        </th>
+        <th class="col-md-2">
+            Shovels
+        </th>
+        <th class="col-md-2">
+            Treats
+        </th>
+        <th class="col-md-2">
+            Poisonous Cookies
+        </th>
+        @*<th class="col-md-2">
+            Connector Bonus
+        </th>*@
+        <th class="col-md-4"> @*To be modified as col-md-2 when Connector Bonus is implemented*@
+            Nothing Received
+        </th>
+    </tr>
+
+    @foreach (var item in Model.UserReactions)
+    {
+        <tr>
+            <td>
+                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Clap)
+            </td>
+            <td>
+                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Shovel)
+            </td>
+            <td>
+                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Treat)
+            </td>
+            <td>
+                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.PoisonousCookie)
+            </td>
+            @*<td>
+                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.ConnectorBonus)
+            </td>*@
+            <td>
+                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Nothing)
+            </td>
+        </tr>
+    }
 </table>
 
 

@@ -30,8 +30,8 @@ namespace BookOne.Controllers
             UserViewModel model = new UserViewModel()
             {
                 User = user,
-                UserBooks = dbOps.MyBooks(userId)
-                //UserReactions ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                UserBooks = dbOps.MyBooks(userId),
+                UserReactions = dbOps.GetReactionsAUserReceived(userId)
             };
 
             return View(model);

@@ -320,10 +320,16 @@ namespace BookOne.BookOne_Domain
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        //Returns number of times a book was in a succesfull circulation
+        //Returns number of times a book was in a succesful circulation
         public int BookCirculationsCounter(int? bookId)
         {
             return db.BookCirculations.Where(c => c.BookAssociated.BookId == bookId && c.CirculationStatus == CirculationStatuses.Completed).Count();
+        }
+
+        //Reactions a user has received after succesful circulations
+        public IEnumerable<UserReaction> GetReactionsAUserReceived(string userId)
+        {
+            return db.UserReactions.Where(r => r.ActionReceiverId == userId).ToList();
         }
     }
 }
