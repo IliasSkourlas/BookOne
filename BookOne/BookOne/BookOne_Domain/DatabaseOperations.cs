@@ -320,7 +320,7 @@ namespace BookOne.BookOne_Domain
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        //Returns number of times a book was in a succesful circulation
+        //Returns the number of times a book was in a succesful circulation
         public int BookCirculationsCounter(int? bookId)
         {
             return db.BookCirculations.Where(c => c.BookAssociated.BookId == bookId && c.CirculationStatus == CirculationStatuses.Completed).Count();
@@ -330,6 +330,18 @@ namespace BookOne.BookOne_Domain
         public IEnumerable<UserReaction> GetReactionsAUserReceived(string userId)
         {
             return db.UserReactions.Where(r => r.ActionReceiverId == userId).ToList();
+        }
+
+        //Returns the number of circulations a user has completed as a borrower
+        public int CompletedUserBookCirculationsCounter(string userId)
+        {
+            return db.BookCirculations.Where(c => c.Borrower.Id == userId && c.CirculationStatus == CirculationStatuses.Completed).Count();
+        }
+
+        //Returns the number of books a user is currently borrowing
+        public int OnGoingUserBookCirculationsCounter(string userId)
+        {
+            return db.BookCirculations.Where(c => c.Borrower.Id == userId && c.CirculationStatus == CirculationStatuses.Borrowed).Count();
         }
     }
 }

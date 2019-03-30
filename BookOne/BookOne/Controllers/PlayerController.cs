@@ -34,6 +34,8 @@ namespace BookOne.Controllers
                 UserReactions = dbOps.GetReactionsAUserReceived(userId)
             };
 
+            ViewBag.CompletedCirculations = dbOps.CompletedUserBookCirculationsCounter(userId);
+            ViewBag.OnGoingCirculations = dbOps.OnGoingUserBookCirculationsCounter(userId);
             return View(model);
         }
 

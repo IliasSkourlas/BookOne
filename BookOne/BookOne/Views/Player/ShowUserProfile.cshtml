@@ -25,6 +25,13 @@
         @Html.HiddenFor(model => model.User.PhoneNumber)
 
         <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.User.RegisteredOn)
         </dt>
         <dd>
@@ -32,74 +39,21 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.User.Email)
+            Completed Circulations as a Borrower
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.Email)
+            @ViewBag.CompletedCirculations
+        </dd>
+
+        <dt>
+            On-Going Circulations as a Borrower
+        </dt>
+        <dd>
+            @ViewBag.OnGoingCirculations
         </dd>
     </dl>
 </div>
 
-
-<br />
-<h3>User's Books</h3>
-<table id="listOfBooks" class="table">
-    <tr class="header">
-        <th>
-            Title
-        </th>
-        <th class="author">
-            Author
-        </th>
-        <th class="thisStatus">
-            Status
-        </th>
-        <th class="carrier">
-            Carrier
-        </th>
-        <th class="editDelete"></th>
-    </tr>
-
-    @foreach (var item in Model.UserBooks)
-    {
-        <tr class="bookTitle">
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td class="author">
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td class="thisStatus">
-                @Html.DisplayFor(modelItem => item.BookStatus)
-            </td>
-            <td class="carrier">
-                @if (item.AvailabilityStatus == false)
-                {
-                    @Html.DisplayFor(modelItem => item.Carrier.ActualUsername)
-                }
-                @if (item.AvailabilityStatus == true)
-                {
-                    <span>- - -</span>
-                }
-            </td>
-            <td class="editDelete">
-                @*@Html.ActionLink("Details", "Details", new { id = item.BookId })*@
-                @*@if (item.AvailabilityStatus == true)
-                {
-                    <span> &emsp; </span>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.BookId })
-                    <span> &emsp; </span>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.BookId })
-                }
-                @if (item.AvailabilityStatus == false)
-                {
-                    <span>&emsp;</span>
-                    @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookId }, null)
-                }*@
-            </td>
-        </tr>
-    }
-</table>
 
 
 <br />
