@@ -36,6 +36,9 @@ namespace BookOne.Controllers
                 BookCirculations = dbOps.MyBooksCirculations(loggedInUserId)
             };
 
+            foreach (var circulation in model.BookCirculations)
+                circulation.DaysRemaining = dbOps.DaysRemainingCounter(circulation);
+
             return View(model);
         }
 
