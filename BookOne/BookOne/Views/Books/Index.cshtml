@@ -19,23 +19,25 @@
         background-size: cover;
         background-attachment: fixed;
     }
+
+    
 </style>
 
 
 
 <table id="listOfBooks" class="table">
-    <tr class="header">
-        <th class="col-md-8" onclick="document.getElementById('searchInput').placeholder='Book'">
-
+    <tr class="header" >
+        <th id="Title" class="col-md-8">
+           
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th class="author col-md-4" onclick="document.getElementById('searchInput').placeholder='Author'">
+        <th id="Author" class="author col-md-4" >
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th class="owner col-md-4" onclick="document.getElementById('searchInput').placeholder='Owner'">
+        <th id="Owner" col-md-4">
             Owner
         </th>
-        <th class="Status col-md-4" onclick="document.getElementById('searchInput').placeholder='Availability'">
+        <th id="Availability" class="Status col-md-4">
             Availability
         </th>
     </tr>
@@ -44,18 +46,19 @@
     @foreach (var item in Model)
     {
         <tr class="bookTitle">
-            <td>
+            <td >
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
 
-            @*<td class="owner">
-                @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
-            </td>*@
 
-            <td class="owner">
+            @*<td class="owner">
+                @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
+            </td>*@
+            
+            <td   class="owner">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
 
@@ -86,8 +89,8 @@
 
     function hideAll() {
         $('.author').hide();
+        $('#Owner').hide();
         $('.owner').hide();
-
     }
 
     var n = 0;
@@ -103,22 +106,24 @@
             new function () {
                 $('.author').show();
                 $('.Status').hide();
-
+                
             }
         }
         if (n === 2) {
             console.log("new", n);
             new function () {
                 $('.author').hide();
+                $('#Owner').show();
                 $('.owner').show();
             }
         }
         if (n === 3) {
             console.log("new", n);
             new function () {
+                $('#Owner').hide();
                 $('.owner').hide();
                 $('.Status').show();
-
+                
 
 
             }
@@ -133,7 +138,7 @@
             }
         }
 
-
+        
     }
 
 </script>

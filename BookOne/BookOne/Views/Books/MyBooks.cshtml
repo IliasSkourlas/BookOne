@@ -8,15 +8,33 @@
 <style type="text/css">
 
     body {
-        background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgb(0, 0, 0, 0.02)), url('../../Content/images/Drowing.jpg');
+        background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
+    }
+    .table > tbody > tr > td, .table > tfoot > tr > td {
+        padding: 8px;
+        line-height: 1.42857143;
+        vertical-align: top;
+        border-top: none;
+        /*border-top: 1px solid #ddd;*/
     }
 
     #weAreHere a {
         color: rgb(0, 255, 255);
     }
+    div.borrowed * {
+        color: rgba(227, 229, 8, 0.74);
+    }
+    #excludedColor a {
+        color: rgba(0, 255, 255, 0.68);
+    }
+    .editDelete a {
+        color: rgba(0, 255, 255, 0.68);
+    }
+   
+    
 </style>
 
 <br />
@@ -27,8 +45,9 @@
     @Html.ActionLink("Add new", "Create")
 </p>
 
-<h2>My Books</h2>
+@*<h2>My Books</h2>*@
 <table id="listOfBooks" class="table">
+
     <tr class="header">
         <th class="col-md-6">
             Title
@@ -40,7 +59,7 @@
             Status
         </th>
         <th class="carrier col-md-6">
-            
+            Carrier
         </th>
         <th class="editDelete col-md-3">
             Actions
@@ -70,48 +89,64 @@
     }
 </table>
 
-<h2>Borrowed Books to other Users</h2>
-<table id="listOfBooks" class="table">
-    <tr class="header">
-        <th class="col-md-6">
-            Title
-        </th>
-        <th class="author col-md-6">
-            Author
-        </th>
-        <th class="thisStatus col-md-3">
-            Borrowed On
-        </th>
-        <th class="carrier col-md-6">
-            Carrier
-        </th>
-        <th class="editDelete col-md-3">
-            Actions
-        </th>
-    </tr>
+@*<h2>Borrowed Books to other Users</h2>*@
+<div  class="borrowed">
 
-    @foreach (var item in Model.BookCirculations)
-    {
-        if (item.BookAssociated.AvailabilityStatus == true) { continue; }
-        <tr class="bookTitle">
-            <td>
-                @Html.ActionLink(item.BookAssociated.Title, "Details", new { id = item.BookAssociated.BookId })
-            </td>
-            <td class="author">
-                @Html.DisplayFor(modelItem => item.BookAssociated.Author)
-            </td>
-            <td class="thisStatus">
-                @Html.DisplayFor(modelItem => item.BorrowedOn)
-            </td>
-            <td class="carrier">
-                @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
-            </td>
-            <td class="editDelete">
-                @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
-            </td>
-        </tr>
-    }
-</table>
+    <table id="listOfBooks" class="table table-hover">
+
+        <thead class="thead-dark">
+
+            <tr class="header">
+                <th class="col-md-6">
+                    @*Title*@
+                </th>
+                <th class="author col-md-6">
+                    @*Author*@
+                </th>
+                <th class="thisStatus col-md-3">
+                    @*Borrowed On*@
+                </th>
+                <th class="carrier col-md-6">
+                    @*Carrier*@
+                </th>
+                <th class="editDelete col-md-3">
+                    @*Actions*@
+                </th>
+            </tr>
+
+            @foreach (var item in Model.BookCirculations)
+            {
+                if (item.BookAssociated.AvailabilityStatus == true) { continue; }
+
+
+            <tbody>
+                <tr class="bookTitle">
+
+
+                    <td>
+                        @Html.ActionLink(item.BookAssociated.Title, "Details", new { id = item.BookAssociated.BookId })
+                    </td>
+                    <td class="author">
+                        @Html.DisplayFor(modelItem => item.BookAssociated.Author)
+                    </td>
+                    <td class="thisStatus">
+                        @Html.DisplayFor(modelItem => item.BorrowedOn)
+                    </td>
+                    <td class="carrier">
+                        @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
+                    </td>
+                    <td id="excludedColor" class="editDelete">
+                        @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
+                    </td>
+
+                </tr>
+            </tbody>
+                }
+                </thead>
+
+        </table>
+
+</div>
 
 
 <script>
