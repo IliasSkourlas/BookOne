@@ -1,0 +1,150 @@
+﻿ <!DOCTYPE html>
+    <html>
+      <head>
+        <title>Chat</title>
+        <link rel="stylesheet" href="@Url.Content("~/Content/app.css")">
+      </head>
+      <body>
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">pChat - @ViewBag.currentUser.name </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Log Out</a></li>
+            </ul>
+          </div>
+        </nav>
+        <!-- / Navigation Bar -->
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-3">
+                    <aside class="main visible-md visible-lg">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="panel panel-default users__bar">
+                                    <div class="panel-heading users__heading">
+                                        Contacts (@ViewBag.allUsers.Count)
+                                    </div>
+                                    <div class="__no__chat__">
+                                        <p>Select a contact to chat with</p>
+                                    </div>
+                                    <div class="panel-body users__body">
+                                        <ul id="contacts" class="list-group">
+
+                                            @foreach (var user in @ViewBag.allUsers)
+                                            {
+                                                <a class="user__item contact-@user.id" href="#" data-contact-id="@user.id" data-contact-name="@user.name">
+                                                    <li>
+                                                        <div class="avatar">
+                                                            <img src="@Url.Content("~/Content/no_avatar.png")">
+                                                        </div>
+                                                        <span>@user.name</span>
+                                                        <div class="status-bar"></div>
+                                                    </li>
+                                                </a>
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+
+                </div>
+                <div class="col-xs-12 col-md-9 chat__body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <ul class="list-group chat__main"></ul>
+                        </div>
+                        <div class="chat__type__body">
+                            <div class="chat__type">
+                                <textarea id="msg_box" placeholder="Type your message"></textarea>
+                                <button class="btn btn-primary" id="sendMessage">Send</button>
+                            </div>
+                        </div>
+                        <div class="chat__typing">
+                            <span id="typerDisplay"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="@Url.Content("~/Content/app.js")"></script>
+      </body>
+    </html>
+
+
+
+    <script>
+    let currentContact = null; // Holds current contact
+    let newMessageTpl =
+    `<div>
+        <div id="msg-{{id}}" class="row __chat__par__">
+          <div class="__chat__">
+            <p>{{body}}</p>
+            <p class="delivery-status">Delivered</p>
+          </div>
+        </div>
+     </div>`;
+    ...
+    // select contact to chat with
+    $('.user__item').click( function(e) {
+        e.preventDefault();
+
+        currentContact = {
+            id: $(this).data('contact-id'),
+            name: $(this).data('contact-name'),
+        };
+
+        $('#contacts').find('li').removeClass('active');
+
+        $('#contacts .contact-' + currentContact.id).find('li').addClass('active');
+        getChat(currentContact.id);
+    });
+
+    // get chat data
+    function getChat( contact_id ) {
+        $.get("/contact/conversations/" + contact_id )
+         .done( function(resp) {
+            var chat_data = resp.data || [];
+            loadChat( chat_data );
+         });
+    }
+
+    //load chat data into view
+    function loadChat( chat_data ) {
+
+        chat_data.forEach( function(data) {
+            displayMessage(data);
+        });
+
+        $('.chat__body').show();
+        $('.__no__chat__').hide();
+    }
+
+    function displayMessage( message_obj ) {
+        const msg_id = message_obj.id;
+        const msg_body = message_obj.message;
+
+        let template = $(newMessageTpl).html();
+
+        template = template.replace("{{id}}", msg_id);
+        template = template.replace("{{body}}", msg_body);
+
+        template = $(template);
+
+        if ( message_obj.sender_id == @ViewBag.currentUser.id ) {
+            template.find('.__chat__').addClass('from__chat');
+        } else {
+            template.find('.__chat__').addClass('receive__chat');
+        }
+
+        if ( message_obj.status == 1 ) {
+            template.find('.delivery-status').show();
+        }
+
+        $('.chat__main').append(template);
+    }
