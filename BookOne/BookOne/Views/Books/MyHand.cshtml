@@ -5,7 +5,6 @@
     ViewBag.Title = "MyHand";
 }
 
-
 <style type="text/css">
 
     body {
@@ -14,12 +13,13 @@
         background-size: cover;
         background-attachment: fixed;
     }
+
 </style>
 
 <br />
 <br />
+<br />
 
-<h2>My Unborrowed Books</h2>
 <table id="listOfBooks" class="table">
     <tr class="header">
         <th class="col-md-6">
@@ -28,9 +28,15 @@
         <th class="author col-md-6">
             Author
         </th>
-        <th class="owner col-md-6"></th>
-        <th class="timeLeft col-md-3"></th>
-        <th class="timeLeft col-md-3"></th>
+        <th class="owner col-md-6">
+            Owner
+        </th>
+        <th class="timeLeft col-md-3"> 
+            Remaining Days
+        </th>
+        <th class="timeLeft col-md-3">
+           
+        </th>
     </tr>
 
     @foreach (var item in Model.Books)
@@ -51,102 +57,134 @@
 </table>
 
 
-<h2>Borrowed Books from other Users</h2>
-<table  id="listOfBooks" class="table">
-    <tr class="header">
-        <th class="col-md-6">
-            Title
-        </th>
-        <th class="author col-md-6">
-            Author
-        </th>
-        <th class="owner col-md-6">
-            Owner
-        </th>
-        <th class="timeLeft col-md-3">
-            Remaining Days
-        </th>
-        <th class="timeLeft col-md-3"></th>
-    </tr>
-
-    @foreach (var item in Model.BookCirculations)
-    {
-        if (item.BookAssociated.AvailabilityStatus == true) { continue; }
-        <tr class="bookTitle">
-            <td>
-                @Html.DisplayFor(modelItem => item.BookAssociated.Title)
-            </td>
-            <td class="author">
-                @Html.DisplayFor(modelItem => item.BookAssociated.Author)
-            </td>
-            <td class="owner">
-                @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
-            </td>
-            <td class="timeLeft">
-                @Html.DisplayFor(modelItem => item.DaysRemaining)
-            </td>
-            <td class="timeLeft">
-                @if (item.BookAssociated.BorrowerAskedToReturnThisBook == false)
-                {
-                    @Html.ActionLink("Return Book", "ReturnBookRequest", "Player", new { CirculationId = item.BookCirculationId }, null)
-                }
-                @if(item.BookAssociated.BorrowerAskedToReturnThisBook == true)
-                {
-                    <span>You asked to return this book</span>
-                }
-            </td>
+@*<h2>Borrowed Books from other Users</h2>*@
+<div class="borrowed">
+    <table id="listOfBooks" class="table">
+        <tr class="header">
+            <th class="col-md-6">
+                @*Title*@
+            </th>
+            <th class="author col-md-3">
+                @*Author*@
+            </th>
+            <th class="owner col-md-3">
+                @*Owner*@
+            </th>
+            <th class="timeLeft col-md-3">
+                @*Remaining Days*@
+            </th>
+            <th class="returnBook col-md-3"></th>
         </tr>
-    }
-</table>
+
+        @foreach (var item in Model.BookCirculations)
+        {
+            if (item.BookAssociated.AvailabilityStatus == true) { continue; }
+
+            <tbody>
+                <tr class="bookTitle">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+                    </td>
+                    <td class="author">
+                        @Html.DisplayFor(modelItem => item.BookAssociated.Author)
+                    </td>
+                    <td class="owner">
+                        @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
+                    </td>
+                    <td class="timeLeft">
 
 
-<script>
+                        @if (item.DaysRemaining <= 13)
+                        {
+                            <div id="excludedColor">
+                                @Html.DisplayFor(modelItem => item.DaysRemaining)
+                            </div>
+                            <script>
+                                myFunction();
+                                function myFunction() {
+                                    setInterval(function () { $("#excludedColor ").css("color", "var(--main-excludedColor)"); }, 500);
+                                    setInterval(function () { $("#excludedColor ").css("color", "var( --main-excludedColorHover)"); }, 1001);
+                                }
 
-    function hideAll() {
-        $('.author').hide();
-        $('.owner').hide();
-        $('.timeLeft').hide()
-    }
+                            </script>
 
-    var n = 0;
-    var i = 1;
+                        }
+                        @if (item.DaysRemaining > 13)
+                        {
 
-    function rotate() {
-        n = n + i;
-        if (n === 0) {
+                            @Html.DisplayFor(modelItem => item.DaysRemaining)
+                        }
 
+                    </td>
+                    <td id="returnBook"class="returnBook">
+                        @if (item.BookAssociated.BorrowerAskedToReturnThisBook == false)
+                        {
+                            @Html.ActionLink("Return Book", "ReturnBookRequest", "Player", new { CirculationId = item.BookCirculationId }, null)
+                        }
+                        @if (item.BookAssociated.BorrowerAskedToReturnThisBook == true)
+                        {
+                            <span>You asked to return this book</span>
+                        }
+
+
+                        
+                    </td>
+                </tr>
+             </tbody>
+            }
+        </table>
+</div>
+
+    <script>
+
+        function hideAll() {
+            $('.author').hide();
+            $('.timeLeft').hide();
+            //$('.returnBook').hide();
         }
-        if (n === 1) {
-            new function () {
 
-                $('.author').show();
+        var n = 0;
+        var i = 1;
+
+        function rotate() {
+            n = n + i;
+            if (n === 0) {
 
             }
-        }
-        if (n === 2) {
-            new function () {
-                $('.author').hide();
-                $('.owner').show();
+            if (n === 1) {
+                new function () {
+
+                    $('.author').show();
+                    $('.owner').hide();
+
+                }
             }
-        }
-        if (n === 3) {
-            new function () {
-                $('.owner').hide();
-                $('.timeLeft').show();
+            if (n === 2) {
+                new function () {
+                    $('.author').hide();
+                    $('.owner').show();
 
-
+                }
             }
-        }
-        if (n === 4) {
-            n = 1;
-            new function () {
-                $('.author').show();
-                $('.owner').hide();
-                $('.timeLeft').hide();
+            if (n === 3) {
+                new function () {
+                    $('.owner').hide();
+                    $('.timeLeft').show();
+                    //$('.returnBook').show();
 
+                }
             }
-        }
+            if (n === 4) {
+                n = 1;
+                new function () {
+                    $('.author').show();
+                    $('.owner').hide();
+                    $('.timeLeft').hide();
+                    //$('.returnBook').hide();
 
-        console.log("new", n);
-    }
-</script>
+                }
+            }
+
+            console.log("new", n);
+        }
+    </script>
