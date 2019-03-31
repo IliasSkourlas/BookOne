@@ -19,17 +19,17 @@ namespace BookOne
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "ChatRoom",
+                url: "chat",
+                defaults: new { controller = "Chat", action = "Index" }
+            );
 
             routes.MapRoute(
-            name: "ChatRoom",
-            url: "chat",
-            defaults: new { controller = "Chat", action = "Index" });
-
-            routes.MapRoute(
-            name: "SendMessage",
-            url: "send_message",
-            defaults: new { controller = "Chat", action = "SendMessage" });
-
+                name: "SendMessage",
+                url: "send_message",
+                defaults: new { controller = "Chat", action = "SendMessage" }
+            );
         }
     }
 }
