@@ -13,7 +13,9 @@
 
 
     <style type="text/css">
-
+        :root {
+            --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+        }
         #MyNavbar {
             background-color: #000000;
             border-bottom: none;
@@ -23,6 +25,28 @@
         #searchFilter {
             display: none;
         }
+
+
+        .table > tbody > tr > td {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: var(--main-border-top-color);
+        }
+        #listOfBooks > tbody > tr.header > th {
+            border-top: var(--main-border-top-color);
+        }
+        .table {
+            margin-bottom: 0px;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        body > div.container.body-content > hr {
+            border-top: var(--main-border-top-color);
+            border-bottom: var(--main-border-top-color);
+        }
+
 
         .video-container {
             position: absolute;
