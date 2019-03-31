@@ -20,6 +20,7 @@
             opacity: 0.89;
             filter: alpha(opacity=30);
         }
+
         #searchFilter {
             display: none;
         }
@@ -35,20 +36,20 @@
             background-attachment: fixed;
         }
 
-            .video-container video {
-                min-width: 100%;
-                min-height: 100%;
-                width: auto;
-                height: auto;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-                opacity: 0.2;
-                pointer-events: none;
-                background-attachment: fixed;
-                z-index: 1;
-            }
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            opacity: 0.2;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
+        }
 
         .header th {
             color: rgb(0, 255, 255);
@@ -56,8 +57,8 @@
 
         #weAreHere a {
             color: rgb(0, 255, 255);
-            
         }
+
         a:hover {
             color: rgba(0, 255, 255, 0.84);
             text-decoration: none;
@@ -78,6 +79,7 @@
             border: 1px solid rgba(255, 216, 0, 0.3);
             background-color: rgba(255, 216, 0, 0.2);
         }
+
         .canvasContainer1 {
             position: fixed;
             left: 43%;
@@ -88,6 +90,7 @@
             z-index: 1;
             background-color: transparent;
         }
+
         .contextCanvas1 {
             position: absolute;
             width: 100%;
@@ -98,11 +101,11 @@
         }
 
 
-
         #canvas2 {
             border: 1px solid rgba(255, 255, 255, 0.58);
             background-color: rgba(14, 14, 14, 0.90);
         }
+
         .canvasContainer2 {
             transition: left 1s;
             transition: opacity 1s;
@@ -116,6 +119,7 @@
             background-color: transparent;
             opacity: 0;
         }
+
         .contextCanvas2 {
             position: absolute;
             width: 100%;
@@ -124,6 +128,7 @@
             top: 0px;
             z-index: 1;
         }
+
         #lookAtThisPlayer {
             position: absolute;
             top: 20%;
@@ -136,6 +141,7 @@
             border: 1px solid rgba(255, 216, 0, 0.00);
             background-color: rgba(0, 0, 0, 0.00);
         }
+
         .canvasContainer3 {
             position: fixed;
             left: 100%;
@@ -168,6 +174,7 @@
             opacity: 0.6;
             z-index: 6;
         }
+
         .canvasContainer3 .btn {
             background-color: rgba(25, 233, 227, 0.32);
             color: rgba(0, 0, 0, 0.94);
@@ -183,6 +190,7 @@
         .canvasContainer3 .cancel {
             background-color: rgba(233, 203, 25, 0.32);
         }
+
         .messageForm {
             position: absolute;
             display: none;
@@ -203,7 +211,6 @@
             min-height: 200px;
             z-index: 6;
         }
-
     </style>
 
 </head>
@@ -232,7 +239,7 @@
                     @Html.Partial("_weAreHerePatial")
                 </ul>
 
-               
+
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
@@ -246,10 +253,11 @@
                         <option value="Availability">Availability</option>
                     </select>
                 </form>
-               
+
             </div>
         </div>
     </div>
+
 
     <div class="container body-content">
 
@@ -308,7 +316,7 @@
 
     <div id="canvasContainer3" class="canvasContainer3">
         <canvas id="canvas3" class="contextCanvas3"></canvas>
-        
+
         <button id="chat-button" class="chat-button" onclick="openChat()">Chat</button>
         <div class="messageForm" id="messageForm">
             <form action="/action_page.php" class="form-container">
@@ -322,7 +330,7 @@
 
     @RenderSection("scripts", required: false)
 
-    
+
 
     <script>
         // CANVAS
@@ -384,7 +392,7 @@
         /////// Chainge searchInput by clicking in to Headers
         $(document).ready(function () {
             $("#Author").click(function () {
-                $("#searchInput").attr("placeholder","Author");
+                $("#searchInput").attr("placeholder", "Author");
                 $("#searchFilter").val("Authors");
             })
             $("#Title").click(function () {
@@ -401,10 +409,10 @@
             })
 
         });
-     
-       
 
-        ////// PLAYER VISASBILITY 2
+
+
+        ////// PLAYER VISIBILITY 2
         ////// disappear
         $(document).ready(function () {
             $("#canvasContainer2").click(function () {
@@ -478,7 +486,7 @@
                 }
             }
         }
-               
+
     </script>
 </body>
 </html>

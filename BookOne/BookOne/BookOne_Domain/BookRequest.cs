@@ -33,6 +33,7 @@ namespace BookOne.BookOne_Domain
         Declined,
         Canceled,
         Closed,
-        Returning
+        Returning,
+        BorrowedBook
     }
 }
