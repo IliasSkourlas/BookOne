@@ -1,45 +1,50 @@
 ﻿@model BookOne.BookOne_Domain.Book
 
 @{
-    ViewBag.Title = "Book Details";
+    Layout = "~/Views/Shared/_Layout - AddBook.cshtml";
 }
 
-<h2>Book Details</h2>
+<br />
+<br />
+<br />
 
 <div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Author)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Author)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.RegisteredOn)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.RegisteredOn)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.BookStatus)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.BookStatus)
-        </dd>
-        <dt>
-            Completed Circulations
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CompletedCirculationsForThisBook)
-        </dd>
-    </dl>
+    
+    <h2>
+        <dl class="dl-horizontal">
+            @*<dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>*@
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            @*<dt>
+                @Html.DisplayNameFor(model => model.Author)
+            </dt>*@
+            <dd>
+                @Html.DisplayFor(model => model.Author)
+            </dd>
+            @*<dt>
+                @Html.DisplayNameFor(model => model.RegisteredOn)
+            </dt>*@
+            @*<dd>
+                @Html.DisplayFor(model => model.RegisteredOn)
+            </dd>*@
+            @*<dt>
+                @Html.DisplayNameFor(model => model.BookStatus)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.BookStatus)
+            </dd>*@
+            <dt>
+                Circulation
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CompletedCirculationsForThisBook)
+            </dd>
+        </dl>
+    </h2>
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.BookId }) |
