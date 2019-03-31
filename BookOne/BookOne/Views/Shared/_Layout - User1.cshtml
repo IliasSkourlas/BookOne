@@ -15,7 +15,28 @@
     <style type="text/css">
         :root {
             --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+            --main-Header-color: rgb(0, 255, 255);
+            --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
         }
+
+
+        .table {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 1);
+        }
+        .header th {
+            color: var(--main-Header-color);
+        }
+        a:hover {
+            color: var(--main-HeaderHover-color);
+            text-decoration: none;
+        }
+        a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+
         #MyNavbar {
             background-color: #000000;
             border-bottom: none;
@@ -24,6 +45,9 @@
         }
         #searchFilter {
             display: none;
+        }
+        #weAreHere a {
+            color: var(--main-Header-color);
         }
 
 
@@ -58,44 +82,22 @@
             pointer-events: none;
             background-attachment: fixed;
         }
-
-            .video-container video {
-                min-width: 100%;
-                min-height: 100%;
-                width: auto;
-                height: auto;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
-                opacity: 0.2;
-                pointer-events: none;
-                background-attachment: fixed;
-                z-index: 1;
-            }
-
-        .header th {
-            color: rgb(0, 255, 255);
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            opacity: 0.2;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
         }
 
-        #weAreHere a {
-            color: rgb(0, 255, 255);
-            
-        }
-        a:hover {
-            color: rgba(0, 255, 255, 0.84);
-            text-decoration: none;
-        }
 
-        .table {
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            font-size: 18px;
-            color: rgba(255, 255, 255, 1);
-        }
-
-        a {
-            color: rgba(255, 255, 255, 0.8);
-        }
 
 
         #canvas1 {
