@@ -216,12 +216,12 @@ namespace BookOne.BookOne_Domain
                 db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Declined)
                 .Include(r => r.BookRequested.Owner);
 
-            // pending BookRequests to be approved by the logged in user for books returning(user is the owner of these book)
+            // pending BookRequests to be approved by the logged in user for books returning(user is the owner of these books)
             var bookRequests_BorrowerWantsToReturnBook =
                 db.BookRequests.Where(r => r.BookRequested.Owner.Id == user.Id && r.RequestStatus == RequestStatuses.Returning)
                 .Include(r => r.BookRequested.Owner);
 
-            // pending BookRequests to be approved by the logged in user for books returning(user is the borrower of these book)
+            // pending BookRequests to be approved by the logged in user for books returning(user is the borrower of these books)
             var bookRequests_BorrowerAskedToReturnBook =
                 db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Returning)
                 .Include(r => r.BookRequested.Owner);
@@ -292,6 +292,8 @@ namespace BookOne.BookOne_Domain
             var bookToBeBorrowed = db.Books.Where(b => b.BookId == request.BookRequested.BookId)
                 .SingleOrDefault();
 
+
+            request.RequestStatus = RequestStatuses.BorrowedBook;
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
             bookToBeBorrowed.AvailabilityStatus = false;
@@ -375,19 +377,32 @@ namespace BookOne.BookOne_Domain
 
 
         //Returns user's number of unanswered requests
-        //public int NewRequestsCounter(string userId)
-        //{
-        //    var meh = db.BookRequests.Where(r => r.BookRequested.Owner.Id == userId && r.RequestStatus == RequestStatuses.Unanswered).Count();
+        public int NewRequestsCounter(string loggedInUserId)
+        {
+            //Requests made by other others for loggedInUser's books
+            var unansweredRequests = db.BookRequests
+                .Where(r => r.BookRequested.Owner.Id == loggedInUserId && r.RequestStatus == RequestStatuses.Unanswered)
+                .Count();
 
-        //    var meh2 = db.BookRequests.Where(r => r.RequestedBy.Id == userId && r.RequestStatus == RequestStatuses.Accepted).Count();
-        //}
+            //LoggedInUser's Requests - Owner accepted to borrow his book
+            var acceptedRequests = db.BookRequests
+                .Where(r => r.RequestedBy.Id == loggedInUserId && r.RequestStatus == RequestStatuses.Accepted)
+                .Count();
 
-        
-        
+            //LoggedInUser's Requests from other users to return his books
+            var returningRequests = db.BookRequests
+                .Where(r => r.BookRequested.Owner.Id == loggedInUserId && r.RequestStatus == RequestStatuses.Returning && r.BookRequested.BorrowerAskedToReturnThisBook == true)
+                .Count();
+
+            return unansweredRequests + acceptedRequests + returningRequests;
+        }
+
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        
-        
+
+
         //Returns all messages between the logged in user and another user.
         public IEnumerable<Message> GetConversation(string loggedInUserId, string contactId)
         {

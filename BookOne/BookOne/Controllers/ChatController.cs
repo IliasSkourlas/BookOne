@@ -23,6 +23,7 @@ namespace BookOne.Controllers
             return View("ChatStart");
         }
 
+
         public JsonResult ConversationWithContact(ApplicationUser contact)
         {
             var loggedInUserId = User.Identity.GetUserId();
@@ -34,6 +35,7 @@ namespace BookOne.Controllers
                 JsonRequestBehavior.AllowGet
             );
         }
+
 
         [HttpPost]
         public JsonResult SendMessage(ApplicationUser contact)

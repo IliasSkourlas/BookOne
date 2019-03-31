@@ -246,8 +246,19 @@ namespace BookOne.Controllers
         }
 
 
+        //Used to make the Requests tab in the navbar blink when the loggedInUser has unanswered requests.
+        public PartialViewResult CheckUnansweredRequests()
+        {
+            var meh = dbOps.NewRequestsCounter(User.Identity.GetUserId());
+            if (meh > 0)
+                return PartialView("_UnansweredRequestsFoundPartial");
+            else
+                return null;
+        }
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
