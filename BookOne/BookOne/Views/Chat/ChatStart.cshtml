@@ -1,98 +1,91 @@
-﻿ <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Chat</title>
-        <link rel="stylesheet" href="@Url.Content("~/Content/app.css")">
-      </head>
-      <body>
-        <!-- Navigation Bar -->
-        <nav class="navbar navbar-inverse">
-          <div class="container-fluid">
-            <div class="navbar-header">
-              <a class="navbar-brand" href="#">pChat - @ViewBag.currentUser.ActualUsername </a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Log Out</a></li>
-            </ul>
-          </div>
-        </nav>
-        <!-- / Navigation Bar -->
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-3">
-                    <aside class="main visible-md visible-lg">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="panel panel-default users__bar">
-                                    <div class="panel-heading users__heading">
-                                        Contacts (@ViewBag.allUsers.Count)
-                                    </div>
-                                    <div class="__no__chat__">
-                                        <p>Select a contact to chat with</p>
-                                    </div>
-                                    <div class="panel-body users__body">
-                                        <ul id="contacts" class="list-group">
+﻿
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">pChat - @ViewBag.currentUser.ActualUsername </a>
+        </div>
+        @*<ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Log Out</a></li>
+        </ul>*@
+        </div>
+    </nav>
+    <!-- / Navigation Bar -->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <aside class="main visible-md visible-lg">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="panel panel-default users__bar">
+                                <div class="panel-heading users__heading">
+                                    Contacts (@ViewBag.allUsers.Count)
+                                </div>
+                                <div class="__no__chat__">
+                                    <p>Select a contact to chat with</p>
+                                </div>
+                                <div class="panel-body users__body">
+                                    <ul id="contacts" class="list-group">
 
-                                            @foreach (var user in @ViewBag.allUsers)
-                                            {
-                                                <li>
-                                                    <a class="user__item contact-@user.Id" href="#" data-contact-id="@user.Id" data-contact-name="@user.ActualUsername">
+                                        @foreach (var user in @ViewBag.allUsers)
+                                        {
+                                            <li>
+                                                <a class="user__item contact-@user.Id" href="#" data-contact-id="@user.Id" data-contact-name="@user.ActualUsername">
 
-                                                        <div class="avatar">
-                                                            <img src="@Url.Content("~/Content/no_avatar.png")">
-                                                        </div>
-                                                        <span>@user.ActualUsername</span>
-                                                        <div class="status-bar"></div>
+                                                    <div class="avatar">
+                                                        <img src="@Url.Content("~/Content/no_avatar.png")">
+                                                    </div>
+                                                    <span>@user.ActualUsername</span>
+                                                    <div class="status-bar"></div>
 
-                                                    </a>
-                                                </li>
-                                            }
-                                        </ul>
-                                    </div>
+                                                </a>
+                                            </li>
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </aside>
+                    </div>
+                </aside>
 
 
-                </div>
-                <div class="col-xs-12 col-md-9 chat__body">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <ul class="list-group chat__main"></ul>
+            </div>
+            <div class="col-xs-12 col-md-9 chat__body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <ul class="list-group chat__main"></ul>
+                    </div>
+                    <div class="chat__type__body">
+                        <div class="chat__type">
+                            <textarea id="msg_box" placeholder="Type your message"></textarea>
+                            <button class="btn btn-primary" id="sendMessage">Send</button>
                         </div>
-                        <div class="chat__type__body">
-                            <div class="chat__type">
-                                <textarea id="msg_box" placeholder="Type your message"></textarea>
-                                <button class="btn btn-primary" id="sendMessage">Send</button>
-                            </div>
-                        </div>
-                        <div class="chat__typing">
-                            <span id="typerDisplay"></span>
-                        </div>
+                    </div>
+                    <div class="chat__typing">
+                        <span id="typerDisplay"></span>
                     </div>
                 </div>
             </div>
         </div>
-        <script src="@Url.Content("~/Content/app.js")"></script>
-      </body>
-    </html>
+    </div>
 
 
 
+    <script src="@Url.Content("~/Content/app.js")"></script>
+     
     <script>
     let currentContact = null; // Holds current contact
     let newMessageTpl =
-    `<div>
-        <div id="msg-{{id}}" class="row __chat__par__">
-          <div class="__chat__">
-            <p>{{body}}</p>
-            <p class="delivery-status">Delivered</p>
-          </div>
-        </div>
-     </div>`;
+    //<div>
+    //    <div id="msg-{{id}}" class="row __chat__par__">
+    //      <div class="__chat__">
+    //        <p>{{body}}</p>
+    //        <p class="delivery-status">Delivered</p>
+    //      </div>
+    //    </div>
+    // </div>;
 
-    
+
     // select contact to chat with
     $('.user__item').click( function(e) {
         e.preventDefault();
@@ -108,6 +101,7 @@
         getChat(currentContact.id);
     });
 
+
     // get chat data
     function getChat( contact_id ) {
         $.get("/contact/conversations/" + contact_id )
@@ -116,6 +110,7 @@
             loadChat( chat_data );
          });
     }
+
 
     //load chat data into view
     function loadChat( chat_data ) {
@@ -127,6 +122,7 @@
         $('.chat__body').show();
         $('.__no__chat__').hide();
     }
+
 
     function displayMessage( message_obj ) {
         const msg_id = message_obj.id;
@@ -150,5 +146,6 @@
         }
 
         $('.chat__main').append(template);
-        </script>
+
     }
+    </script>

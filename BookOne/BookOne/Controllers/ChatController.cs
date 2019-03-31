@@ -17,11 +17,6 @@ namespace BookOne.Controllers
 
         public ActionResult Index()
         {
-            //if (Session["user"] == null)
-            //{
-            //    return Redirect("/");
-            //}
-
             ViewBag.allUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
             ViewBag.currentUser = dbOps.GetUser(User.Identity.GetUserId());
 
@@ -30,26 +25,10 @@ namespace BookOne.Controllers
 
         public JsonResult ConversationWithContact(ApplicationUser contact)
         {
-            if (Session["user"] == null)
-            {
-                return Json(new { status = "error", message = "User is not logged in" });
-            }
+            var loggedInUserId = User.Identity.GetUserId();
 
-            var currentUser = (ApplicationUser)Session["user"];
-
-            var conversations = new List<Message>();
-
-            using (var db = new ApplicationDbContext())
-            {
-                conversations = db.Messages.
-                                  Where(c => (c.Receiver == currentUser.Claims
-                                      && c.Sender == contact) ||
-                                      (c.Receiver == contact
-                                      && c.Sender == currentUser.Claims))
-                                  .OrderBy(c => c.SentOn)
-                                  .ToList();
-            }
-
+            var conversations = dbOps.GetConversation(loggedInUserId, contact.Id);
+            
             return Json(
                 new { status = "success", data = conversations },
                 JsonRequestBehavior.AllowGet
@@ -59,29 +38,20 @@ namespace BookOne.Controllers
         [HttpPost]
         public JsonResult SendMessage(ApplicationUser contact)
         {
-            if (Session["user"] == null)
-            {
-                return Json(new { status = "error", message = "User is not logged in" });
-            }
-
-            var currentUser = (ApplicationUser)Session["user"];
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
             string socket_id = Request.Form["socket_id"];
 
-            while (contact != currentUser)
+            while (contact != loggedInUser)
             {
                 Message message = new Message
                 {
-                    Sender = currentUser,
+                    Sender = loggedInUser,
                     Content = Request.Form["message"],
                     Receiver = contact
                 };
 
-                using (var db = new ApplicationDbContext())
-                {
-                    db.Messages.Add(message);
-                    db.SaveChanges();
-                }
+                dbOps.InsertMessage(message);
 
                 return Json(message);
             };

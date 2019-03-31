@@ -381,5 +381,28 @@ namespace BookOne.BookOne_Domain
 
         //    var meh2 = db.BookRequests.Where(r => r.RequestedBy.Id == userId && r.RequestStatus == RequestStatuses.Accepted).Count();
         //}
+
+        
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        
+        
+        //Returns all messages between the logged in user and another user.
+        public IEnumerable<Message> GetConversation(string loggedInUserId, string contactId)
+        {
+            return db.Messages
+                .Where(c => (c.Receiver.Id == loggedInUserId && c.Sender.Id == contactId) || 
+                (c.Receiver.Id == contactId && c.Sender.Id == loggedInUserId))
+                .OrderBy(c => c.SentOn)
+                .ToList();
+        }
+
+
+        public void InsertMessage(Message message)
+        {
+            db.Messages.Add(message);
+            db.SaveChanges();
+        }
     }
 }
