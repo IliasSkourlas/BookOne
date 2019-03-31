@@ -359,8 +359,8 @@
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
     <Content Include="Views\Books\BorrowedBookDetails.cshtml" />
     <Content Include="Views\Shared\_LookAtThisPlayerPartial.cshtml" />
-    <Content Include="Views\Chat\ChatStart.cshtml" />
     <Content Include="Views\Player\_UnansweredRequestsFoundPartial.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

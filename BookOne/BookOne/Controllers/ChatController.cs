@@ -20,7 +20,7 @@ namespace BookOne.Controllers
             ViewBag.allUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
             ViewBag.currentUser = dbOps.GetUser(User.Identity.GetUserId());
 
-            return View("ChatStart");
+            return PartialView();
         }
 
 
@@ -41,6 +41,7 @@ namespace BookOne.Controllers
         public JsonResult SendMessage(ApplicationUser contact)
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            contact = dbOps.GetUser(User.Identity.GetUserId());
 
             string socket_id = Request.Form["socket_id"];
 
