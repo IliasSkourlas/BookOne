@@ -64,6 +64,7 @@ namespace BookOne.Models
         public DbSet<BookNote> BookNotes { get; set; }
         public DbSet<UserReaction> UserReactions { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<EmailNotification> EmailNotifications { get; set; }
     }
 
 

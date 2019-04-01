@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookOne.BookOne_Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,9 @@ namespace BookOne.Controllers
 {
     public class HomeController : Controller
     {
+        DatabaseOperations dbOps = new DatabaseOperations();
+
+
         public ActionResult Index()
         {
             return View();
@@ -29,6 +33,18 @@ namespace BookOne.Controllers
             ViewBag.Message = "Uncertified Play Team One";
 
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void EmailNotifier(string userEmail)
+        {
+            var notification = new EmailNotification()
+            {
+                EmailAddress = userEmail
+            };
+
+            dbOps.InsertEmailNotification(notification);
         }
     }
 }

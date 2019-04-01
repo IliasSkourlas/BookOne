@@ -39,12 +39,12 @@
                     @Html.DisplayFor(modelItem => item.BookRequested.Owner.ActualUsername)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestedOn)
+                    @item.RequestedOn.Date.ToShortDateString()
                 </td>
                 <td>
                     @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
                     {
-                        <span>Waiting for owner's response | </span>
+                        <span>(Waiting for owner's response) | </span>
 
                         @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
                     }
@@ -57,12 +57,14 @@
                     }
                     @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
                     {
-                        <span>You have this book</span>
+                        <span>(You have this book)</span>
                     }
 
                     @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
                     {
-                        <span>Request Declined</span> @*ActionLink cancel request*@
+                        <span>(Request Declined) | </span>
+
+                        @Html.ActionLink("Remove Request", "CancelConfirmation", new { RequestId = item.BookRequestId })
                     }
                 </td>
             </tr>
@@ -105,7 +107,7 @@
                     @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestedOn)
+                    @item.RequestedOn.Date.ToShortDateString()
                 </td>
                 <td>
                     @if (item.RequestedBy.Id != User.Identity.GetUserId())
