@@ -7,15 +7,36 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+
     <style type="text/css">
+        :root {
+            --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+            --main-Header-color: rgb(0, 255, 255);
+            --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
+        }
+
+        .container body-content {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 1);
+        }
+        #AboutText {
+            margin-top: 20%;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: large;
+            color: rgba(255, 255, 255, 1);
+            text-align: center;
+            letter-spacing: 4px;
+        }
+        
         .container-fluid .navbar-brand {
             margin-left: -200px;
         }
         #MyNavbar {
-            background-color: rgba(21, 226, 226, 0.9); 
+            background-color: rgba(21, 226, 226, 0.00); 
             border-bottom: none;
-            opacity: 0.69;
-            filter: alpha(opacity=30)
+            /*opacity: 0.69;*/
+            /*filter: alpha(opacity=30)*/
         }
 
         .navbar-brand{
@@ -41,14 +62,37 @@
         }
 
 
-        body {
-            background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTen.jpg');
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            color: #fff;
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--main-HeaderHover-color);
+            font-size: large;
+        }
+        #about {
+            transition: opacity 2s;
+        }
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.8);
         }
         
+
+        #button {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+
+        }
+        #button:hover {
+            background-color: rgba(0, 255, 255, 0.43);
+            border-color: var(--main-HeaderHover-color)
+        }
+        .form-row {
+            transition: opacity 3s;
+            opacity: 0;
+        }
+
+        a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
         .video-container {
             position: absolute;
             top: 0;
@@ -56,43 +100,35 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+            pointer-events: none;
+            background-attachment: fixed;
         }
-
         .video-container video {
-            /* Make video to at least 100% wide and tall */
             min-width: 100%;
             min-height: 100%;
-            /* Setting width & height to auto prevents the browser from stretching or squishing the video */
             width: auto;
             height: auto;
-            /* Center the video */
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
             opacity: 0.2;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
         }
      
-        #AboutText {
-            margin-top: 32%;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            font-size: large;
-            color: rgba(255, 255, 255, 1);
-            text-align: center;
-            letter-spacing: 4px;
-        }
+        
     </style>
 
 </head>
 <body>
 
-   
 
     <div class="video-container">
-        <video id="video" autoplay loop muted>
-            <source src="~/Content/images/fish2.mp4" type="video/mp4" />
-        </video>
+        @Html.Partial("_VideoPartial")
     </div>
+
 
     <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -102,23 +138,23 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("BookOne", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @*@Html.ActionLink("BookOne", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                        <li>@Html.ActionLink("All books", "Index", "Books")</li>
                     }
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                 </ul>
-                @Html.Partial("_LoginPartial")
+               
             </div>
         </div>
     </div>
-    <div class="container body-content">
-
+    <div class="container body-content" onmousemove = "myFunction(event)" onmouseout = "showEmail()">
+        @Html.Partial("_LoginPartial")
 
         @RenderBody()
 
@@ -130,5 +166,47 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+
+    <script>
+        document.getElementById("button").addEventListener("click", addOne);
+
+        var count = 15;
+
+        function addOne() {
+            var x = document.getElementById("emailInput").value;
+
+
+            // Make better
+            if (x.length > 12 && x.includes("") && x.includes(".")) {
+                count += 1;
+                document.getElementById("counter").innerHTML = count;
+                document.getElementById("emailInput").value = "";
+            }
+            document.getElementById("emailInput").value = "";
+        }
+
+
+        /////////// mouse over
+        //$(document).ready(function () {
+        //    $("#AboutText").onmousemove(function () {
+        //        $(".form-row").css("opacity", "1");
+        //        $("#about").css("opacity", "0");
+        //    })
+           
+
+        //});
+
+        function myFunction(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+        }
+       function showEmail() {
+            $(".form-row").css("opacity", "1");
+            $("#about").css("opacity", "0");
+        };
+
+    </script>
 </body>
 </html>

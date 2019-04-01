@@ -14,7 +14,6 @@ namespace BookOne.BookOne_Domain
             RegisteredOn = DateTime.Now;
             BookStatus = BookStatuses.Public;
             AvailabilityStatus = true;
-            Carrier = Owner;
             BorrowerAskedToReturnThisBook = false;
         }
 

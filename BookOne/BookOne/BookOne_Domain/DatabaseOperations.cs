@@ -333,6 +333,7 @@ namespace BookOne.BookOne_Domain
 
             book.AvailabilityStatus = true;
             book.Carrier = db.Users.Find(book.Owner.Id);
+            book.BorrowerAskedToReturnThisBook = false;
             circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
             db.SaveChanges();
         }
@@ -402,6 +403,12 @@ namespace BookOne.BookOne_Domain
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+        public void InsertMessage(Message message)
+        {
+            db.Messages.Add(message);
+            db.SaveChanges();
+        }
+
 
         //Returns all messages between the logged in user and another user.
         public IEnumerable<Message> GetConversation(string loggedInUserId, string contactId)
@@ -414,9 +421,12 @@ namespace BookOne.BookOne_Domain
         }
 
 
-        public void InsertMessage(Message message)
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        public void InsertEmailNotification(EmailNotification notification)
         {
-            db.Messages.Add(message);
+            db.EmailNotifications.Add(notification);
             db.SaveChanges();
         }
     }

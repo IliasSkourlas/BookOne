@@ -13,23 +13,23 @@
 
 
     <style type="text/css">
-        
+
 
 
         body {
-            background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgb(0, 0, 0, 0.02)), url('../../Content/images/Drowing.jpg');
+            /*background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgb(0, 0, 0, 0.02)), url('../../Content/images/Drowing.jpg');*/
+            background-image: linear-gradient(rgb(0, 0, 0),rgb(0, 0, 0));
             background-repeat: no-repeat;
             background-size: cover;
             background-attachment: fixed;
-
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 18px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgb(255, 255, 255);
         }
-        .form-control {
+        /*.form-control {
             background-color: rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.8);
-        }
+        }*/
 
         button, html input[type="button"], input[type="reset"], input[type="submit"] {
             background-color: rgba(255, 255, 255, 0.3);
@@ -37,6 +37,9 @@
         }
         a {
             color: rgba(255, 255, 255, 0.8);
+        }
+        tr:hover {
+            background: rgba(255, 226, 0, 0.07);
         }
        
 
@@ -55,7 +58,6 @@
             pointer-events: none;
             background-attachment: fixed;
         }
-
         .video-container video {
             min-width: 100%;
             min-height: 100%;
@@ -65,11 +67,12 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
-            opacity: 0.2;
+            opacity: 0.5;
             pointer-events: none;
             background-attachment: fixed;
             z-index: 1;
         }
+
         
     </style>
 

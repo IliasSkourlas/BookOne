@@ -65,40 +65,40 @@ namespace BookOne.Controllers
 
 
         // GET: Books/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Book book = dbOps.GetBook(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Book book = dbOps.GetBook(id);
+        //    if (book == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
 
-            book.CompletedCirculationsForThisBook = dbOps.BookCirculationsCounter(id);
+        //    book.CompletedCirculationsForThisBook = dbOps.BookCirculationsCounter(id);
 
-            return View(book);
-        }
+        //    return View(book);
+        //}
 
         // GET: Books/BorrowedBookDetails/5
-        public ActionResult BorrowedBookDetails(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BookCirculation circulation = dbOps.GetBookLatestOnGoingCirculation(id);
-            if (circulation == null)
-            {
-                return HttpNotFound();
-            }
-            circulation.DaysRemaining = DaysRemainingCounter(circulation);
-            circulation.BookAssociated.CompletedCirculationsForThisBook = dbOps.BookCirculationsCounter(id);
+        //public ActionResult BorrowedBookDetails(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    BookCirculation circulation = dbOps.GetBookLatestOnGoingCirculation(id);
+        //    if (circulation == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    circulation.DaysRemaining = DaysRemainingCounter(circulation);
+        //    circulation.BookAssociated.CompletedCirculationsForThisBook = dbOps.BookCirculationsCounter(id);
 
-            return View(circulation);
-        }
+        //    return View(circulation);
+        //}
 
         // GET: Books/Create
         public ActionResult Create()
@@ -126,6 +126,7 @@ namespace BookOne.Controllers
                 var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
                 book.Owner = loggedInUser;
+                book.Carrier = loggedInUser;
                 dbOps.InsertBook(book);
                 return RedirectToAction("MyBooks");
             }
@@ -164,22 +165,22 @@ namespace BookOne.Controllers
         }
 
         // GET: Books/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Book book = dbOps.GetBook(id);
-            if (book == null)
-            {
-                return HttpNotFound();
-            }
-            return View(book);
-        }
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Book book = dbOps.GetBook(id);
+        //    if (book == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(book);
+        //}
 
         // POST: Books/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
