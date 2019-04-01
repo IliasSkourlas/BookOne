@@ -333,6 +333,7 @@ namespace BookOne.BookOne_Domain
 
             book.AvailabilityStatus = true;
             book.Carrier = db.Users.Find(book.Owner.Id);
+            book.BorrowerAskedToReturnThisBook = false;
             circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
             db.SaveChanges();
         }

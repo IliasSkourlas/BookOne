@@ -59,23 +59,10 @@
                     {
                         <span>You have this book</span>
                     }
-                    @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false && item.RequestedBy.Id == User.Identity.GetUserId())
-                    {
-                        <span>You asked to return this book</span>
-                    }
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
-                    {
-                        <span>You returned this book</span>
-                    }
-
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Canceled)
-                    {
-                        <span>Request Canceled</span>
-                    }
 
                     @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
                     {
-                        <span>Request Declined</span>
+                        <span>Request Declined</span> @*ActionLink cancel request*@
                     }
                 </td>
             </tr>
