@@ -429,5 +429,36 @@ namespace BookOne.BookOne_Domain
             db.EmailNotifications.Add(notification);
             db.SaveChanges();
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        //ADMIN OPERATIONS
+
+
+        public IEnumerable<ApplicationUser> GetAllUsers()
+        {
+            return db.Users.ToList();
+        }
+
+
+        public IEnumerable<Book> GetAllBooks()
+        {
+            return db.Books.ToList();
+        }
+
+
+        public IEnumerable<BookCirculation> GetAllBookCirculations()
+        {
+            var onGoingCirculations =  db.BookCirculations
+                .Where(c => c.CirculationStatus == CirculationStatuses.Borrowed);
+
+            var completedCirculations =  db.BookCirculations
+                .Where(c => c.CirculationStatus == CirculationStatuses.Completed);
+
+            return onGoingCirculations
+                .Union(completedCirculations)
+                .ToList();
+        }
     }
 }
