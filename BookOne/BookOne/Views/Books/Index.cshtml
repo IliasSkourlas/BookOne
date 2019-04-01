@@ -56,8 +56,12 @@
                 @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
             </td>*@
             
-            <td   class="owner">
+            <td class="owner">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
+                @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
+                {
+                    @Html.ActionLink("ChatWithOwner", "SendMessage", "Chat")
+                }
             </td>
 
             <td class="Status">
