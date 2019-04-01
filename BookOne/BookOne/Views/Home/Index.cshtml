@@ -6,11 +6,47 @@
 }
 
 
+<style type="text/css">
+
+    body {
+        background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+</style>
+
+
 <div id="AboutText">
+    <div id="about">
+        <h1>we are aiming on rediscovering the world of your </h1>
+        <h1>books.</h1>
+    </div>
+    
+    @*<h2>
+            This is an app for searing your books with your friends. Not digital books, but your physical books.
+            It helps you to keep track with their whereabouts, as they are seared from a pool of carriers that you choose.
+            Read and write reviews and decide to give or not a Clap, when they are returned back to you in perfect condition.
+            So...explore and have fun...and don't hesitate searing!
+        </h2>*@
+
+    <br />
+    <br />
 
 
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="inputEmail">...and we will keep you informed</label>
+            <input type="email" class="form-control" id="inputEmail4" placeholder="give as your email...">
+        </div>
 
+        <button id="button" type="submit" class="btn btn-primary">Submit</button>
 
-    @*<h2>@ViewBag.Title.</h2>*@
-    <h1>Welcome</h1>
+        <p><spam>We have </spam><spam id="counter">0</spam><spam> emails so far</spam></p>
+
+    </div>
+
 </div>
+
+
+

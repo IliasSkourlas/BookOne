@@ -2,8 +2,6 @@
 
 @{
     ViewBag.Title = "Edit";
-}
-@{
     Layout = "~/Views/Shared/_Layout - AddBook.cshtml";
 }
 
@@ -11,28 +9,30 @@
     :root {
         --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
     }
+
     #circulation {
         color: rgba(255, 255, 255, 0.94);
     }
+
     #save:hover {
         background-color: rgba(0, 255, 255, 0.43);
         border-color: var(--main-HeaderHover-color)
     }
+
     #delete:hover {
         background-color: rgba(255, 0, 0, 0.36);
         border-color: red
     }
+
     #back a {
         color: rgba(0, 255, 255, 0.79);
         font-size: 20px;
     }
-    #back a:hover {
-        text-decoration: none;
-        color:  rgb(0, 255, 255);
-    }
-    
-    
 
+        #back a:hover {
+            text-decoration: none;
+            color: rgb(0, 255, 255);
+        }
 </style>
 
 
@@ -41,60 +41,68 @@
 {
     @Html.AntiForgeryToken()
 
-    
+    <div class="form-horizontal">
 
+        <h2><spam>Completed Circulations:</spam> <spam id="circulation">@Html.DisplayFor(model => model.CompletedCirculationsForThisBook)</spam></h2>
 
-<div class="form-horizontal">
+        <br />
+        <br />
 
-    <h2><spam>Circulation:</spam> <spam id="circulation">@Html.DisplayFor(model => model.CompletedCirculationsForThisBook)</spam></h2>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.BookId)
+        @Html.HiddenFor(model => model.RegisteredOn)
 
-    <br />
-    <br />
-
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.BookId)
-    @Html.HiddenFor(model => model.RegisteredOn)
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.BookStatus, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EnumDropDownListFor(model => model.BookStatus, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.BookStatus, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <form action="" class="form-inline">
-        <div class="col-md-offset-2 col-md-10">
-            <div class="form-group">
-                <span>
-                    <input id="save" type="submit" value="Save" class="btn btn-default" />
-                </span>
-                <span>
-                    <input id="delete" type="submit" value="delete book" class="btn btn-default" />
-                </span>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
-        
-    </form>
 
-</div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BookStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.BookStatus, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.BookStatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <form action="" class="form-inline">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="save" type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
 }
+
+
+@using (Html.BeginForm("DeleteConfirmed", "Books", new { id = Model.BookId }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <form action="" class="form-inline">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="delete" type="submit" value="Delete Book" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+
 
 <div id="back">
     @Html.ActionLink("Back", "MyBooks", "Books")

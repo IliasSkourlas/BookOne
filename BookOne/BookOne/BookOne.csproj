@@ -183,6 +183,7 @@
     <Compile Include="BookOne_Domain\ClubInitiation.cs" />
     <Compile Include="BookOne_Domain\ClubLimitation.cs" />
     <Compile Include="BookOne_Domain\ClubMember.cs" />
+    <Compile Include="BookOne_Domain\EmailNotification.cs" />
     <Compile Include="BookOne_Domain\Message.cs" />
     <Compile Include="BookOne_Domain\UserReaction.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -262,6 +263,10 @@
     <Compile Include="Migrations\201903301258398_AddedBorrowerAsksToReturnBookInBookModel.Designer.cs">
       <DependentUpon>201903301258398_AddedBorrowerAsksToReturnBookInBookModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904011134267_EmailNotificationModelAdded.cs" />
+    <Compile Include="Migrations\201904011134267_EmailNotificationModelAdded.Designer.cs">
+      <DependentUpon>201904011134267_EmailNotificationModelAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -335,15 +340,12 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Books\Create.cshtml" />
-    <Content Include="Views\Books\Delete.cshtml" />
-    <Content Include="Views\Books\Details.cshtml" />
     <Content Include="Views\Books\Edit.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Books\MyBooks.cshtml" />
     <Content Include="Views\Books\MyHand.cshtml" />
     <Content Include="Views\Shared\_Layout - User1.cshtml" />
     <Content Include="Views\Player\PlayerForm.cshtml" />
-    <Content Include="Views\Player\Requests.cshtml" />
     <Content Include="Views\Player\BorrowingBookConfirmation.cshtml" />
     <Content Include="Views\Shared\_Layout - About.cshtml" />
     <Content Include="Views\Shared\_Layout - IdontNow.cshtml" />
@@ -359,9 +361,13 @@
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
     <Content Include="Views\Books\BorrowedBookDetails.cshtml" />
     <Content Include="Views\Shared\_LookAtThisPlayerPartial.cshtml" />
+    <Content Include="Views\Chat\ChatStart.cshtml" />
     <Content Include="Views\Player\_UnansweredRequestsFoundPartial.cshtml" />
-    <Content Include="Views\Chat\Index.cshtml" />
-    <Content Include="Views\Chat\ChatWithOwner.cshtml" />
+    <Content Include="Views\Shared\_Layout - History.cshtml" />
+    <Content Include="Views\Shared\_Layout - GiveAndTake.cshtml" />
+    <Content Include="Views\Player\Requests.cshtml" />
+    <Content Include="Views\Shared\_Layout - History - Copy.cshtml" />
+    <Content Include="Views\Player\RequestsOld.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -430,6 +436,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903301258398_AddedBorrowerAsksToReturnBookInBookModel.resx">
       <DependentUpon>201903301258398_AddedBorrowerAsksToReturnBookInBookModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904011134267_EmailNotificationModelAdded.resx">
+      <DependentUpon>201904011134267_EmailNotificationModelAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
