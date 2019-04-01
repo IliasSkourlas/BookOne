@@ -12,7 +12,7 @@
 <br />
 <br />
 
-<h2>You want a book</h2>
+
 <table class="table">
     <tbody>
         <tr>
@@ -21,79 +21,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookRequested.Owner)
-            </th>
-            <th>
-                Requested On
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            if (item.BookRequested.Owner.Id == User.Identity.GetUserId()) { continue; }
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookRequested.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookRequested.Owner.ActualUsername)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RequestedOn)
-                </td>
-                <td>
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
-                    {
-                        <span>Waiting for owner's response | </span>
-
-                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
-                    }
-
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
-                    {
-                        @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId }) <span>|</span>
-
-                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
-                    }
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
-                    {
-                        <span>You have this book</span>
-                    }
-                    @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false && item.RequestedBy.Id == User.Identity.GetUserId())
-                    {
-                        <span>You asked to return this book</span>
-                    }
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
-                    {
-                        <span>You returned this book</span>
-                    }
-
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Canceled)
-                    {
-                        <span>Request Canceled</span>
-                    }
-
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
-                    {
-                        <span>Request Declined</span>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-<br />
-<br />
-
-
-<h2>Someone wants a book from you</h2>
-<table class="table">
-    <tbody>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
             <th>
                 Requested By
@@ -109,10 +36,12 @@
 
         @foreach (var item in Model)
         {
-            if (item.BookRequested.Owner.Id != User.Identity.GetUserId()) { continue; }
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.BookRequested.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookRequested.Owner.ActualUsername)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername)
@@ -136,9 +65,47 @@
                         //Change color at MyBooks
                     }
 
+                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
+                    {
+                        <span>Waiting for owner's response | </span>
+
+                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
+                    }
+
+                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
+                    {
+                        @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId }) <span>|</span>
+
+                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
+                    }
+                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
+                    {
+                        <span>You have this book</span>
+                    }
+
                     @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false && item.BookRequested.Owner.Id == User.Identity.GetUserId())
                     {
                         @Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })
+                    }
+                    @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false && item.RequestedBy.Id == User.Identity.GetUserId())
+                    {
+                        <span>You asked to return this book</span>
+                    }
+
+
+                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
+                    {
+                        <span>You returned this book</span>
+                    }
+
+                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Canceled)
+                    {
+                        <span>Request Canceled</span>
+                    }
+
+                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
+                    {
+                        <span>Request Declined</span>
                     }
                 </td>
             </tr>
