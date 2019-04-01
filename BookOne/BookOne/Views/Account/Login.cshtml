@@ -3,7 +3,24 @@
 @{
     ViewBag.Title = "Log in";
 }
+@{
+    Layout = "~/Views/Shared/_Layout - About.cshtml";
+}
 
+
+<style type="text/css">
+
+    body {
+        background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+</style>
+
+<br />
+
+ 
 <h2>@ViewBag.Title.</h2>
 <div class="row">
     <div class="col-md-8">
@@ -11,8 +28,8 @@
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
+                @*<h4>Use a local account to log in.</h4>*@
+                <br />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
@@ -49,9 +66,9 @@
         </section>
     </div>
     <div class="col-md-4">
-        <section id="socialLoginForm">
+        @*<section id="socialLoginForm">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+        </section>*@
     </div>
 </div>
 

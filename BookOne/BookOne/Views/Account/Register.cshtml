@@ -2,14 +2,28 @@
 @{
     ViewBag.Title = "Register";
 }
+@{
+    Layout = "~/Views/Shared/_Layout - About.cshtml";
+}
 
-<h2>@ViewBag.Title.</h2>
+@*<h2>@ViewBag.Title.</h2>*@
+
+
+<style type="text/css">
+
+    body {
+        background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+</style>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
-    <hr />
+    <br />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
