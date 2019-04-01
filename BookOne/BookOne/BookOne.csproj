@@ -343,7 +343,7 @@
     <Content Include="Views\Books\MyHand.cshtml" />
     <Content Include="Views\Shared\_Layout - User1.cshtml" />
     <Content Include="Views\Player\PlayerForm.cshtml" />
-    <Content Include="Views\Player\Requests.cshtml" />
+    <Content Include="Views\Player\Requests1.cshtml" />
     <Content Include="Views\Player\BorrowingBookConfirmation.cshtml" />
     <Content Include="Views\Shared\_Layout - About.cshtml" />
     <Content Include="Views\Shared\_Layout - IdontNow.cshtml" />
@@ -363,7 +363,7 @@
     <Content Include="Views\Player\_UnansweredRequestsFoundPartial.cshtml" />
     <Content Include="Views\Shared\_Layout - History.cshtml" />
     <Content Include="Views\Shared\_Layout - GiveAndTake.cshtml" />
-    <Content Include="Views\Player\Requests 2.cshtml" />
+    <Content Include="Views\Player\Requests.cshtml" />
     <Content Include="Views\Shared\_Layout - History - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
