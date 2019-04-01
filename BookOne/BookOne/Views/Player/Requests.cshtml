@@ -9,11 +9,10 @@
 }
 
 <br />
-<br />
-<br />
+<h2>Someone wants your book</h2>
 
 
-<table class="table">
+<table id="give" class="table">
     <tbody>
         <tr>
             <th>
@@ -23,22 +22,22 @@
                 What
             </th>
             <th>
-                
+
             </th>
             <th></th>
         </tr>
-       
+
 
         @foreach (var item in Model)
-        {   
+        {
             <tr>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername) 
+                    @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername)
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.BookRequested.Title)  
+                    @Html.DisplayFor(modelItem => item.BookRequested.Title)
                 </td>
 
                 <td>
@@ -106,10 +105,10 @@
     </tbody>
 </table>
 
-<hr />
-<hr />
+<br />
+<h2>You want a book</h2>
 
-<table class="table">
+<table id="take" class="table">
     <tbody>
         <tr>
             <th>
@@ -119,14 +118,14 @@
                 @Html.DisplayNameFor(model => model.BookRequested.Owner)
             </th>
             @*<th>
-                Requested By
-            </th>*@
+                    Requested By
+                </th>*@
             @*<th>
                     Requested On
                 </th>*@
             @*<th>
-                Phone Number
-            </th>*@
+                    Phone Number
+                </th>*@
             <th></th>
         </tr>
 
@@ -140,17 +139,17 @@
                     @Html.DisplayFor(modelItem => item.BookRequested.Owner.ActualUsername)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername)
+                    </td>*@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.RequestedOn)
                     </td>*@
                 @*<td>
-                    @if (item.RequestedBy.Id != User.Identity.GetUserId())
-                    {
-                        @Html.DisplayFor(modelItem => item.RequestedBy.PhoneNumber)
-                    }
-                </td>*@
+                        @if (item.RequestedBy.Id != User.Identity.GetUserId())
+                        {
+                            @Html.DisplayFor(modelItem => item.RequestedBy.PhoneNumber)
+                        }
+                    </td>*@
                 <td>
                     @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == true)
                     {

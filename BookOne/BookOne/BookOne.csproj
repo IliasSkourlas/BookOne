@@ -364,6 +364,7 @@
     <Content Include="Views\Shared\_Layout - History.cshtml" />
     <Content Include="Views\Shared\_Layout - GiveAndTake.cshtml" />
     <Content Include="Views\Player\Requests 2.cshtml" />
+    <Content Include="Views\Shared\_Layout - History - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
