@@ -126,6 +126,7 @@ namespace BookOne.Controllers
                 var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
                 book.Owner = loggedInUser;
+                book.Carrier = loggedInUser;
                 dbOps.InsertBook(book);
                 return RedirectToAction("MyBooks");
             }
