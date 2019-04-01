@@ -7,22 +7,38 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
-    <style type="text/css">
 
-        body {
-            background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTen.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
+    <style type="text/css">
+        :root {
+            --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+            --main-Header-color: rgb(0, 255, 255);
+            --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
         }
+
+        .container body-content {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 1);
+        }
+        #AboutText {
+            margin-top: 20%;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: large;
+            color: rgba(255, 255, 255, 1);
+            text-align: center;
+            letter-spacing: 4px;
+        }
+
+
+
         .container-fluid .navbar-brand {
             margin-left: -200px;
         }
         #MyNavbar {
-            background-color: rgba(21, 226, 226, 0.9); 
+            background-color: rgba(21, 226, 226, 0.00); 
             border-bottom: none;
-            opacity: 0.69;
-            filter: alpha(opacity=30)
+            /*opacity: 0.69;*/
+            /*filter: alpha(opacity=30)*/
         }
 
         .navbar-brand{
@@ -60,7 +76,6 @@
             pointer-events: none;
             background-attachment: fixed;
         }
-
         .video-container video {
             min-width: 100%;
             min-height: 100%;
@@ -76,26 +91,17 @@
             z-index: 1;
         }
      
-        #AboutText {
-            margin-top: 32%;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            font-size: large;
-            color: rgba(255, 255, 255, 1);
-            text-align: center;
-            letter-spacing: 4px;
-        }
+        
     </style>
 
 </head>
 <body>
 
+
     <div class="video-container">
         @Html.Partial("_VideoPartial")
     </div>
 
-
-
-    
 
     <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -111,17 +117,17 @@
                 <ul class="nav navbar-nav">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Books", "Index", "Books")</li>
+                        <li>@Html.ActionLink("All books", "Index", "Books")</li>
                     }
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                 </ul>
-                @Html.Partial("_LoginPartial")
+               
             </div>
         </div>
     </div>
     <div class="container body-content">
-
+        @Html.Partial("_LoginPartial")
 
         @RenderBody()
 
@@ -133,5 +139,27 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+
+    <script>
+        document.getElementById("oneMore").addEventListener("click", addOne);
+
+        var count = 1;
+
+        function addOne() {
+            var x = document.getElementById("emailInput").value;
+
+
+            // Make better
+            if (x.length > 12 && x.includes("") && x.includes(".")) {
+                count += 1;
+                document.getElementById("counter").innerHTML = count;
+                document.getElementById("emailInput").value = "";
+            }
+            document.getElementById("emailInput").value = "";
+        }
+
+    </script>
 </body>
 </html>

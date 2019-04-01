@@ -13,25 +13,24 @@
 
 
 <style type="text/css">
-    
+
     body {
         background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
     }
-    
 </style>
 
 
 
 <table id="listOfBooks" class="table">
-    <tr class="header" >
+    <tr class="header">
         <th id="Title" class="col-md-8">
-           
+
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th id="Author" class="author col-md-4" >
+        <th id="Author" class="author col-md-4">
             @Html.DisplayNameFor(model => model.Author)
         </th>
         <th id="Owner" col-md-4">
@@ -46,17 +45,17 @@
     @foreach (var item in Model)
     {
         <tr class="bookTitle">
-            <td >
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
             </td>
             @*<td class="owner">
-                @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
-            </td>*@
-            
-            <td   class="owner">
+                    @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
+                </td>*@
+
+            <td class="owner">
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
 
@@ -73,6 +72,8 @@
         </tr>
     }
 </table>
+
+
 
 
 
@@ -104,7 +105,7 @@
             new function () {
                 $('.author').show();
                 $('.Status').hide();
-                
+
             }
         }
         if (n === 2) {
@@ -121,7 +122,7 @@
                 $('#Owner').hide();
                 $('.owner').hide();
                 $('.Status').show();
-                
+
 
 
             }
@@ -136,7 +137,7 @@
             }
         }
 
-        
+
     }
 
 </script>
