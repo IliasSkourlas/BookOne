@@ -17,48 +17,45 @@ namespace BookOne.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.allUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
-            ViewBag.currentUser = dbOps.GetUser(User.Identity.GetUserId());
+            var loggedInUserId = User.Identity.GetUserId();
+            var otherUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
+            
 
-            return View("ChatStart");
+            return View();
         }
 
 
-        public JsonResult ConversationWithContact(ApplicationUser contact)
+        public ActionResult ConversationWithContact(ApplicationUser contact)
         {
             var loggedInUserId = User.Identity.GetUserId();
 
             var conversations = dbOps.GetConversation(loggedInUserId, contact.Id);
-            
-            return Json(
-                new { status = "success", data = conversations },
-                JsonRequestBehavior.AllowGet
-            );
+
+            return View(conversations);
         }
 
 
         [HttpPost]
-        public JsonResult SendMessage(ApplicationUser contact)
+        public ActionResult SendMessage(ApplicationUser contact, string content)
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-
-            string socket_id = Request.Form["socket_id"];
+            contact = dbOps.GetUser(User.Identity.GetUserId());
 
             while (contact != loggedInUser)
             {
                 Message message = new Message
                 {
                     Sender = loggedInUser,
-                    Content = Request.Form["message"],
+                    Content = content,
                     Receiver = contact
                 };
 
                 dbOps.InsertMessage(message);
 
-                return Json(message);
+                return View(message);
             };
 
-            return null;
+            return ViewBag.Message("Please select a user to chat with");
         }
     }
 }

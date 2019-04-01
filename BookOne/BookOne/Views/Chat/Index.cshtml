@@ -1,16 +1,20 @@
-﻿
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">pChat - @ViewBag.currentUser.ActualUsername </a>
-        </div>
-        @*<ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Log Out</a></li>
-        </ul>*@
-        </div>
-    </nav>
-    <!-- / Navigation Bar -->
+﻿@using Microsoft.AspNet.Identity;
+
+@model BookOne.Models.ApplicationUser
+
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>Chatroom</h2>
+
+@*<head>
+    <title>BookOne- Chatroom</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/app.css")">
+</head>*@
+<body>
+
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-md-3">
@@ -29,17 +33,13 @@
 
                                         @foreach (var user in @ViewBag.allUsers)
                                         {
-                                            <li>
-                                                <a class="user__item contact-@user.Id" href="#" data-contact-id="@user.Id" data-contact-name="@user.ActualUsername">
-
-                                                    <div class="avatar">
-                                                        <img src="@Url.Content("~/Content/no_avatar.png")">
-                                                    </div>
+                                            <a class="user__item contact-@User.Identity" href="#"
+                                               data-contact-name="@user.ActualUsername">
+                                                <li>                                                   
                                                     <span>@user.ActualUsername</span>
                                                     <div class="status-bar"></div>
-
-                                                </a>
-                                            </li>
+                                                </li>
+                                            </a>
                                         }
                                     </ul>
                                 </div>
@@ -68,24 +68,22 @@
             </div>
         </div>
     </div>
-
-
-
     <script src="@Url.Content("~/Content/app.js")"></script>
-     
-    <script>
+</body>
+
+
+<script>
     let currentContact = null; // Holds current contact
     let newMessageTpl =
-    //<div>
-    //    <div id="msg-{{id}}" class="row __chat__par__">
-    //      <div class="__chat__">
-    //        <p>{{body}}</p>
-    //        <p class="delivery-status">Delivered</p>
-    //      </div>
-    //    </div>
-    // </div>;
-
-
+    `<div>
+        <div id="msg-{{id}}" class="row __chat__par__">
+          <div class="__chat__">
+            <p>{{body}}</p>
+            <p class="delivery-status">Delivered</p>
+          </div>
+        </div>
+     </div>`;
+    ...
     // select contact to chat with
     $('.user__item').click( function(e) {
         e.preventDefault();
@@ -101,7 +99,6 @@
         getChat(currentContact.id);
     });
 
-
     // get chat data
     function getChat( contact_id ) {
         $.get("/contact/conversations/" + contact_id )
@@ -110,7 +107,6 @@
             loadChat( chat_data );
          });
     }
-
 
     //load chat data into view
     function loadChat( chat_data ) {
@@ -123,7 +119,6 @@
         $('.__no__chat__').hide();
     }
 
-
     function displayMessage( message_obj ) {
         const msg_id = message_obj.id;
         const msg_body = message_obj.message;
@@ -135,7 +130,7 @@
 
         template = $(template);
 
-        if ( message_obj.sender_id == @ViewBag.currentUser.Id ) {
+        if ( message_obj.sender_id == @ViewBag.loggedInUserId ) {
             template.find('.__chat__').addClass('from__chat');
         } else {
             template.find('.__chat__').addClass('receive__chat');
@@ -146,6 +141,4 @@
         }
 
         $('.chat__main').append(template);
-
     }
-    </script>

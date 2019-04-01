@@ -1,0 +1,15 @@
+﻿@model BookOne.BookOne_Domain.Message;
+
+@{
+    Layout = "~/Views/Shared/_Layout - User1.cshtml";
+}
+
+@{
+    ViewBag.Title = "ChatWithOwner";
+}
+
+<p Chatting with: >
+
+    @Html.DisplayNameFor(model => model.Receiver)
+</p>
+
