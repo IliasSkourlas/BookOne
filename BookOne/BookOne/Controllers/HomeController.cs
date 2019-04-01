@@ -35,16 +35,31 @@ namespace BookOne.Controllers
             return View();
         }
 
+
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public void EmailNotifier(string userEmail)
+        public ActionResult EmailNotifier(string userEmail)
         {
             var notification = new EmailNotification()
             {
                 EmailAddress = userEmail
             };
 
+            return RedirectToAction("EmailIsValidToBeNotified", notification);
+        }
+
+        public ActionResult EmailIsValidToBeNotified(EmailNotification notification)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Success = "Invalid Email Address provided.";
+                return View("Contact");
+            }
+
             dbOps.InsertEmailNotification(notification);
+
+            ViewBag.Success = "You'll be notified soon..";
+            return View("Contact");
         }
     }
 }
