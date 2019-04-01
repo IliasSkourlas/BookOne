@@ -14,39 +14,195 @@
         background-size: cover;
         background-attachment: fixed;
     }
+    :root {
+        --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+        --main-Header-color: rgb(0, 255, 255);
+        --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
+    }
+
+    .container body-content {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #AboutText {
+        margin-top: 20%;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: large;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+        letter-spacing: 4px;
+    }
+
+    .container-fluid .navbar-brand {
+        margin-left: -200px;
+    }
+
+    #MyNavbar {
+        background-color: rgba(21, 226, 226, 0.00);
+        border-bottom: none;
+    }
+
+    .navbar-brand {
+        font-size: 30px;
+    }
+
+    .navbar-nav {
+        font-size: 25px;
+    }
+
+    .navbar {
+        min-height: 80px;
+    }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #FFC0CB;
+        opacity: 0.9;
+    }
+
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: var(--main-HeaderHover-color);
+        }
+
+    .nav > li > a:hover {
+        background-color: rgb(0, 255, 255);
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: #FFC0CB;
+    }
+
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--main-HeaderHover-color);
+        font-size: large;
+    }
+
+    #about {
+        transition: opacity 2s;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+
+    #button {
+        background-color: rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+        #button:hover {
+            background-color: rgba(0, 255, 255, 0.43);
+            border-color: var(--main-HeaderHover-color);
+        }
+
+    .form-row {
+        transition: opacity 3s;
+        opacity: 0;
+    }
+
+    a {
+        color: rgba(255, 255, 255, 0.8);
+    }
+    #logoutForm > ul > li:nth-child(1) > a {
+        background-color: transparent;
+        
+    }
+    #logoutForm > ul > li:nth-child(1) > a:hover {
+        color: var(--main-HeaderHover-color);
+    }
+    #logoutForm > ul > li:nth-child(2) > a {
+        background-color: transparent;
+    }
+    #logoutForm > ul > li:nth-child(2) > a:hover {
+        color: var(--main-HeaderHover-color);
+    }
+    
 </style>
 
-
-<div id="AboutText">
-    <div id="about">
-        <h1>we are aiming on rediscovering the world of your </h1>
-        <h1>books.</h1>
-    </div>
-    
-    @*<h2>
-            This is an app for searing your books with your friends. Not digital books, but your physical books.
-            It helps you to keep track with their whereabouts, as they are seared from a pool of carriers that you choose.
-            Read and write reviews and decide to give or not a Clap, when they are returned back to you in perfect condition.
-            So...explore and have fun...and don't hesitate searing!
-        </h2>*@
-
-    <br />
-    <br />
+<div id="mouseMove" onmousemove="myFunction(event)" onmouseout="showEmail()">
 
 
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputEmail">...and we will keep you informed</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="give as your email...">
+
+    <div id="AboutText">
+        <div id="about">
+            <h1>we are aiming on rediscovering the world of your </h1>
+            <h1>books.</h1>
         </div>
 
-        <button id="button" type="submit" class="btn btn-primary">Submit</button>
+        @*<h2>
+                This is an app for searing your books with your friends. Not digital books, but your physical books.
+                It helps you to keep track with their whereabouts, as they are seared from a pool of carriers that you choose.
+                Read and write reviews and decide to give or not a Clap, when they are returned back to you in perfect condition.
+                So...explore and have fun...and don't hesitate searing!
+            </h2>*@
 
-        <p><spam>We have </spam><spam id="counter">0</spam><spam> emails so far</spam></p>
+        <br />
+        <br />
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputEmail">...and we will keep you informed</label>
+                <input type="email" class="form-control" id="inputEmail4" placeholder="give as your email...">
+            </div>
+
+            <button id="button" type="submit" class="btn btn-primary">Submit</button>
+
+            <p><spam>We have </spam><spam id="counter">0</spam><spam> emails so far</spam></p>
+
+        </div>
 
     </div>
 
 </div>
+<script>
+
+    ///////  Add count with a new email
+    document.getElementById("button").addEventListener("click", addOne);
+
+    var count = 1;
+
+    function addOne() {
+        var x = document.getElementById("emailInput").value;
+
+
+        // Make better
+        if (x.length > 12 && x.includes("") && x.includes(".")) {
+            count += 1;
+            document.getElementById("counter").innerHTML = count;
+            document.getElementById("emailInput").value = "";
+        }
+        document.getElementById("emailInput").value = "";
+    }
+
+
+    /////////// mouse over
+    //$(document).ready(function () {
+    //    $("#AboutText").onmousemove(function () {
+    //        $(".form-row").css("opacity", "1");
+    //        $("#about").css("opacity", "0");
+    //    })
+
+
+    //});
+
+
+
+
+    function myFunction(e) {
+        var x = e.clientX;
+        var y = e.clientY;
+    }
+    function showEmail() {
+        $(".form-row").css("opacity", "1");
+        $("#about").css("opacity", "0");
+    };
+
+</script>
 
 
 

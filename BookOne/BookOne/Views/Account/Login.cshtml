@@ -9,19 +9,126 @@
 
 
 <style type="text/css">
-
+    :root {
+        --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+        --main-Header-color: rgb(0, 255, 255);
+        --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
+    }
     body {
         background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
     }
+
+
+    .container body-content {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    /*#AboutText {
+        margin-top: 20%;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: large;
+        color: rgba(255, 255, 255, 1);
+        text-align: center;
+        letter-spacing: 4px;
+    }*/
+
+    .container-fluid .navbar-brand {
+        margin-left: -200px;
+    }
+    #MyNavbar {
+        background-color: rgba(21, 226, 226, 0.00);
+        border-bottom: none;
+    }
+    .navbar-brand {
+        font-size: 30px;
+    }
+    .navbar-nav {
+        font-size: 25px;
+    }
+    .navbar {
+        min-height: 80px;
+    }
+    .navbar-inverse .navbar-nav > li > a {
+        color: #FFC0CB;
+        opacity: 0.9;
+    }
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: var(--main-HeaderHover-color);
+        }
+
+    /*.nav > li > a:hover {
+        background-color: rgb(0, 255, 255);
+    }*/
+    /*.navbar-inverse .navbar-brand {
+        color: #FFC0CB;
+    }*/
+    
+
+
+
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: var(--main-HeaderHover-color);
+        font-size: large;
+    }
+        
+    #loginForm > form > div.validation-summary-errors.text-danger > ul > li {
+        color: white;
+    }
+    #Email-error {
+        color: white;
+    }
+    #Password-error {
+        color: white;
+    }
+    /*#button {
+        background-color: rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    #button:hover {
+        background-color: rgba(0, 255, 255, 0.43);
+        border-color: var(--main-HeaderHover-color);
+    }*/
+    /*.form-row {
+        transition: opacity 3s;
+        opacity: 0;
+    }*/
+    /*a {
+        color: rgba(255, 255, 255, 0.8);
+    }*/
+    #loginLink {
+        background-color: transparent;
+        color: rgba(255, 255, 255, 0.8);
+    }
+    #loginLink:hover {
+        color: var(--main-HeaderHover-color);
+    }
+    #registerLink {
+        background-color: transparent;
+        color: rgba(255, 255, 255, 0.8);
+    }
+    #registerLink:hover {
+        color: var(--main-HeaderHover-color);
+    }
+    
+    
+
+   
 </style>
 
 <br />
+<br />
+<br />
 
  
-<h2>@ViewBag.Title.</h2>
+@*<h2>@ViewBag.Title.</h2>*@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
