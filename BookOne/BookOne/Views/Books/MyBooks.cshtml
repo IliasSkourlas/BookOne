@@ -52,7 +52,7 @@
 
         <tr class="bookTitle">
             <td>
-                @Html.ActionLink( item.Title, "Details", new { id = item.BookId })
+                @Html.ActionLink( item.Title, "Edit", new { id = item.BookId })
             </td>
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
@@ -97,7 +97,8 @@
                 <tbody>
                     <tr class="bookTitle">
                         <td>
-                            @Html.ActionLink(item.BookAssociated.Title, "BorrowedBookDetails", new { id = item.BookAssociated.BookId })
+                            @*@Html.ActionLink(item.BookAssociated.Title, "BorrowedBookDetails", new { id = item.BookAssociated.BookId })*@
+                            @Html.ActionLink(item.BookAssociated.Title, "Edit", new { id = item.BookAssociated.BookId })
                         </td>
                         <td class="author">
                             @Html.DisplayFor(modelItem => item.BookAssociated.Author)
@@ -126,14 +127,10 @@
                                 </script>
                             }
 
-
                         </td>
                         <td class="carrier">
                             @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
                         </td>
-                        @*<td    class="editDelete">
-                            @Html.ActionLink("Return Book", "ReturnBook", "Player", new { bookId = item.BookAssociated.BookId }, null)
-                        </td>*@
                     </tr>
                 </tbody>
             }
