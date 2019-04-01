@@ -6,15 +6,13 @@
 }
 
 <style type="text/css">
- 
+
     body {
         background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
     }
- 
-
 </style>
 
 
@@ -27,6 +25,7 @@
 </p>
 
 
+@*My Unborrowed Books*@
 <table id="listOfBooks" class="table">
 
     <tr class="header">
@@ -42,9 +41,6 @@
         <th class="carrier col-md-6">
             Carrier
         </th>
-        @*<th class="editDelete col-md-3">
-            Actions
-        </th>*@
     </tr>
 
     @foreach (var item in Model.Books)
@@ -53,7 +49,7 @@
 
         <tr class="bookTitle">
             <td>
-                @Html.ActionLink( item.Title, "Edit", new { id = item.BookId })
+                @Html.ActionLink(item.Title, "Edit", new { id = item.BookId })
             </td>
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)
@@ -62,80 +58,74 @@
                 @Html.DisplayFor(modelItem => item.BookStatus)
             </td>
             <td class="carrier"></td>
-            @*<td class="editDelete"></td>*@
         </tr>
     }
 </table>
 
 
-@*<h2>Borrowed Books to other Users</h2>*@
-<div  class="borrowed">
+@*Borrowed Books to other Users*@
+<div class="borrowed">
 
     <table id="listOfBooks" class="table table-hover">
 
-            <tr class="header">
-                <th class="col-md-6">
-                    @*Title*@
-                </th>
-                <th class="author col-md-6">
-                    @*Author*@
-                </th>
-                <th class="thisStatus col-md-6">
-                    @*Borrowed On*@
-                </th>
-                <th class="carrier col-md-6">
-                    @*Carrier*@
-                </th>
-                @*<th class="editDelete col-md-3">
-                    Actions
-                </th>*@
-            </tr>
+        <tr class="header">
+            <th class="col-md-6">
+                @*Title*@
+            </th>
+            <th class="author col-md-6">
+                @*Author*@
+            </th>
+            <th class="thisStatus col-md-6">
+                @*Borrowed On*@
+            </th>
+            <th class="carrier col-md-6">
+                @*Carrier*@
+            </th>
+        </tr>
 
-            @foreach (var item in Model.BookCirculations)
-            {
-                if (item.BookAssociated.AvailabilityStatus == true) { continue; }
+        @foreach (var item in Model.BookCirculations)
+        {
+            if (item.BookAssociated.AvailabilityStatus == true) { continue; }
 
-                <tbody>
-                    <tr class="bookTitle">
-                        <td>
-                            @*@Html.ActionLink(item.BookAssociated.Title, "BorrowedBookDetails", new { id = item.BookAssociated.BookId })*@
-                            @Html.ActionLink(item.BookAssociated.Title, "Edit", new { id = item.BookAssociated.BookId })
-                        </td>
-                        <td class="author">
-                            @Html.DisplayFor(modelItem => item.BookAssociated.Author)
-                        </td>
-                        <td class="thisStatus">
-                            @if (item.DaysRemaining > 1 || item.DaysRemaining == 0)
-                            {
-                                @Html.DisplayFor(modelItem => item.DaysRemaining) <span> days remaining</span>
-                            }
-                            @if (item.DaysRemaining == 1)
-                            {
-                                @Html.DisplayFor(modelItem => item.DaysRemaining) <span> day remaining</span>
-                            }
+            <tbody>
+                <tr class="bookTitle">
+                    <td>
+                        @*@Html.ActionLink(item.BookAssociated.Title, "BorrowedBookDetails", new { id = item.BookAssociated.BookId })*@
+                        @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+                    </td>
+                    <td class="author">
+                        @Html.DisplayFor(modelItem => item.BookAssociated.Author)
+                    </td>
+                    <td class="thisStatus">
+                        @if (item.DaysRemaining > 1 || item.DaysRemaining == 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.DaysRemaining) <span> days remaining</span>
+                        }
+                        @if (item.DaysRemaining == 1)
+                        {
+                            @Html.DisplayFor(modelItem => item.DaysRemaining) <span> day remaining</span>
+                        }
+                        @*book will blink if DaysRemaining < 3*@
+                        @if (item.DaysRemaining < 3)
+                        {
+                            <script>
 
-                            @*book will blink if DaysRemaining < 3*@
-                            @if (item.DaysRemaining < 3)
-                            {
-                                <script>
+                                myFunction();
+                                function myFunction() {
+                                    setInterval(function () { $("div.borrowed *").css("color", "var(--main-borrowed-color)"); }, 1000);
+                                    setInterval(function () { $("div.borrowed *").css("color", "var(--main-borrowed-hover-color)"); }, 4001);
+                                }
 
-                                    myFunction();
-                                    function myFunction() {
-                                        setInterval(function () { $("div.borrowed *").css("color", "var(--main-borrowed-color)"); }, 1000);
-                                        setInterval(function () { $("div.borrowed *").css("color", "var(--main-borrowed-hover-color)"); }, 4001);
-                                    }
-
-                                </script>
-                            }
-
-                        </td>
-                        <td class="carrier">
-                            @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
-                        </td>
-                    </tr>
-                </tbody>
-            }
-     </table>
+                            </script>
+                        }
+                    </td>
+                    <td class="carrier">
+                        @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
 </div>
 
 

@@ -1,38 +1,27 @@
 ﻿@{
     ViewBag.Title = "Contact";
-}
-@{
     Layout = "~/Views/Shared/_Layout - Contact - TheHappy.cshtml";
 }
 
 
 
-@*<h2>@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>*@
+<h3>Get notified when the application is ready.</h3>
 
-@*<address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        30 6993128869
-    </address>*@
+@using (Html.BeginForm("EmailNotifier", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 
-@*<address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>*@
+        <div id="AboutText" class="container">
+            <div id="email" class="input-group mb-3">
 
+                <p id="counter">1</p>
 
+                <input id="emailInput" type="text" class="form-control" placeholder="Your email" aria-label="Recipient's email" aria-describedby="basic-addon2">
 
-    <div id="AboutText"  class="container">
+                <div class="input-group-append">
+                    <button id="oneMore" class="btn btn-outline-secondary" type="button">Get notified</button>
+                </div>
 
-           
-        <div id="email" class="input-group mb-3">
-            <p id="counter">1</p>
-            <input id="emailInput" type="text" class="form-control" placeholder="Your email" aria-label="Recipient's email" aria-describedby="basic-addon2">
-
-            <div class="input-group-append">
-                <button id="oneMore" class="btn btn-outline-secondary" type="button">Get notified</button>
             </div>
         </div>
-    </div>
+}
