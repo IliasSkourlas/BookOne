@@ -8,8 +8,118 @@
     ViewBag.Title = "Book Requests";
 }
 
-<div id="back" >
-    <a href="/Books/Index">Back </a>
+
+
+<style type="text/css">
+
+
+
+    #back {
+        color: white;
+    }
+
+    #back:hover {
+         color: var(--main-Header-color);
+    }
+    .headers {
+        color: hotpink;
+    }
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgb(255, 255, 255);
+    }
+    /*button, html input[type="button"], input[type="reset"], input[type="submit"] {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.8);
+        }*/
+    a {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    a:hover {
+        color: var(--main-HeaderHover-color);
+        text-decoration: none;
+    }
+
+
+    tr:hover {
+        background: rgba(253, 255, 233, 0.19);
+    }
+
+    #give {
+        /*color: rgb(251, 219, 132);*/
+        /*color: rgb(155, 251, 132);*/
+        color: var(--main-Header-color);
+    }
+
+    #take {
+        /*color: rgb(255, 102, 102)*/
+        color: var(--main-Header-color);
+    }
+
+    .green a {
+        color: rgb(0, 128, 0);
+    }
+
+    .green a:hover {
+        color: rgb(0, 206, 29);
+    }
+
+    .red a {
+        color: rgb(128, 0, 0);
+    }
+
+    .red a:hover {
+        color: rgb(206, 0, 0);
+    }
+
+    .nutral a {
+        color: var(--main-HeaderHover-color);
+    }
+
+    .nutral a:hover {
+        color: var(--main-Header-color);
+    }
+
+
+
+
+    .video-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        background-attachment: fixed;
+    }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            opacity: 0.35;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+
+    #video2 {
+        opacity: 0.032;
+    }
+</style>
+
+
+
+<div  >
+    <a id="back" href="/Books/Index">Back </a>
 </div>
 <br />
 <br />
@@ -17,7 +127,7 @@
 <h2 id="take">You want </h2>
 <table class="table">
     <tbody>
-        <tr>
+        <tr  class="headers">
             <th>
                 @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
@@ -81,7 +191,7 @@
 <h2 id="give">Someone wants </h2>
 <table class="table">
     <tbody>
-        <tr>
+        <tr  class="headers">
             <th>
                 @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
@@ -135,3 +245,7 @@
         }
     </tbody>
 </table>
+
+
+
+    

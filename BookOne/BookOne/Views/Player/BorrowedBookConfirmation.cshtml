@@ -1,57 +1,215 @@
 ﻿@model BookOne.BookOne_Domain.BookRequest
 
 @{
+    Layout = "~/Views/Shared/_Layout - History.cshtml";
+    ViewBag.Title = "MyHand";
+}
+
+@{
     ViewBag.Title = "Confirmation";
 }
 
-<h2>Borrowing Book Confirmation</h2>
+
+<style type="text/css">
+
+    .center {
+        position: relative;
+        text-align: center;
+    }
 
 
-@using (Html.BeginForm("BorrowedBookConfirmation", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
+    #back {
+        color: white;
+        text-decoration: none;
+    }
 
-<div class="form-horizontal">
-    <h4>(Press Accept only if you are receiving the book right now)</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.BookRequestId)
-    @Html.HiddenFor(model => model.OwnerDeclined)
-    @Html.HiddenFor(model => model.RequestedOn)
-    @Html.HiddenFor(model => model.RequestStatus)
-    @Html.HiddenFor(model => model.BookRequested.BookId)
-    @Html.HiddenFor(model => model.RequestedBy.Id)
+    #back:hover {
+        color: var(--main-Header-color);
+    }
+    #yes {
+        color: rgba(0, 255, 255, 0.43);
+        background-color: rgba(255, 255, 255, 0.11);
+        /*border-color: rgba(0, 255, 255, 0.43);*/
+        display: inline-block;
+        margin: 10px 40px;
+        font-size: x-large;
+    }
+    #yes:hover {
+        background-color: rgba(0, 255, 255, 0.43);      
+        border-color: var(--main-HeaderHover-color)
+    }
+    #no {
+        color: rgba(255, 0, 0, 0.36);
+        background-color: rgba(255, 255, 255, 0.11);
+        /*border-color: rgba(255, 0, 0, 0.36);*/
+        display: inline-block;
+        margin: 10px 40px;
+        font-size: x-large;
+    }
+    #no:hover {
+        background-color: rgba(255, 0, 0, 0.36);
+        border-color: red
+    }
+    #theBook {
+        color: white;
+        font-style: italic;
+    }
+    .question {
+        display: inline;
+    }
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.BookRequested.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DisplayFor(model => model.BookRequested.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.BookRequested.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.BookRequested.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @ViewBag.Owner
 
-            @*@Html.DisplayFor(model => model.BookRequested.Owner.ActualUsername, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.BookRequested.Owner.ActualUsername, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Accept" class="btn btn-default" />
-        </div>
-    </div>
-</div>
-}
+
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgb(255, 255, 255);
+    }
+   
+
+    tr:hover {
+        background: rgba(253, 255, 233, 0.19);
+    }
+
+
+    .green a {
+        color: rgb(0, 128, 0);
+    }
+
+        .green a:hover {
+            color: rgb(0, 206, 29);
+        }
+
+    .red a {
+        color: rgb(128, 0, 0);
+    }
+
+        .red a:hover {
+            color: rgb(206, 0, 0);
+        }
+
+    .nutral a {
+        color: var(--main-HeaderHover-color);
+    }
+
+        .nutral a:hover {
+            color: var(--main-Header-color);
+        }
+
+
+
+
+    .video-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        background-attachment: fixed;
+    }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            opacity: 0.35;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+
+    #video2 {
+        opacity: 0.032;
+    }
+</style>
+
+
 
 <div>
-    @Html.ActionLink("Back to List", "Requests")
+    @*<a id="back"> @Html.ActionLink("Back", "Requests")</a>*@
+    <a id="back" href="/Player/Requests">Back </a>
+</div>
+<br />
+<br />
+
+<br />
+<br />
+<br />
+
+
+
+<div class="center">
+    @using (Html.BeginForm("BorrowedBookConfirmation", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.BookRequestId)
+        @Html.HiddenFor(model => model.OwnerDeclined)
+        @Html.HiddenFor(model => model.RequestedOn)
+        @Html.HiddenFor(model => model.RequestStatus)
+        @Html.HiddenFor(model => model.BookRequested.BookId)
+        @Html.HiddenFor(model => model.RequestedBy.Id)
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.BookRequested.Title, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                <h1 class="question">Is the book &nbsp;</h1>
+                <h1 id="theBook" class="question">
+                    @Html.DisplayFor(model => model.BookRequested.Title, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BookRequested.Title, "", new { @class = "text-danger" })
+                    &nbsp;
+                </h1>
+                 <h1 class="question"> in your hands right now ?</h1>
+              
+                <div>
+                    <br />
+                    <br/>
+                    <div class="form-group">
+                        <div id="buttons">
+                            <input id="yes" type="submit" value="Yes" class="btn btn-default" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input id="no" type="submit" value="No" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.BookRequested.Owner, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @ViewBag.Owner
+            </div>
+        </div>*@
+
+       
+       
+
+       
+
+
+
+
+    </div>
+    }
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
