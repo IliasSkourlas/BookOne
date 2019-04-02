@@ -1,0 +1,75 @@
+﻿@model IEnumerable<BookOne.BookOne_Domain.Book>
+
+@{
+    ViewBag.Title = "Books";
+}
+
+
+<br />
+<br />
+
+@Html.ActionLink("Users", "Index") |
+@Html.ActionLink("Books", "Books") |
+@Html.ActionLink("BookCirculations", "BookCirculations")
+
+
+<h2>Books</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Title
+        </th>
+        <th>
+            Author
+        </th>
+        <th>
+            Owner
+        </th>
+        <th>
+            Registered On
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Availability
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.BorrowerAskedToReturnThisBook)
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegisteredOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailabilityStatus)
+            </td>
+            <td>
+                @if (item.AvailabilityStatus == true)
+                {
+                    @Html.ActionLink("Edit", "EditBook", new { id = item.BookId }) <span> | </span>
+                    @Html.ActionLink("Delete", "DeleteBook", new { id = item.BookId })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

@@ -187,6 +187,7 @@
     <Compile Include="BookOne_Domain\Message.cs" />
     <Compile Include="BookOne_Domain\UserReaction.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -286,6 +287,7 @@
     <Content Include="Content\images\Drowing.jpg" />
     <Content Include="Content\images\fish2.mp4" />
     <Content Include="Content\images\fishShadowMan.mp4" />
+    <Content Include="Content\images\road Lights2.mp4" />
     <Content Include="Content\images\TenTen.jpg" />
     <Content Include="Content\images\TenTenCut.jpg" />
     <Content Include="favicon.ico" />
@@ -368,6 +370,13 @@
     <Content Include="Views\Player\Requests.cshtml" />
     <Content Include="Views\Shared\_Layout - History - Copy.cshtml" />
     <Content Include="Views\Player\RequestsOld.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Books.cshtml" />
+    <Content Include="Views\Admin\BookCirculations.cshtml" />
+    <Content Include="Views\Admin\EditBook.cshtml" />
+    <Content Include="Views\Admin\DeleteBook.cshtml" />
+    <Content Include="Views\Admin\DeleteUser.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

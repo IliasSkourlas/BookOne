@@ -1,0 +1,64 @@
+﻿@model IEnumerable<BookOne.BookOne_Domain.BookCirculation>
+
+@{
+    ViewBag.Title = "Circulations";
+}
+
+
+<br />
+<br />
+
+@Html.ActionLink("Users", "Index") |
+@Html.ActionLink("Books", "Books") |
+@Html.ActionLink("BookCirculations", "BookCirculations")
+
+
+<h2>Book Circulations</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Book Title
+        </th>
+        <th>
+            Owner
+        </th>
+        <th>
+            Borrower
+        </th>
+        <th>
+            Borrowed On
+        </th>
+        <th>
+            Remaining Days
+        </th>
+        <th>
+            Circulation Status
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysRemaining)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CirculationStatus)
+            </td>
+        </tr>
+    }
+
+</table>

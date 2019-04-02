@@ -8,7 +8,6 @@
 
 <h4>Get notified when the application is ready.</h4>
 
-@*<p id="counter">1</p>*@
 
 <form action="/Home/EmailNotifier" method="Post" class="form-horizontal">
 
@@ -27,5 +26,6 @@
 </form>
 
 
+<p id="counter">Users blown away by this application: @Html.Action("EmailNotificationsCounter", "Home", new { area = "" })</p>
 
 

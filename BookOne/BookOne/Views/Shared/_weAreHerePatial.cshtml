@@ -1,10 +1,14 @@
 ﻿
- @if (User.Identity.IsAuthenticated)
-    {
-        <li id="weAreHere">@Html.ActionLink("All", "Index", "Books")</li>
-    }
-    <li>@Html.ActionLink("My", "MyBooks", "Books")</li>
-    <li>@Html.ActionLink("Hand", "MyHand", "Books")</li>
-    <li id="blink">@Html.ActionLink("Requests", "Requests", "Player")</li>
+
+<li id="weAreHere">@Html.ActionLink("All", "Index", "Books")</li>
+<li>@Html.ActionLink("My", "MyBooks", "Books")</li>
+<li>@Html.ActionLink("Hand", "MyHand", "Books")</li>
+<li id="blink">@Html.ActionLink("Requests", "Requests", "Player")</li>
+
+@if (User.IsInRole("Administrator"))
+{
+    <li>@Html.ActionLink("Administration Panel", "Index", "Admin")</li>
+}
 
 @{Html.RenderAction("CheckUnansweredRequests", "Player"); }
+

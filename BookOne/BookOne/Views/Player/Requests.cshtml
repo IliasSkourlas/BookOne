@@ -8,11 +8,13 @@
     ViewBag.Title = "Book Requests";
 }
 
-<br />
+<div id="back" >
+    <a href="/Books/Index">Back </a>
+</div>
 <br />
 <br />
 
-<h2>You want a book</h2>
+<h2 id="take">You want </h2>
 <table class="table">
     <tbody>
         <tr>
@@ -44,27 +46,26 @@
                 <td>
                     @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
                     {
-                        <span>(Waiting for owner's response) | </span>
+                        <span>(Waiting for owner's response) &nbsp; &nbsp; </span>
 
-                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
+                        <span class="red"> @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
                     }
 
                     @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
                     {
-                        @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId }) <span>|</span>
+                        <span class="green">
+                            @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId })
+                        </span>
+                        <span>&nbsp; &nbsp;</span>
 
-                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
-                    }
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
-                    {
-                        <span>(You have this book)</span>
+                        <span class="red">@Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
                     }
 
                     @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
                     {
-                        <span>(Request Declined) | </span>
+                        <span>(Request Declined) &nbsp; &nbsp; </span>
 
-                        @Html.ActionLink("Remove Request", "CancelConfirmation", new { RequestId = item.BookRequestId })
+                        <span class="nutral">@Html.ActionLink("Remove Request", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
                     }
                 </td>
             </tr>
@@ -77,7 +78,7 @@
 <br />
 
 
-<h2>Someone wants a book from you</h2>
+<h2 id="give">Someone wants </h2>
 <table class="table">
     <tbody>
         <tr>
@@ -118,16 +119,16 @@
                 <td>
                     @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == true)
                     {
-                        @Html.ActionLink("Give Book", "BorrowerReceivesBook", new { RequestId = item.BookRequestId }) <span>|</span>
+                        <span class="green">@Html.ActionLink("Give Book", "BorrowerReceivesBook", new { RequestId = item.BookRequestId })</span> <span>&nbsp; &nbsp;</span>
 
-                        @Html.ActionLink("Decline Request", "DeclineRequest", new { RequestId = item.BookRequestId })
+                        <span class="red">@Html.ActionLink("Decline Request", "DeclineRequest", new { RequestId = item.BookRequestId })</span>
 
                         //Change color at MyBooks
                     }
 
                     @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false && item.BookRequested.Owner.Id == User.Identity.GetUserId())
                     {
-                        @Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })
+                        <span class="nutral">@Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })</span>
                     }
                 </td>
             </tr>

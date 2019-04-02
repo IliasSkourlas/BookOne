@@ -1,0 +1,84 @@
+﻿@model IEnumerable<BookOne.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<br />
+<br />
+
+@Html.ActionLink("Users", "Index") |
+@Html.ActionLink("Books", "Books") |
+@Html.ActionLink("BookCirculations", "BookCirculations")
+
+
+<h2>Users</h2>
+
+<table class="table">
+
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Phone Number
+        </th>
+        <th>
+            RegisteredOn
+        </th>
+        <th>
+            User Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.Id)
+        @Html.HiddenFor(modelItem => item.PostalCode)
+        @Html.HiddenFor(modelItem => item.XP_Points)
+        @Html.HiddenFor(modelItem => item.EmailConfirmed)
+        @Html.HiddenFor(modelItem => item.PasswordHash)
+        @Html.HiddenFor(modelItem => item.SecurityStamp)
+        @Html.HiddenFor(modelItem => item.PhoneNumberConfirmed)
+        @Html.HiddenFor(modelItem => item.TwoFactorEnabled)
+        @Html.HiddenFor(modelItem => item.LockoutEndDateUtc)
+        @Html.HiddenFor(modelItem => item.LockoutEnabled)
+        @Html.HiddenFor(modelItem => item.AccessFailedCount)
+        @Html.HiddenFor(modelItem => item.UserName)
+
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegisteredOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserStatus)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditUser", new { userId = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteUser", new { userId = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
