@@ -138,9 +138,9 @@
     @*<a id="back"> @Html.ActionLink("Back", "Requests")</a>*@
     <a id="back" href="/Player/Requests">Back </a>
 </div>
-<br />
-<br />
 
+<br />
+<br />
 <br />
 <br />
 <br />
@@ -164,8 +164,8 @@
         @Html.HiddenFor(model => model.RequestedBy.Id)
 
         <div class="form-group">
-            @*@Html.LabelFor(model => model.BookRequested.Title, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
+
                 <h1 class="question">Is the book &nbsp;</h1>
                 <h1 id="theBook" class="question">
                     @Html.DisplayFor(model => model.BookRequested.Title, new { htmlAttributes = new { @class = "form-control" } })
