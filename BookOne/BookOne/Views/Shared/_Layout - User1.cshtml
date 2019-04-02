@@ -469,8 +469,12 @@
 
             // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
             // So we call the Array.prototype function and provide the nodeList as a parameter
-            Array.prototype.forEach.call(bookTitles,
-                book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+            $(bookTitles).each(function () {
+                let book = this;
+                bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
+            });
+            //Array.prototype.forEach.call(bookTitles,
+            //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
 
             let searchFilter = document.getElementById("searchFilter").selectedIndex;
 

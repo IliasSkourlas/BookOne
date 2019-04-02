@@ -2,14 +2,52 @@
 
 @{
     ViewBag.Title = "Edit User";
+    Layout = "~/Views/Shared/_Layout - My.cshtml";
 }
 
-<h2>Edit User</h2>
+
+<style type="text/css">
+
+
+
+    body {
+        background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    
+    .header th {
+        color: var(--main-Header-color);
+    }
+
+    .adminDashboardHeader {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 20px;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #formText {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #back {
+        color: rgba(255, 255, 255, 0.8);
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+    }
+</style>
+
+<h2 class="adminDashboardHeader">EDIT USER</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -24,7 +62,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ActualUsername, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div id="formText" class="col-md-10">
                 @Html.EditorFor(model => model.ActualUsername, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ActualUsername, "", new { @class = "text-danger" })
             </div>
@@ -106,6 +144,6 @@
     </div>
 }
 
-<div>
+<div id="back">
     @Html.ActionLink("Back to List", "Index")
 </div>
