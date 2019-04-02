@@ -8,16 +8,16 @@
 
 <style type="text/css">
 
+    :root {
+        --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+        --main-Header-color: rgb(0, 255, 255);
+        --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
+    }
     body {
         background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
-    }
-    :root {
-        --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
-        --main-Header-color: rgb(0, 255, 255);
-        --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
     }
 
     .container body-content {
@@ -118,6 +118,20 @@
         background-color: transparent;
     }
     #logoutForm > ul > li:nth-child(2) > a:hover {
+        color: var(--main-HeaderHover-color);
+    }
+
+
+    #loginLink {
+        background-color: transparent;
+    }
+    #loginLink::after hover {
+        color: var(--main-HeaderHover-color);
+    }
+    #registerLink {
+        background-color: transparent;
+    }
+    #registerLink:hover {
         color: var(--main-HeaderHover-color);
     }
     
