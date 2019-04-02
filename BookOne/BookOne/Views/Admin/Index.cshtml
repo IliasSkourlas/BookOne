@@ -1,84 +1,191 @@
-﻿@model IEnumerable<BookOne.Models.ApplicationUser>
+﻿<!DOCTYPE html>
+<html>
+<head>
+   
+    @model IEnumerable<BookOne.Models.ApplicationUser>
 
-@{
-    ViewBag.Title = "Users";
-}
-
-<br />
-<br />
-
-@Html.ActionLink("Users", "Index") |
-@Html.ActionLink("Books", "Books") |
-@Html.ActionLink("BookCirculations", "BookCirculations")
-
-
-<h2>Users</h2>
-
-<table class="table">
-
-    <tr>
-        <th>
-            Username
-        </th>
-        <th>
-            Role
-        </th>
-        <th>
-            Email
-        </th>
-        <th>
-            Phone Number
-        </th>
-        <th>
-            RegisteredOn
-        </th>
-        <th>
-            User Status
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        @Html.HiddenFor(modelItem => item.Id)
-        @Html.HiddenFor(modelItem => item.PostalCode)
-        @Html.HiddenFor(modelItem => item.XP_Points)
-        @Html.HiddenFor(modelItem => item.EmailConfirmed)
-        @Html.HiddenFor(modelItem => item.PasswordHash)
-        @Html.HiddenFor(modelItem => item.SecurityStamp)
-        @Html.HiddenFor(modelItem => item.PhoneNumberConfirmed)
-        @Html.HiddenFor(modelItem => item.TwoFactorEnabled)
-        @Html.HiddenFor(modelItem => item.LockoutEndDateUtc)
-        @Html.HiddenFor(modelItem => item.LockoutEnabled)
-        @Html.HiddenFor(modelItem => item.AccessFailedCount)
-        @Html.HiddenFor(modelItem => item.UserName)
-
-
-
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActualUsername)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegisteredOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserStatus)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditUser", new { userId = item.Id }) |
-                @Html.ActionLink("Delete", "DeleteUser", new { userId = item.Id })
-            </td>
-        </tr>
+    @{
+        ViewBag.Title = "Users";
+        Layout = "~/Views/Shared/_Layout - My.cshtml";
     }
 
-</table>
+
+    <br />
+    <br />
+
+    @Html.ActionLink("Users", "Index") |
+    @Html.ActionLink("Books", "Books") |
+    @Html.ActionLink("BookCirculations", "BookCirculations")
+
+    <style type="text/css">
+
+
+
+        body {
+            background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .table {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .header th {
+            color: var(--main-Header-color);
+        }
+
+        .adminDashboardHeader {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 1);
+        }
+
+    </style>
+</head>
+<body>
+    </br>
+
+    
+    <h2 class="adminDashboardHeader">USER DASHBOARD</h2>
+
+    <table class="table">
+
+        <tr class="header">
+            <th id="username" class="col-md-2">
+                Username
+            </th>
+            <th id="role" class="col-md-2">
+                Role
+            </th>
+            <th id="mail" class="col-md-2">
+                Email
+            </th>
+            <th id="phone" class="col-md-2">
+                Phone Number
+            </th>
+            <th id="registeredOn" class="col-md-2">
+                RegisteredOn
+            </th>
+            <th id="userStatus" class="col-md-2">
+                User Status
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            @Html.HiddenFor(modelItem => item.Id)
+            @Html.HiddenFor(modelItem => item.PostalCode)
+            @Html.HiddenFor(modelItem => item.XP_Points)
+            @Html.HiddenFor(modelItem => item.EmailConfirmed)
+            @Html.HiddenFor(modelItem => item.PasswordHash)
+            @Html.HiddenFor(modelItem => item.SecurityStamp)
+            @Html.HiddenFor(modelItem => item.PhoneNumberConfirmed)
+            @Html.HiddenFor(modelItem => item.TwoFactorEnabled)
+            @Html.HiddenFor(modelItem => item.LockoutEndDateUtc)
+            @Html.HiddenFor(modelItem => item.LockoutEnabled)
+            @Html.HiddenFor(modelItem => item.AccessFailedCount)
+            @Html.HiddenFor(modelItem => item.UserName)
+
+
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActualUsername)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegisteredOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserStatus)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditUser", new { userId = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteUser", new { userId = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</body>
+</html>
+
+    <script>
+        /////// Change searchInput by clicking into Headers
+        $(document).ready(function () {
+            $("#username").click(function () {
+                $("#searchInput").attr("placeholder", "Username");
+                $("#searchFilter").val("username");
+            })
+            $("#role").click(function () {
+                $("#searchInput").attr("placeholder", "Role");
+                $("#searchFilter").val("role");
+            })
+            $("#mail").click(function () {
+                $("#searchInput").attr("placeholder", "E-mail");
+                $("#searchFilter").val("mail");
+            })
+            $("#phone").click(function () {
+                $("#searchInput").attr("placeholder", "Phone Number");
+                $("#searchFilter").val("phone");
+            })
+            $("#registeredOn").click(function () {
+                $("#searchInput").attr("placeholder", "Registered On");
+                $("#searchFilter").val("registeredOn");
+            })
+            $("#userStatus").click(function () {
+                $("#searchInput").attr("placeholder", "Status");
+                $("#searchFilter").val("userStatus");
+            })
+
+        });
+
+
+
+
+        function SearchFunction() {
+            // Declare variables
+            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            bookList = document.getElementById("listOfBooks");
+            bookTitles = bookList.getElementsByClassName("bookTitle");
+
+            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
+            // So we call the Array.prototype function and provide the nodeList as a parameter
+            Array.prototype.forEach.call(bookTitles,
+                book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+
+            let searchFilter = document.getElementById("searchFilter").selectedIndex;
+
+            //Because i have added a dummy value "SelectFilter" in options
+            // I subtract it from the final index.
+            searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (index = 0; index < bookTitles.length; index++) {
+                let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
+                txtValue = bookAuthor.innerHTML;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    bookTitles[index].style.display = "";
+                } else {
+                    bookTitles[index].style.display = "none";
+                }
+            }
+        }
+    </script>
