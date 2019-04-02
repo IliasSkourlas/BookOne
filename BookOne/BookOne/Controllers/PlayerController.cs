@@ -63,7 +63,7 @@ namespace BookOne.Controllers
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!dbOps.UserIsAPlayer(loggedInUser))
+            if (!(User.IsInRole("Administrator") || User.IsInRole("Player")))
             {
                 return View("PlayerForm", loggedInUser);
             }

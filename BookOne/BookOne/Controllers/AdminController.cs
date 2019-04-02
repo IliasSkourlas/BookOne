@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace BookOne.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
         DatabaseOperations dbOps = new DatabaseOperations();
@@ -18,7 +19,12 @@ namespace BookOne.Controllers
         // GET: AllUsers
         public ActionResult Index()
         {
-            return View(dbOps.GetAllUsers());
+            var allUsers = dbOps.GetAllUsers();
+
+            foreach(var user in allUsers)
+                user.Role = dbOps.GetUserRole(user);
+
+            return View(allUsers);
         }
 
         // GET: AllBooks
@@ -30,7 +36,14 @@ namespace BookOne.Controllers
         // GET: AllBookCirculations
         public ActionResult BookCirculations()
         {
-            return View(dbOps.GetAllBookCirculations());
+            var booksController = new BooksController();
+
+            var circulations = dbOps.GetAllBookCirculations();
+
+            foreach (var circulation in circulations)
+                circulation.DaysRemaining = booksController.DaysRemainingCounter(circulation);
+
+            return View(circulations);
         }
 
 
@@ -83,7 +96,7 @@ namespace BookOne.Controllers
             if (ModelState.IsValid)
             {
                 dbOps.UpdateUser(user);
-                return RedirectToAction("Users");
+                return RedirectToAction("Index");
             }
             return View(user);
         }
@@ -134,7 +147,7 @@ namespace BookOne.Controllers
         {
             var user = dbOps.GetUser(userId);
             dbOps.DeleteUser(user);
-            return RedirectToAction("Users");
+            return RedirectToAction("Index");
         }
     }
 }

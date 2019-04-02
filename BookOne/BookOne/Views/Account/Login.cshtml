@@ -165,12 +165,18 @@
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
+
                 @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>*@
             }
         </section>
+
+        <div class="col-md-offset-2 col-md-10">
+            @ViewBag.Failure
+        </div>
+
     </div>
     <div class="col-md-4">
         @*<section id="socialLoginForm">

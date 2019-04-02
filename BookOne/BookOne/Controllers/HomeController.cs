@@ -59,7 +59,12 @@ namespace BookOne.Controllers
             dbOps.InsertEmailNotification(notification);
 
             ViewBag.Success = "You'll be notified soon..";
-            return View("Contact");
+            return View("Index");
+        }
+
+        public ActionResult EmailNotificationsCounter()
+        {
+            return Content(dbOps.EmailNotificationsCounter().ToString());
         }
     }
 }
