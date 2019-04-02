@@ -22,12 +22,7 @@ namespace BookOne.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-
-
-            //ApplicationUser firstUser = new ApplicationUser();
-            //firstUser.Email = "sotiros@meh.com";
-            //firstUser.Id = "meh";
-            //firstUser.PasswordHash = "ksdjfh";
+            
 
             if (!context.Roles.Any(r => r.Name == "Visitor"))
             {

@@ -1,7 +1,6 @@
 ﻿using BookOne.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -143,9 +142,9 @@ namespace BookOne.BookOne_Domain
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
 
-        public void UpdateUserDetails(ApplicationUser loggedInUser)
+        public void UpdateUserDetails(ApplicationUser user)
         {
-            db.Entry(loggedInUser).State = EntityState.Modified;
+            db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
 
@@ -237,6 +236,21 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        //Gets all user's requests (Unfiltered)
+        public IEnumerable<BookRequest> GetAllRequests(ApplicationUser user)
+        {
+            var usersRequestsAsOwner = db.BookRequests
+                .Where(r => r.BookRequested.Owner.Id == user.Id);
+
+            var usersRequestsAsBorrower = db.BookRequests
+                .Where(r => r.RequestedBy.Id == user.Id);
+
+            return usersRequestsAsOwner
+                .Union(usersRequestsAsBorrower)
+                .ToList();
+        }
+
+
         //Borrower cancels a Book Request
         public void CancelRequest(BookRequest request)
         {
@@ -318,6 +332,21 @@ namespace BookOne.BookOne_Domain
                 .FirstOrDefault();
 
             return circulation;
+        }
+
+
+        //Gets all user's Circulations (Unfiltered)
+        public IEnumerable<BookCirculation> GetAllCirculations(ApplicationUser user)
+        {
+            var usersCirculationsAsOwner = db.BookCirculations
+                .Where(c => c.BookAssociated.Owner.Id == user.Id);
+
+            var usersCirculationsAsBorrower = db.BookCirculations
+                .Where(c => c.Borrower.Id == user.Id);
+
+            return usersCirculationsAsOwner
+                .Union(usersCirculationsAsBorrower)
+                .ToList();
         }
 
 
@@ -481,23 +510,29 @@ namespace BookOne.BookOne_Domain
         }
 
 
-        //Updates a user to the database
-        public void UpdateUser(ApplicationUser user)
-        {
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
-        }
-
-
         public string GetUserRole(ApplicationUser user)
         {
-            if (user.Roles.Where(r => r.RoleId == "1").Count() > 0)
-                return "User";
-            if (user.Roles.Where(r => r.RoleId == "2").Count() > 0)
-                return "Player";
             if (user.Roles.Where(r => r.RoleId == "3").Count() > 0)
                 return "Administrator";
+            if (user.Roles.Where(r => r.RoleId == "2").Count() > 0)
+                return "Player";
+            if (user.Roles.Where(r => r.RoleId == "1").Count() > 0)
+                return "User";
             return null;
         }
+
+
+        //public void ChangeUserRole(ApplicationUser user)
+        //{
+        //    var savedUser = db.Users.Find(user.Id);
+        //    var oldRole = savedUser.Roles.SingleOrDefault().RoleId;
+
+        //    var roleStore = new RoleStore<IdentityRole>(db);
+        //    var roleManager = new RoleManager<IdentityRole>(roleStore);
+        //    var userStore = new UserStore<ApplicationUser>(db);
+        //    var userManager = new UserManager<ApplicationUser>(userStore);
+        //    userManager.RemoveFromRole(user.Id, oldRole);
+        //    userManager.AddToRole(user.Id, user.userRole.ToString());
+        //}
     }
 }
