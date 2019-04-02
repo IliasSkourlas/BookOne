@@ -33,7 +33,19 @@ namespace BookOne.BookOne_Domain
         {
             return db.UserReactions.Where(r => r.ActionReceiverId == userId);
         }
-        
+
+
+        //Check a user's status during Login.
+        public bool AccountIsDisabled(string email)
+        {
+            var user = db.Users.Where(u => u.Email == email).SingleOrDefault();
+
+            if (user.UserStatus == UserStatuses.Deleted)
+                return true;
+            else
+                return false;
+        }
+
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -147,16 +159,6 @@ namespace BookOne.BookOne_Domain
             var userManager = new UserManager<ApplicationUser>(userStore);
             userManager.RemoveFromRole(user.Id, "User");
             userManager.AddToRole(user.Id, "Player");
-        }
-
-        
-        public bool UserIsAPlayer(ApplicationUser user)
-        {
-            int userRole = user.Roles.Where(r => r.RoleId == "2").Count();
-            if (userRole > 0)
-                return true;
-            else
-                return false;
         }
 
 
@@ -422,7 +424,8 @@ namespace BookOne.BookOne_Domain
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        
+        //Inserts a visitor's Email Address to the database in order to notify him when the application is ready
         public void InsertEmailNotification(EmailNotification notification)
         {
             db.EmailNotifications.Add(notification);
@@ -430,20 +433,32 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        //Returns the number of users that want to be notified when the application is ready
+        public int EmailNotificationsCounter()
+        {
+            return db.EmailNotifications.Count();
+        }
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         //ADMIN OPERATIONS
 
 
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
-            return db.Users.ToList();
+            return db.Users
+                .OrderBy(u => u.RegisteredOn)
+                .ToList();
         }
 
 
         public IEnumerable<Book> GetAllBooks()
         {
-            return db.Books.ToList();
+            return db.Books
+                .Include(b => b.Owner)
+                .OrderBy(b => b.RegisteredOn)
+                .ToList();
         }
 
 
@@ -452,14 +467,16 @@ namespace BookOne.BookOne_Domain
             return db.BookCirculations
                 .Where(c => c.CirculationStatus != CirculationStatuses.Fresh)
                 .Include(c => c.BookAssociated)
-                .Include(c => c.Borrower).ToList();
+                .Include(c => c.Borrower)
+                .OrderBy(c => c.BorrowedOn)
+                .ToList();
         }
 
 
         //Removes a user from the database
         public void DeleteUser(ApplicationUser user)
         {
-            db.Users.Remove(user);
+            user.UserStatus = UserStatuses.Deleted;
             db.SaveChanges();
         }
 
@@ -469,6 +486,18 @@ namespace BookOne.BookOne_Domain
         {
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
+        }
+
+
+        public string GetUserRole(ApplicationUser user)
+        {
+            if (user.Roles.Where(r => r.RoleId == "1").Count() > 0)
+                return "User";
+            if (user.Roles.Where(r => r.RoleId == "2").Count() > 0)
+                return "Player";
+            if (user.Roles.Where(r => r.RoleId == "3").Count() > 0)
+                return "Administrator";
+            return null;
         }
     }
 }

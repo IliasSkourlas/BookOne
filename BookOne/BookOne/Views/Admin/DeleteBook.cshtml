@@ -27,6 +27,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.ActualUsername)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.RegisteredOn)
         </dt>
 
@@ -49,15 +57,6 @@
         <dd>
             @Html.DisplayFor(model => model.AvailabilityStatus)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BorrowerAskedToReturnThisBook)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BorrowerAskedToReturnThisBook)
-        </dd>
-
     </dl>
 
     @using (Html.BeginForm("DeleteBookConfirmed", "Admin", new { id = Model.BookId }, FormMethod.Post))

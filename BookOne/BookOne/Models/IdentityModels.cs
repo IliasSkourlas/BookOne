@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -30,6 +31,9 @@ namespace BookOne.Models
         public UserStatuses UserStatus { get; set; }
 
         public int XP_Points { get; set; }
+
+        [NotMapped]
+        public string Role { get; set; }
 
 
 

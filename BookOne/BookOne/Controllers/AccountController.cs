@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BookOne.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using BookOne.BookOne_Domain;
 
 namespace BookOne.Controllers
 {
@@ -69,6 +70,15 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            var dbOps = new DatabaseOperations();
+
+            if (dbOps.AccountIsDisabled(model.Email))
+            {
+                ViewBag.Failure = "Account is disabled";
+
+                return View(model);
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);

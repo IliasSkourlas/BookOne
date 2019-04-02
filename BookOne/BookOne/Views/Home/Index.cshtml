@@ -148,28 +148,31 @@
         </div>
 
         @*<h2>
-                This is an app for searing your books with your friends. Not digital books, but your physical books.
-                It helps you to keep track with their whereabouts, as they are seared from a pool of carriers that you choose.
-                Read and write reviews and decide to give or not a Clap, when they are returned back to you in perfect condition.
-                So...explore and have fun...and don't hesitate searing!
-            </h2>*@
+            This is an app for searing your books with your friends. Not digital books, but your physical books.
+            It helps you to keep track with their whereabouts, as they are seared from a pool of carriers that you choose.
+            Read and write reviews and decide to give or not a Clap, when they are returned back to you in perfect condition.
+            So...explore and have fun...and don't hesitate searing!
+        </h2>*@
 
         <br />
         <br />
 
+        <form action="/Home/EmailNotifier" method="Post" class="form-horizontal">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail">...and we will keep you informed</label>
+                    <input type="email" name="userEmail" class="form-control" id="inputEmail4" placeholder="give us your email...">
+                </div>
 
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputEmail">...and we will keep you informed</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="give as your email...">
+                <button id="button" type="submit" class="btn btn-primary">Submit</button>
+
             </div>
+        </form>
 
-            <button id="button" type="submit" class="btn btn-primary">Submit</button>
 
-            <p><spam>We have </spam><spam id="counter">0</spam><spam> emails so far</spam></p>
+        <p><spam>We have </spam> <spam id="counter"> @Html.Action("EmailNotificationsCounter", "Home", new { area = "" }) </spam> <spam> emails so far</spam></p>
 
-        </div>
-
+        @ViewBag.Success
     </div>
 
 </div>

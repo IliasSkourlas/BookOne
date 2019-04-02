@@ -5,6 +5,9 @@
 }
 
 
+<br />
+<br />
+
 @Html.ActionLink("Users", "Index") |
 @Html.ActionLink("Books", "Books") |
 @Html.ActionLink("BookCirculations", "BookCirculations")
@@ -15,22 +18,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.BorrowedOn)
+            Book Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BorrowedForXWeeks)
+            Owner
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.OwnerGaveBook)
+            Borrower
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.BorrowerReceivedBook)
+            Borrowed On
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RequestIdForThisCirculation)
+            Remaining Days
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CirculationStatus)
+            Circulation Status
         </th>
     </tr>
 
@@ -38,19 +41,19 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Carrier.ActualUsername)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.BorrowedOn)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BorrowedForXWeeks)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerGaveBook)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BorrowerReceivedBook)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestIdForThisCirculation)
+                @Html.DisplayFor(modelItem => item.DaysRemaining)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CirculationStatus)

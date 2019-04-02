@@ -14,6 +14,13 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.PostalCode)
+        @Html.HiddenFor(model => model.XP_Points)
+        @Html.HiddenFor(model => model.PasswordHash)
+        @Html.HiddenFor(model => model.SecurityStamp)
+        @Html.HiddenFor(model => model.TwoFactorEnabled)
+        @Html.HiddenFor(model => model.UserName)
+        @Html.HiddenFor(model => model.LockoutEndDateUtc)
 
         <div class="form-group">
             @Html.LabelFor(model => model.ActualUsername, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -24,18 +31,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PostalCode, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.RegisteredOn, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RegisteredOn, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RegisteredOn, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.RegisteredOn)
             </div>
         </div>
 
@@ -44,14 +42,6 @@
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.UserStatus, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.UserStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.XP_Points, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.XP_Points, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.XP_Points, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -68,24 +58,7 @@
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.EmailConfirmed)
-                    @Html.ValidationMessageFor(model => model.EmailConfirmed, "", new { @class = "text-danger" })
                 </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PasswordHash, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PasswordHash, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SecurityStamp, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SecurityStamp, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SecurityStamp, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -108,24 +81,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TwoFactorEnabled, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.TwoFactorEnabled)
-                    @Html.ValidationMessageFor(model => model.TwoFactorEnabled, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LockoutEndDateUtc, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LockoutEndDateUtc, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LockoutEndDateUtc, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.LockoutEnabled, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
@@ -138,16 +93,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AccessFailedCount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AccessFailedCount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayFor(model => model.AccessFailedCount, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AccessFailedCount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
             </div>
         </div>
 
