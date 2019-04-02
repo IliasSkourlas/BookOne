@@ -292,7 +292,7 @@ namespace BookOne.Controllers
 
             var model = new UserExchangeHistoryViewModel()
             {
-                User = loggedInUser,
+               
                 BookRequests = dbOps.GetAllRequests(loggedInUser),
                 BookCirculations = dbOps.GetAllCirculations(loggedInUser)
             };
