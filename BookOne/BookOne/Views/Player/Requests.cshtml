@@ -55,10 +55,6 @@
 
                         @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
                     }
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
-                    {
-                        <span>(You have this book)</span>
-                    }
 
                     @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
                     {

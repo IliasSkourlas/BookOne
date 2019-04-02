@@ -4,8 +4,13 @@
     ViewBag.Title = "Circulations";
 }
 
-<h2>Book Circulations</h2>
 
+@Html.ActionLink("Users", "Index") |
+@Html.ActionLink("Books", "Books") |
+@Html.ActionLink("BookCirculations", "BookCirculations")
+
+
+<h2>Book Circulations</h2>
 
 <table class="table">
     <tr>
@@ -29,27 +34,28 @@
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BorrowedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BorrowedForXWeeks)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OwnerGaveBook)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BorrowerReceivedBook)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequestIdForThisCirculation)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CirculationStatus)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedForXWeeks)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerGaveBook)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowerReceivedBook)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestIdForThisCirculation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CirculationStatus)
+            </td>
+        </tr>
+    }
 
 </table>
