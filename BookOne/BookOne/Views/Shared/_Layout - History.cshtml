@@ -14,42 +14,90 @@
 
     <style type="text/css">
 
-
+        :root {
+            --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+            --main-Header-color: rgb(0, 255, 255);
+            --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
+            --accept-color: rgb(155, 251, 132);
+            --cancel-color: rgb(255, 102, 102);
+        }
 
         body {
             /*background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgb(0, 0, 0, 0.02)), url('../../Content/images/Drowing.jpg');*/
-            background-image: linear-gradient(rgb(0, 0, 0),rgb(0, 0, 0));
+            /*background-image: linear-gradient(rgb(0, 0, 0),rgb(0, 0, 0));*/
+            background-image: linear-gradient(rgb(0, 3, 26),rgb(1, 5, 34));
             background-repeat: no-repeat;
             background-size: cover;
             background-attachment: fixed;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 18px;
-            color: rgba(255, 255, 255, 0.87);
+            color: rgb(255, 255, 255);
         }
-        #give {
-            
+        body > div.container.body-content > table:nth-child(5) > tbody > tr:nth-child(1) {
+            color: hotpink;
         }
-        #take {
+        body > div.container.body-content > table:nth-child(9) > tbody > tr:nth-child(1) {
+            color: hotpink;
+        }
+        #back {
+            color: white;
+           
+        }
+        #back:hover {
+            color: var(--main-Header-color);
+        }
 
-        }
-        /*.form-control {
+
+        .form-control {
             background-color: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.8);
-        }*/
-        button, html input[type="button"], input[type="reset"], input[type="submit"] {
+            color: rgb(255, 255, 255);
+        }
+        /*button, html input[type="button"], input[type="reset"], input[type="submit"] {
             background-color: rgba(255, 255, 255, 0.3);
             color: rgba(255, 255, 255, 0.8);
-        }
+        }*/
         a {
             color: rgba(255, 255, 255, 0.8);
         }
+        a:hover {
+            color: var(--main-HeaderHover-color);
+            text-decoration:none;
+        }
+
+
         tr:hover {
-            background: rgba(255, 226, 0, 0.07);
+            background: rgba(253, 255, 233, 0.19);
+        }
+        #give {
+            /*color: rgb(251, 219, 132);*/
+            /*color: rgb(155, 251, 132);*/
+            color:var(--main-Header-color);
+        }
+        #take {
+            /*color: rgb(255, 102, 102)*/
+            color: var(--main-Header-color);
         }
        
+        .green a {
+            color:rgb(0, 128, 0);
+        }
+            .green a:hover {
+                color: rgb(0, 206, 29);
+            }
 
-
-
+        .red a {
+            color: rgb(128, 0, 0);
+        }
+            .red a:hover {
+                color: rgb(206, 0, 0);
+            }
+        .nutral a {
+            color: var(--main-HeaderHover-color);
+        }
+        .nutral a:hover {
+            color: var(--main-Header-color);
+        }
+       
 
 
 
@@ -72,12 +120,15 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%,-50%);
-            opacity: 0.5;
+            opacity: 0.35;
             pointer-events: none;
             background-attachment: fixed;
             z-index: 1;
         }
-
+        
+        #video2 {
+            opacity:0.032;
+        }       
         
     </style>
 
@@ -88,13 +139,35 @@
 
 <body>
 
-    
+
 
     @*<div class="video-container">
+            <video id="video" autoplay loop muted>
+                <source src="~/Content/images/fish2.mp4" type="video/mp4" />
+            </video>
+        </div>*@
+
+    <div class="video-container">
         <video id="video" autoplay loop muted>
+            <source src="~/Content/images/road Lights2.mp4" type="video/mp4" />
+        </video>
+        <video id="video2" autoplay loop muted>
+            <source src="~/Content/images/fish2.mp4" type="video/mp4" />
+        </video>
+
+    </div>
+
+    @*<div class="video-container2">
+        <video id="video2" autoplay loop muted>
             <source src="~/Content/images/fish2.mp4" type="video/mp4" />
         </video>
     </div>*@
+
+    @*<div class="video-container">
+            <video id="video2" autoplay loop muted>
+                <source src="~/Content/images/UnderWater3Cut.mp4" type="video/mp4" />
+            </video>
+        </div>*@
 
 
     <div class="container body-content">
@@ -112,7 +185,7 @@
 
     @RenderSection("scripts", required: false)
 
-   
+
 
 </body>
 </html>
