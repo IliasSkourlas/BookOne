@@ -1,4 +1,5 @@
 ﻿using BookOne.BookOne_Domain;
+using BookOne.Models;
 using BookOne.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -57,15 +58,40 @@ namespace BookOne.Controllers
             if (ModelState.IsValid)
             {
                 dbOps.UpdateBook(book);
-                return RedirectToAction("MyBooks");
+                return RedirectToAction("Books");
             }
             return View(book);
         }
 
 
+        // GET: Users/Edit/5
+        public ActionResult EditUser(string userId)
+        {
+            var user = dbOps.GetUser(userId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Users/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditUser(ApplicationUser user)
+        {
+            if (ModelState.IsValid)
+            {
+                dbOps.UpdateUser(user);
+                return RedirectToAction("Users");
+            }
+            return View(user);
+        }
+
+
 
         // GET: Books/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteBook(int? id)
         {
             if (id == null)
             {
@@ -82,11 +108,33 @@ namespace BookOne.Controllers
         // POST: Books/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteBookConfirmed(int id)
         {
             Book book = dbOps.GetBook(id);
             dbOps.DeleteBook(book);
-            return RedirectToAction("MyBooks");
+            return RedirectToAction("Books");
+        }
+
+
+        // GET: Users/Delete/5
+        public ActionResult DeleteUser(string userId)
+        {
+            var user = dbOps.GetUser(userId);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Books/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteUserConfirmed(string userId)
+        {
+            var user = dbOps.GetUser(userId);
+            dbOps.DeleteUser(user);
+            return RedirectToAction("Users");
         }
     }
 }

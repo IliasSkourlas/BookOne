@@ -222,16 +222,15 @@ namespace BookOne.BookOne_Domain
                 .Include(r => r.BookRequested.Owner);
 
             // pending BookRequests to be approved by the logged in user for books returning(user is the borrower of these books)
-            var bookRequests_BorrowerAskedToReturnBook =
-                db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Returning)
-                .Include(r => r.BookRequested.Owner);
+            //var bookRequests_BorrowerAskedToReturnBook =
+            //    db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Returning)
+            //    .Include(r => r.BookRequested.Owner);
 
             return booksRequestedFromTheLoggedInUser
                 .Union(bookRequests_OwnerHasNotAnswered)
                 .Union(bookRequests_OwnerApproved)
                 .Union(bookRequests_OwnerDeclined)
                 .Union(bookRequests_BorrowerWantsToReturnBook)
-                .Union(bookRequests_BorrowerAskedToReturnBook)
                 .ToList();
         }
 
@@ -450,15 +449,26 @@ namespace BookOne.BookOne_Domain
 
         public IEnumerable<BookCirculation> GetAllBookCirculations()
         {
-            var onGoingCirculations =  db.BookCirculations
-                .Where(c => c.CirculationStatus == CirculationStatuses.Borrowed);
+            return db.BookCirculations
+                .Where(c => c.CirculationStatus != CirculationStatuses.Fresh)
+                .Include(c => c.BookAssociated)
+                .Include(c => c.Borrower).ToList();
+        }
 
-            var completedCirculations =  db.BookCirculations
-                .Where(c => c.CirculationStatus == CirculationStatuses.Completed);
 
-            return onGoingCirculations
-                .Union(completedCirculations)
-                .ToList();
+        //Removes a user from the database
+        public void DeleteUser(ApplicationUser user)
+        {
+            db.Users.Remove(user);
+            db.SaveChanges();
+        }
+
+
+        //Updates a user to the database
+        public void UpdateUser(ApplicationUser user)
+        {
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
         }
     }
 }
