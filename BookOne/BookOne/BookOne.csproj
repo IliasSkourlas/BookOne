@@ -276,6 +276,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BooksViewModel.cs" />
     <Compile Include="ViewModels\ReturnBookViewModel.cs" />
+    <Compile Include="ViewModels\UserExchangeHistoryViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

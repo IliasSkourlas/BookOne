@@ -95,7 +95,7 @@ namespace BookOne.Controllers
         {
             if (ModelState.IsValid)
             {
-                dbOps.UpdateUser(user);
+                dbOps.UpdateUserDetails(user);
                 return RedirectToAction("Index");
             }
             return View(user);

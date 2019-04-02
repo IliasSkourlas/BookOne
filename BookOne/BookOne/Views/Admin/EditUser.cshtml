@@ -65,6 +65,8 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.RegisteredOn)
+        @Html.HiddenFor(model => model.Role)
         @Html.HiddenFor(model => model.PostalCode)
         @Html.HiddenFor(model => model.XP_Points)
         @Html.HiddenFor(model => model.PasswordHash)

@@ -77,6 +77,14 @@ namespace BookOne.Controllers
         //Create request for a book
         public ActionResult RequestConfirmation(int? bookId)
         {
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+
+            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
+            if (!(User.IsInRole("Administrator") || User.IsInRole("Player")))
+            {
+                return View("PlayerForm", loggedInUser);
+            }
+
             if (bookId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -86,8 +94,7 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
-
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            
             var bookRequested = dbOps.GetBook(book.BookId);
 
             dbOps.InsertRequest(loggedInUser, bookRequested);
@@ -255,11 +262,7 @@ namespace BookOne.Controllers
             else
                 return null;
         }
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -271,5 +274,31 @@ namespace BookOne.Controllers
 
             return RedirectToAction("MyBooks", "Books");
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+
+
+        public ActionResult History()
+        {
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+
+            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
+            if (!(User.IsInRole("Administrator") || User.IsInRole("Player")))
+            {
+                return View("PlayerForm", loggedInUser);
+            }
+
+            var model = new UserExchangeHistoryViewModel()
+            {
+                User = loggedInUser,
+                BookRequests = dbOps.GetAllRequests(loggedInUser),
+                BookCirculations = dbOps.GetAllCirculations(loggedInUser)
+            };
+
+            return View(model);
+        }
+
     }
 }
