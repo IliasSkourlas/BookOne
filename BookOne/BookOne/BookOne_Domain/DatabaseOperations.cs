@@ -241,12 +241,12 @@ namespace BookOne.BookOne_Domain
         {
             var usersRequestsAsOwner = db.BookRequests
                 .Where(r => r.BookRequested.Owner.Id == user.Id)
-                .Include(r => r.BookRequested)
+                .Include(r => r.BookRequested.Owner)
                 .Include(r => r.RequestedBy);
 
             var usersRequestsAsBorrower = db.BookRequests
                 .Where(r => r.RequestedBy.Id == user.Id)
-                .Include(r => r.BookRequested)
+                .Include(r => r.BookRequested.Owner)
                 .Include(r => r.RequestedBy);
 
             return usersRequestsAsOwner
@@ -354,12 +354,12 @@ namespace BookOne.BookOne_Domain
         {
             var usersCirculationsAsOwner = db.BookCirculations
                 .Where(c => c.BookAssociated.Owner.Id == user.Id)
-                .Include(c => c.BookAssociated)
+                .Include(c => c.BookAssociated.Owner)
                 .Include(c => c.Borrower);
 
             var usersCirculationsAsBorrower = db.BookCirculations
                 .Where(c => c.Borrower.Id == user.Id)
-                .Include(c => c.BookAssociated)
+                .Include(c => c.BookAssociated.Owner)
                 .Include(c => c.Borrower);
 
             return usersCirculationsAsOwner
