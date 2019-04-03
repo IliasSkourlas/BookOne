@@ -28,7 +28,7 @@
         }
 
     #yes {
-        color: rgba(0, 255, 255, 0.63);
+        color: rgb(255, 0, 220);
         background-color: rgba(255, 255, 255, 0.11);
         /*border-color: rgba(0, 255, 255, 0.43);*/
         display: inline-block;
@@ -62,11 +62,37 @@
 
     .question {
         display: inline;
+        font-style: italic;
+    }
+    #theCarrier {
+        display: inline;
+        font-style: italic; 
+        color: rgba(0, 255, 255, 0.83);
+    }
+    .clappsAndTreats {
+        font: large;
+          
     }
 
+    .clapping:hover {
+        color:hotpink;
+    }
+    .noClapping:hover {
+        color:gray;
+    }
+    .shovel:hover {
+        color: red;
+    }
+    .treat:hover {
+        color: green;
+    }
+    .cookie:hover {
+        color: yellow;
+    }
 
-
-
+    /*.clapping:checked + span {
+       color:darkorchid;
+    }*/ 
 
 
     .form-control {
@@ -105,8 +131,6 @@
         }
 
 
-
-
     .video-container {
         position: absolute;
         top: 0;
@@ -143,77 +167,83 @@
     <a id="back" href="/Player/Requests">Back </a>
 </div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
+ <br /><br />
 
 
 
 
 
-<div class="center">
+       <div class="center">
 
-    <div class="dl-horizontal">
+           <div class="dl-horizontal">
 
-        <h1 class="question">Is &nbsp; </h1>
-        <h1 id="theBook" class="question">
-            @Html.DisplayFor(model => model.Circulation.BookAssociated.Title)
-            &nbsp;
-        </h1>
-        <h1 class="question">back in your hands?  &nbsp;</h1>
+               <h1 class="question">Ok  </h1>
+               <h1 id="theBook" class="question">
+                   @Html.DisplayFor(model => model.Circulation.BookAssociated.Title)
 
-        <br />
-        <br />
+               </h1>
+               <h1 class="question">is back in your hands! </h1>
 
-        @*<dd>
-            @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)
-        </dd>*@
-        @*<dd>
-            @Html.DisplayFor(model => model.Circulation.BorrowedOn)
-        </dd>*@
+               <br /><br /><br />
 
-        <div>
-            <div class="form-group">
-                <div id="buttons">
-                    <input id="yes" type="submit" value="Yes" class="btn btn-default" />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a id="no" href="/Player/Requests" class="btn btn-default">No</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    @using (Html.BeginForm("OwnerGetsBackHisBook", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Circulation.BookCirculationId)
-        @Html.HiddenFor(model => model.Circulation.BorrowedForXWeeks)
-        @Html.HiddenFor(model => model.Circulation.Borrower.Id)
-        @Html.HiddenFor(model => model.Circulation.Borrower)
-        @Html.HiddenFor(model => model.Circulation.BorrowerReceivedBook)
-        @Html.HiddenFor(model => model.Circulation.CirculationStatus)
-        @Html.HiddenFor(model => model.Circulation.OwnerGaveBook)
-        @Html.HiddenFor(model => model.Circulation.BookAssociated.BookId)
-        @Html.HiddenFor(model => model.Circulation.RequestIdForThisCirculation)
-        @Html.HiddenFor(model => model.ReactionGiven.ActionGiverId)
-        @Html.HiddenFor(model => model.ReactionGiven.ActionReceiverId)
-        @Html.HiddenFor(model => model.ReactionGiven.CirculationForThisReaction.BookCirculationId)
-        @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
+               @*<dd>
+                @Html.DisplayFor(model => model.Circulation.BorrowedOn)
+            </dd>*@
 
-        <hr /><br />
-        <h2>If you are receiving your book in perfect condition, you can thank the borrower by giving him a "Clap"...</h2>
-        <div>
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1, new { @checked = true }) <span> Clap</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span> Shovel</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span> Treat</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span> Poisonous Cookie</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0) <span> Nothing</span> <br />
 
-            <br />
-            <input type="submit" value="Yes" class="btn btn-default" /> |
+           </div>
 
-        </div>
-    }
-</div>
+           @using (Html.BeginForm("OwnerGetsBackHisBook", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+           {
+               @Html.AntiForgeryToken()
+               @Html.HiddenFor(model => model.Circulation.BookCirculationId)
+               @Html.HiddenFor(model => model.Circulation.BorrowedForXWeeks)
+               @Html.HiddenFor(model => model.Circulation.Borrower.Id)
+               @Html.HiddenFor(model => model.Circulation.Borrower)
+               @Html.HiddenFor(model => model.Circulation.BorrowerReceivedBook)
+               @Html.HiddenFor(model => model.Circulation.CirculationStatus)
+               @Html.HiddenFor(model => model.Circulation.OwnerGaveBook)
+               @Html.HiddenFor(model => model.Circulation.BookAssociated.BookId)
+               @Html.HiddenFor(model => model.Circulation.RequestIdForThisCirculation)
+               @Html.HiddenFor(model => model.ReactionGiven.ActionGiverId)
+               @Html.HiddenFor(model => model.ReactionGiven.ActionReceiverId)
+               @Html.HiddenFor(model => model.ReactionGiven.CirculationForThisReaction.BookCirculationId)
+               @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
+
+
+               <h2 class="question">... </h2>
+               <h2 id="theCarrier" class="question">
+                   @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)
+
+               </h2>
+               <h2 class="question">deservers </h2>
+
+
+               <br /><br /><br />
+
+               <div>
+                   <div class="clappsAndTreats">
+                       <label class="clapping">@Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1, new { @checked = true }) <span id="clapping"> Clapping</span> <br /></label>
+                      <div class="noClapping"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0) <span id="noClapping"> No clapping</span> <br /></div>
+                      <div class="shovel"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span id="shovel"> a shovel </span> <br /></div>
+                      <div class="treat"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span id="treat"> a treat</span> <br /></div>
+                      <div class="cookie"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span id="cookie"> a poisonous Cookie</span> <br /></div>
+                   </div>
+
+                   <br /><br /><br />
+
+
+                   <div>
+                       <div class="form-group">
+                           <div id="buttons">
+                               <input id="yes" type="submit" value="this is for  @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)" class="btn btn-default" />
+                               @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a id="no" href="/Player/Requests" class="btn btn-default">No</a>*@
+                           </div>
+                       </div>
+                   </div>
+
+               </div>
+           }
+       </div>
