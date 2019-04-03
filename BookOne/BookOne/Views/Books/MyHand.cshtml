@@ -92,9 +92,8 @@
                         @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
                     </td>
                     <td class="timeLeft">
-
-
-                        @if (item.DaysRemaining <= 13)
+                        
+                        @if (item.DaysRemaining <= 3)
                         {
                             <div id="excludedColor">
                                 @Html.DisplayFor(modelItem => item.DaysRemaining)
@@ -105,16 +104,14 @@
                                     setInterval(function () { $("#excludedColor ").css("color", "var(--main-excludedColor)"); }, 500);
                                     setInterval(function () { $("#excludedColor ").css("color", "var( --main-excludedColorHover)"); }, 1001);
                                 }
-
                             </script>
-
                         }
-                        @if (item.DaysRemaining > 13)
+
+                        @if (item.DaysRemaining > 3)
                         {
 
                             @Html.DisplayFor(modelItem => item.DaysRemaining)
                         }
-
                     </td>
                     <td id="returnBook"class="returnBook">
                         @if (item.BookAssociated.BorrowerAskedToReturnThisBook == false)
@@ -125,9 +122,6 @@
                         {
                             <span>You asked to return this book</span>
                         }
-
-
-                        
                     </td>
                 </tr>
              </tbody>
