@@ -122,6 +122,7 @@
 <div>
     <a id="back" href="/Books/Index">Back </a>
 </div>
+
 <br />
 @ViewBag.RequestFailed
 <br />
@@ -130,16 +131,16 @@
 <table class="table">
     <tbody>
         <tr class="headers">
-            <th>
+            <th class="col-md-3">
                 @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
-            <th>
+            <th class="col-md-2">
                 @Html.DisplayNameFor(model => model.BookRequested.Owner)
             </th>
-            <th>
+            <th class="col-md-2">
                 Requested On
             </th>
-            <th></th>
+            <th class="col-md-5"></th>
         </tr>
 
         @foreach (var item in Model)
@@ -180,6 +181,13 @@
 
                             <span class="nutral">@Html.ActionLink("Remove Request", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
                         }
+
+                        if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
+                        {
+                            <span>(Book is borrowed to someone else)</span> <span>&nbsp; &nbsp;</span>
+
+                            <span class="red">@Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                        }
                     }
                 </td>
             </tr>
@@ -196,19 +204,19 @@
 <table class="table">
     <tbody>
         <tr class="headers">
-            <th>
+            <th class="col-md-3">
                 @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
-            <th>
+            <th class="col-md-2">
                 Requested By
             </th>
-            <th>
+            <th class="col-md-2">
                 Requested On
             </th>
-            <th>
+            <th class="col-md-2">
                 Phone Number
             </th>
-            <th></th>
+            <th class="col-md-3"></th>
         </tr>
 
         @foreach (var item in Model)
@@ -243,6 +251,12 @@
                     @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false && item.BookRequested.Owner.Id == User.Identity.GetUserId())
                     {
                         <span class="nutral">@Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })</span>
+                    }
+                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == false)
+                    {
+                        <span>Book is not in your hands</span><span>&nbsp; &nbsp;</span>
+
+                        <span class="red">@Html.ActionLink("Cancel", "DeclineRequest", new { RequestId = item.BookRequestId })</span>
                     }
                 </td>
             </tr>

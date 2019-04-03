@@ -99,6 +99,10 @@
                 {
                     <span>You gave this book</span>
                 }
+                @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Fresh)
+                {
+                    <span>You accepted to give this book</span>
+                }
             </td>
         </tr>
     }
@@ -163,6 +167,10 @@
                 {
                     <span>Waiting for owner's response</span>
                 }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted)
+                {
+                    <span>Owner accepted this request</span>
+                }
             </td>
         </tr>
     }
@@ -217,7 +225,7 @@
                 }
                 @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
                 {
-                    <span>Owner declined</span>
+                    <span>You declined this request</span>
                 }
                 @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning)
                 {
@@ -226,6 +234,10 @@
                 @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
                 {
                     <span>User is waiting for your response</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted)
+                {
+                    <span>You accepted this request</span>  
                 }
             </td>
         </tr>

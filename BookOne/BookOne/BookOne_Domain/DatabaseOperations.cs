@@ -253,16 +253,6 @@ namespace BookOne.BookOne_Domain
                 .Union(usersRequestsAsBorrower)
                 .ToList();
         }
-        
-
-        //Borrower cancels a Book Request
-        public void CancelRequest(BookRequest request)
-        {
-            var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
-
-            requestToBeChanged.RequestStatus = RequestStatuses.Canceled;
-            db.SaveChanges();
-        }
 
 
         public void CloseRequest(BookRequest request)
@@ -270,6 +260,16 @@ namespace BookOne.BookOne_Domain
             var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
 
             requestToBeChanged.RequestStatus = RequestStatuses.Closed;
+            db.SaveChanges();
+        }
+
+
+        //Borrower cancels a Book Request
+        public void CancelRequest(BookRequest request)
+        {
+            var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
+
+            requestToBeChanged.RequestStatus = RequestStatuses.Canceled;
             db.SaveChanges();
         }
 
@@ -358,7 +358,7 @@ namespace BookOne.BookOne_Domain
                 .Include(c => c.Borrower);
 
             var usersCirculationsAsBorrower = db.BookCirculations
-                .Where(c => c.Borrower.Id == user.Id)
+                .Where(c => c.Borrower.Id == user.Id && c.CirculationStatus == CirculationStatuses.Borrowed)
                 .Include(c => c.BookAssociated.Owner)
                 .Include(c => c.Borrower);
 
