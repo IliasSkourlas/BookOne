@@ -240,10 +240,14 @@ namespace BookOne.BookOne_Domain
         public IEnumerable<BookRequest> GetAllRequests(ApplicationUser user)
         {
             var usersRequestsAsOwner = db.BookRequests
-                .Where(r => r.BookRequested.Owner.Id == user.Id);
+                .Where(r => r.BookRequested.Owner.Id == user.Id)
+                .Include(r => r.BookRequested)
+                .Include(r => r.RequestedBy);
 
             var usersRequestsAsBorrower = db.BookRequests
-                .Where(r => r.RequestedBy.Id == user.Id);
+                .Where(r => r.RequestedBy.Id == user.Id)
+                .Include(r => r.BookRequested)
+                .Include(r => r.RequestedBy);
 
             return usersRequestsAsOwner
                 .Union(usersRequestsAsBorrower)
@@ -340,10 +344,14 @@ namespace BookOne.BookOne_Domain
         public IEnumerable<BookCirculation> GetAllCirculations(ApplicationUser user)
         {
             var usersCirculationsAsOwner = db.BookCirculations
-                .Where(c => c.BookAssociated.Owner.Id == user.Id);
+                .Where(c => c.BookAssociated.Owner.Id == user.Id)
+                .Include(c => c.BookAssociated)
+                .Include(c => c.Borrower);
 
             var usersCirculationsAsBorrower = db.BookCirculations
-                .Where(c => c.Borrower.Id == user.Id);
+                .Where(c => c.Borrower.Id == user.Id)
+                .Include(c => c.BookAssociated)
+                .Include(c => c.Borrower);
 
             return usersCirculationsAsOwner
                 .Union(usersCirculationsAsBorrower)
