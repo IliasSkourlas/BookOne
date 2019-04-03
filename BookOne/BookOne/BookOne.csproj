@@ -283,6 +283,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\clapping.mp4" />
     <Content Include="Content\images\ContentsCut1.jpg" />
     <Content Include="Content\images\Drowing.jpg" />
     <Content Include="Content\images\fish2.mp4" />
