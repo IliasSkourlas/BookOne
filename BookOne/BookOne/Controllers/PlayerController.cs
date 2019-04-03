@@ -61,9 +61,10 @@ namespace BookOne.Controllers
         public ActionResult Requests()
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            var userRole = dbOps.GetUserRole(loggedInUser);
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!(User.IsInRole("Administrator") || User.IsInRole("Player")))
+            if (!(userRole == "Player" || userRole == "Administrator"))
             {
                 return View("PlayerForm", loggedInUser);
             }
@@ -78,9 +79,10 @@ namespace BookOne.Controllers
         public ActionResult RequestConfirmation(int? bookId)
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            var userRole = dbOps.GetUserRole(loggedInUser);
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!(User.IsInRole("Administrator") || User.IsInRole("Player")))
+            if (!(userRole == "Player" || userRole == "Administrator"))
             {
                 return View("PlayerForm", loggedInUser);
             }
