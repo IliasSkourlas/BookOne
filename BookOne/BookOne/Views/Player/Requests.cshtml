@@ -18,9 +18,10 @@
         color: white;
     }
 
-    #back:hover {
-         color: var(--main-Header-color);
-    }
+        #back:hover {
+            color: var(--main-Header-color);
+        }
+
     .headers {
         color: hotpink;
     }
@@ -37,10 +38,10 @@
         color: rgba(255, 255, 255, 0.8);
     }
 
-    a:hover {
-        color: var(--main-HeaderHover-color);
-        text-decoration: none;
-    }
+        a:hover {
+            color: var(--main-HeaderHover-color);
+            text-decoration: none;
+        }
 
 
     tr:hover {
@@ -62,25 +63,25 @@
         color: rgb(0, 128, 0);
     }
 
-    .green a:hover {
-        color: rgb(0, 206, 29);
-    }
+        .green a:hover {
+            color: rgb(0, 206, 29);
+        }
 
     .red a {
         color: rgb(128, 0, 0);
     }
 
-    .red a:hover {
-        color: rgb(206, 0, 0);
-    }
+        .red a:hover {
+            color: rgb(206, 0, 0);
+        }
 
     .nutral a {
         color: var(--main-HeaderHover-color);
     }
 
-    .nutral a:hover {
-        color: var(--main-Header-color);
-    }
+        .nutral a:hover {
+            color: var(--main-Header-color);
+        }
 
 
 
@@ -118,16 +119,17 @@
 
 
 
-<div  >
+<div>
     <a id="back" href="/Books/Index">Back </a>
 </div>
 <br />
+@ViewBag.RequestFailed
 <br />
 
 <h2 id="take">You want </h2>
 <table class="table">
     <tbody>
-        <tr  class="headers">
+        <tr class="headers">
             <th>
                 @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
@@ -193,7 +195,7 @@
 <h2 id="give">Someone wants </h2>
 <table class="table">
     <tbody>
-        <tr  class="headers">
+        <tr class="headers">
             <th>
                 @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
@@ -250,4 +252,3 @@
 
 
 
-    

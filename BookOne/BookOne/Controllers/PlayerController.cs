@@ -247,6 +247,14 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BorrowedBookConfirmation(BookRequest request)
         {
+            if(request.BookRequested.AvailabilityStatus == false)
+            {
+                dbOps.CloseRequest(request);
+
+                ViewBag.RequestFailed = "This book is borrowed by someone else. The request you made is closed.";
+                return RedirectToAction("Requests");
+            }
+
             dbOps.BorrowerReceivedBook(request);
 
             return RedirectToAction("Requests");

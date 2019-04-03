@@ -253,10 +253,19 @@ namespace BookOne.BookOne_Domain
                 .Union(usersRequestsAsBorrower)
                 .ToList();
         }
-
+        
 
         //Borrower cancels a Book Request
         public void CancelRequest(BookRequest request)
+        {
+            var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
+
+            requestToBeChanged.RequestStatus = RequestStatuses.Canceled;
+            db.SaveChanges();
+        }
+
+
+        public void CloseRequest(BookRequest request)
         {
             var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
 
