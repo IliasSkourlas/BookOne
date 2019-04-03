@@ -29,6 +29,14 @@
         text-decoration-style: solid;
         color: rgb(0, 255, 255);
     }
+
+    #availableBook a {
+        color: var(--available-color);
+    }
+        #availableBook a:hover {
+            color: var(--main-HeaderHover-color);
+        }
+    
 </style>
 
 
@@ -68,14 +76,24 @@
                 @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
             </td>
 
-            <td class="Status">
+            <td id="availableBook" class="Status">
                 @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
                 {
-                    @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
+
+                    <spam id="availableBook">@Html.ActionLink("available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)</spam>
+                    <script>
+                        myFunction();
+                        function myFunction() {
+                            $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
+                        }
+                    </script>
+
+
                 }
                 @if (item.AvailabilityStatus == false || item.Owner.Id == User.Identity.GetUserId())
                 {
                     <span>Unavailable</span>
+
                 }
             </td>
         </tr>

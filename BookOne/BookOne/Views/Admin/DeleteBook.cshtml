@@ -2,14 +2,64 @@
 
 @{
     ViewBag.Title = "Delete Book";
+    Layout = "~/Views/Shared/_Layout - My.cshtml";
+
 }
 
-<h2>Delete Book</h2>
+<style type="text/css">
+
+    body {
+        background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    .header th {
+        color: var(--main-Header-color);
+    }
+
+    .adminDashboardHeader {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 20px;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #formText {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #back {
+        color: rgba(255, 255, 255, 0.8);
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 20px;
+    }
+
+    
+    #formLabel {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 15px;
+        color: rgb(255, 255, 255);
+    }
+
+    #delete:hover {
+        color: rgb(0, 255, 255);
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+    }
+
+
+</style>
+
+<h2 class="">Delete Book</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
     <hr />
-    <dl class="dl-horizontal">
+    <dl id="formLabel" class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
@@ -63,9 +113,9 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
+        <div id="delete" class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Books")
+            @Html.ActionLink("Back to List", "Books", new { id = "back" })
         </div>
     }
 </div>
