@@ -1,42 +1,189 @@
 ﻿@model BookOne.ViewModels.ReturnBookViewModel
 
+@{
+    Layout = "~/Views/Shared/_Layout - History.cshtml";
+    ViewBag.Title = "MyHand";
+}
 
 @{
     ViewBag.Title = "BorrowerReturnsBook";
 }
 
-<h2>Return Book</h2>
 
-<h4>Are you receiving this book from its borrower right now?</h4>
+<style type="text/css">
+
+    .center {
+        position: relative;
+        text-align: center;
+    }
+
+
+    #back {
+        color: white;
+        text-decoration: none;
+    }
+
+        #back:hover {
+            color: var(--main-Header-color);
+        }
+
+    #yes {
+        color: rgba(0, 255, 255, 0.63);
+        background-color: rgba(255, 255, 255, 0.11);
+        /*border-color: rgba(0, 255, 255, 0.43);*/
+        display: inline-block;
+        margin: 10px 40px;
+        font-size: x-large;
+    }
+
+        #yes:hover {
+            background-color: rgba(0, 255, 255, 0.43);
+            border-color: var(--main-HeaderHover-color)
+        }
+
+    #no {
+        color: rgba(255, 0, 0, 0.62);
+        background-color: rgba(255, 255, 255, 0.11);
+        /*border-color: rgba(255, 0, 0, 0.36);*/
+        display: inline-block;
+        margin: 10px 40px;
+        font-size: x-large;
+    }
+
+        #no:hover {
+            background-color: rgba(255, 0, 0, 0.36);
+            border-color: red
+        }
+
+    #theBook {
+        color: white;
+        font-style: italic;
+    }
+
+    .question {
+        display: inline;
+    }
+
+
+
+
+
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgb(255, 255, 255);
+    }
+
+
+    tr:hover {
+        background: rgba(253, 255, 233, 0.19);
+    }
+
+
+    .green a {
+        color: rgb(0, 128, 0);
+    }
+
+        .green a:hover {
+            color: rgb(0, 206, 29);
+        }
+
+    .red a {
+        color: rgb(128, 0, 0);
+    }
+
+        .red a:hover {
+            color: rgb(206, 0, 0);
+        }
+
+    .nutral a {
+        color: var(--main-HeaderHover-color);
+    }
+
+        .nutral a:hover {
+            color: var(--main-Header-color);
+        }
+
+
+
+
+    .video-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        background-attachment: fixed;
+    }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            opacity: 0.35;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+
+    #video2 {
+        opacity: 0.032;
+    }
+</style>
+
 <div>
-    <hr />
-    <dl class="dl-horizontal">
+
+    <a id="back" href="/Player/Requests">Back </a>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
 
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Circulation.BookAssociated.Title)
-        </dt>
 
-        <dd>
+
+
+<div class="center">
+
+    <div class="dl-horizontal">
+
+        <h1 class="question">Is &nbsp; </h1>
+        <h1 id="theBook" class="question">
             @Html.DisplayFor(model => model.Circulation.BookAssociated.Title)
-        </dd>
+            &nbsp;
+        </h1>
+        <h1 class="question">back in your hands?  &nbsp;</h1>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Circulation.Borrower)
-        </dt>
+        <br />
+        <br />
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Circulation.BorrowedOn)
-        </dt>
-
-        <dd>
+        </dd>*@
+        @*<dd>
             @Html.DisplayFor(model => model.Circulation.BorrowedOn)
-        </dd>
-    </dl>
+        </dd>*@
+
+        <div>
+            <div class="form-group">
+                <div id="buttons">
+                    <input id="yes" type="submit" value="Yes" class="btn btn-default" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a id="no" href="/Player/Requests" class="btn btn-default">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @using (Html.BeginForm("OwnerGetsBackHisBook", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
@@ -56,7 +203,7 @@
         @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
 
         <hr /><br />
-        <h5>If you are receiving your book in perfect condition, you can thank the borrower by giving him a "Clap"...</h5>
+        <h2>If you are receiving your book in perfect condition, you can thank the borrower by giving him a "Clap"...</h2>
         <div>
             @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1, new { @checked = true }) <span> Clap</span> <br />
             @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span> Shovel</span> <br />
@@ -66,7 +213,7 @@
 
             <br />
             <input type="submit" value="Yes" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "MyBooks", "Books")
+
         </div>
     }
 </div>
