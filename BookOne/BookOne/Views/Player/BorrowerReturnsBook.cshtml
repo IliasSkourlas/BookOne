@@ -69,25 +69,56 @@
         font-style: italic; 
         color: rgba(0, 255, 255, 0.83);
     }
-    .clappsAndTreats {
-        font: large;
+    .clappsAndTreats *  {
+        font-size:x-large;
           
     }
 
+
+    .clapping:hover:after {
+        color: hotpink;
+        content:"?";
+    }
+    .noClapping:hover:after {
+        color: gray;
+        content:"?";
+    }
+    .shovel:hover:after {
+        color: red;
+        content: "?";
+    }
+    .treat:hover:after {
+        color: green;
+        content: "?";
+    }
+    .cookie:hover:after {
+        color: yellow;
+        content: "?";
+    }
+
     .clapping:hover {
-        color:hotpink;
+        color: hotpink;
+       
     }
+
     .noClapping:hover {
-        color:gray;
+        color: #9d9d9d;
+        
     }
+
     .shovel:hover {
         color: red;
+       
     }
+
     .treat:hover {
         color: green;
+       
     }
+
     .cookie:hover {
         color: yellow;
+       
     }
 
     /*.clapping:checked + span {
@@ -160,6 +191,7 @@
     #video2 {
         opacity: 0.032;
     }
+    
 </style>
 
 <div>
@@ -224,11 +256,11 @@
 
                <div>
                    <div class="clappsAndTreats">
-                       <label class="clapping">@Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1, new { @checked = true }) <span id="clapping"> Clapping</span> <br /></label>
-                      <div class="noClapping"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0) <span id="noClapping"> No clapping</span> <br /></div>
-                      <div class="shovel"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span id="shovel"> a shovel </span> <br /></div>
-                      <div class="treat"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span id="treat"> a treat</span> <br /></div>
-                      <div class="cookie"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span id="cookie"> a poisonous Cookie</span> <br /></div>
+                      <label  onclick="stopClapping()" class="noClapping"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0, new { @checked = true }) <span id="noClapping" >No clapping </span></label><br />
+                       <label onclick="startClapping()" class="clapping">@Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1) <span id="clapping" >Clapping </span> </label><br />
+                      <label class="shovel"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span id="shovel">a shovel </span></label><br />
+                      <label class="treat"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span id="treat">a treat </span></label><br />
+                      <label class="cookie"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span id="cookie">a poisonous Cookie </span> </label>
                    </div>
 
                    <br /><br /><br />
@@ -237,7 +269,7 @@
                    <div>
                        <div class="form-group">
                            <div id="buttons">
-                               <input id="yes" type="submit" value="this is for  @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)" class="btn btn-default" />
+                               <input id="yes" type="submit" value="this is for  @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)" class="btn btn-default" onmouseover="change1()" onmouseout="change2()"/>
                                @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <a id="no" href="/Player/Requests" class="btn btn-default">No</a>*@
                            </div>
@@ -247,3 +279,29 @@
                </div>
            }
        </div>
+
+
+
+<script>
+
+    function change1() {
+        setInterval(function () {
+            $("video").css("opacity", "0.9");
+
+        }, 700);
+    }
+    function change2() {
+        setInterval(function () {
+            $("video").css("opacity", "0.032");
+
+        }, 700);
+    }
+    function startClapping() {
+        $("#video3").css("display", "block");
+    }
+    function stopClapping() {
+        $("#video3").css("display", "none");;
+    }
+
+
+</script>
