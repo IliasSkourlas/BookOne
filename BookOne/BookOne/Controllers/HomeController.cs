@@ -27,15 +27,7 @@ namespace BookOne.Controllers
 
             return View();
         }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Uncertified Play Team One";
-
-            return View();
-        }
-
-
+    
 
         [HttpPost]
         public ActionResult EmailNotifier(string userEmail)
@@ -53,7 +45,7 @@ namespace BookOne.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Success = "Invalid Email Address provided.";
-                return View("Contact");
+                return View("Index");
             }
 
             dbOps.InsertEmailNotification(notification);

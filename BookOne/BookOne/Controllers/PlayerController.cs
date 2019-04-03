@@ -274,31 +274,5 @@ namespace BookOne.Controllers
 
             return RedirectToAction("MyBooks", "Books");
         }
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-
-
-        public ActionResult History()
-        {
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-
-            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!(User.IsInRole("Administrator") || User.IsInRole("Player")))
-            {
-                return View("PlayerForm", loggedInUser);
-            }
-
-            var model = new UserExchangeHistoryViewModel()
-            {
-               
-                BookRequests = dbOps.GetAllRequests(loggedInUser),
-                BookCirculations = dbOps.GetAllCirculations(loggedInUser)
-            };
-
-            return View(model);
-        }
-
     }
 }

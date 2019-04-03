@@ -1,0 +1,234 @@
+﻿@using Microsoft.AspNet.Identity
+
+@model BookOne.ViewModels.UserExchangeHistoryViewModel
+
+@{
+    ViewBag.Title = "History";
+}
+
+
+<br />
+
+<h2>Book Exchange History</h2>
+
+<br />
+
+<h4>Books you borrowed</h4>
+<table class="table">
+    <tr>
+        <th class="col-md-4">
+            Title
+        </th>
+        <th class="col-md-2">
+            Owner
+        </th>
+        <th class="col-md-2">
+            Borrowed On
+        </th>
+        <th class="col-md-4">
+            Status
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookCirculations)
+    {
+        if (item.BookAssociated.Owner.Id == User.Identity.GetUserId()) { continue; }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedOn)
+            </td>
+            <td>
+                @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Completed)
+                {
+                    <span>You returned this book</span>
+                }
+                @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Borrowed)
+                {
+                    <span>You have this book</span>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<br />
+<h4>Borrowed books to other users</h4>
+<table class="table">
+    <tr>
+        <th class="col-md-4">
+            Title
+        </th>
+        <th class="col-md-2">
+            Borrower
+        </th>
+        <th class="col-md-2">
+            Borrowed On
+        </th>
+        <th class="col-md-4">
+            Status
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookCirculations)
+    {
+        if (item.Borrower.Id == User.Identity.GetUserId()) { continue; }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Borrower.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowedOn)
+            </td>
+            <td>
+                @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Completed)
+                {
+                    <span>Book has returned to your hands</span>
+                }
+                @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Borrowed)
+                {
+                    <span>You gave this book</span>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<br />
+
+<h4>Requests you made</h4>
+<table class="table">
+    <tr>
+        <th class="col-md-4">
+            Title
+        </th>
+        <th class="col-md-2">
+            Owner
+        </th>
+        <th class="col-md-2">
+            Requested On
+        </th>
+        <th class="col-md-4">
+            Status
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookRequests)
+    {
+        if (item.BookRequested.Owner.Id == User.Identity.GetUserId()) { continue; }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookRequested.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookRequested.Owner.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedOn)
+            </td>
+            <td>
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
+                {
+                    <span>Request is closed</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.BorrowedBook)
+                {
+                    <span>You have this book</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Canceled)
+                {
+                    <span>Request was canceled</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
+                {
+                    <span>You declined</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning)
+                {
+                    <span>You asked to return this book</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
+                {
+                    <span>Waiting for owner's response</span>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<br />
+
+<h4>Requests for your books</h4>
+<table class="table">
+    <tr>
+        <th class="col-md-4">
+            Title
+        </th>
+        <th class="col-md-2">
+            Requested By
+        </th>
+        <th class="col-md-2">
+            Requested On
+        </th>
+        <th class="col-md-4">
+            Status
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookRequests)
+    {
+        if (item.RequestedBy.Id == User.Identity.GetUserId()) { continue; }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookRequested.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestedOn)
+            </td>
+            <td>
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
+                {
+                    <span>Request is closed</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.BorrowedBook)
+                {
+                    <span>You gave this book</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Canceled)
+                {
+                    <span>Request was canceled</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
+                {
+                    <span>Owner declined</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning)
+                {
+                    <span>User asked to return this book</span>
+                }
+                @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
+                {
+                    <span>User is waiting for your response</span>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
