@@ -161,6 +161,7 @@
         @Html.HiddenFor(model => model.RequestedOn)
         @Html.HiddenFor(model => model.RequestStatus)
         @Html.HiddenFor(model => model.BookRequested.BookId)
+        @Html.HiddenFor(model => model.BookRequested.AvailabilityStatus)
         @Html.HiddenFor(model => model.RequestedBy.Id)
 
         <div class="form-group">
@@ -181,7 +182,7 @@
                         <div id="buttons">
                             <input id="yes" type="submit" value="Yes" class="btn btn-default" />
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input id="no" type="submit" value="No" class="btn btn-default" />
+                            <button id="no" href="/Player/Requests" value="No" class="btn btn-default" />
                         </div>
                     </div>
                 </div>

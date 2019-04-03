@@ -175,7 +175,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BookOne_Domain\Book.cs" />
     <Compile Include="BookOne_Domain\BookCirculation.cs" />
-    <Compile Include="BookOne_Domain\DatabaseOperations2.cs" />
     <Compile Include="BookOne_Domain\DatabaseOperations.cs" />
     <Compile Include="BookOne_Domain\BookNote.cs" />
     <Compile Include="BookOne_Domain\BookRequest.cs" />
@@ -320,7 +319,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -362,7 +360,6 @@
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Player\ShowUserProfile.cshtml" />
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
-    <Content Include="Views\Books\BorrowedBookDetails.cshtml" />
     <Content Include="Views\Shared\_LookAtThisPlayerPartial.cshtml" />
     <Content Include="Views\Chat\ChatStart.cshtml" />
     <Content Include="Views\Player\_UnansweredRequestsFoundPartial.cshtml" />
@@ -378,6 +375,7 @@
     <Content Include="Views\Admin\DeleteBook.cshtml" />
     <Content Include="Views\Admin\DeleteUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Books\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

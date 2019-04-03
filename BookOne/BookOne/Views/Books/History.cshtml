@@ -1,0 +1,87 @@
+﻿@model BookOne.ViewModels.UserExchangeHistoryViewModel
+
+@{
+    ViewBag.Title = "History";
+}
+
+<h2>Book Exchange History</h2>
+
+
+@* Borrowed books by the loggedIn user *@
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookCirculations)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@* Borrowed books to other users *@
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookCirculations)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAssociated.Title)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@* Requests for user's books *@
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookRequests)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookRequested.Title)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@* Requests to other users *@
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model.BookRequests)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookRequested.Title)
+            </td>
+        </tr>
+    }
+
+</table>
