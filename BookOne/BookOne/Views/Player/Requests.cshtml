@@ -154,28 +154,30 @@
                     @item.RequestedOn.Date.ToShortDateString()
                 </td>
                 <td>
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
-                    {
-                        <span>(Waiting for owner's response) &nbsp; &nbsp; </span>
+                    @{
+                        if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
+                        {
+                            <span>(Waiting for owner's response) &nbsp; &nbsp; </span>
 
-                        <span class="red"> @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
-                    }
+                            <span class="red"> @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                        }
 
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
-                    {
-                        <span class="green">
-                            @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId })
-                        </span>
-                        <span>&nbsp; &nbsp;</span>
+                        if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
+                        {
+                            <span class="green">
+                                @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId })
+                            </span>
+                            <span>&nbsp; &nbsp;</span>
 
-                        <span class="red">@Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
-                    }
+                            <span class="red">@Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                        }
 
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
-                    {
-                        <span>(Request Declined) &nbsp; &nbsp; </span>
+                        if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
+                        {
+                            <span>(Request Declined) &nbsp; &nbsp; </span>
 
-                        <span class="nutral">@Html.ActionLink("Remove Request", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                            <span class="nutral">@Html.ActionLink("Remove Request", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                        }
                     }
                 </td>
             </tr>

@@ -307,8 +307,9 @@ namespace BookOne.BookOne_Domain
             var bookToBeBorrowed = db.Books.Where(b => b.BookId == request.BookRequested.BookId)
                 .SingleOrDefault();
 
+            var thisRequest = db.BookRequests.Find(request.BookRequestId);
 
-            request.RequestStatus = RequestStatuses.BorrowedBook;
+            thisRequest.RequestStatus = RequestStatuses.BorrowedBook;
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
             bookToBeBorrowed.AvailabilityStatus = false;
