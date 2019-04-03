@@ -4,9 +4,42 @@
 
 @{
     ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout - My.cshtml";
 }
 
+<style type="text/css">
+    body {
+        background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
 
+    .header th {
+        color: var(--main-Header-color);
+    }
+
+    h2{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 30px;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #formText , h4 {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #formLabel {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 15px;
+        color: rgb(255, 255, 255);
+    }
+
+
+</style>
 <br />
 
 <h2>Book Exchange History</h2>
@@ -60,7 +93,7 @@
 
 
 <br />
-<h4>Borrowed books to other users</h4>
+<h4 >Borrowed books to other users</h4>
 <table class="table">
     <tr>
         <th class="col-md-4">
@@ -112,7 +145,7 @@
 
 <br />
 
-<h4>Requests you made</h4>
+<h4 >Requests you made</h4>
 <table class="table">
     <tr>
         <th class="col-md-4">
