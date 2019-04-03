@@ -14,7 +14,12 @@
 
     <style type="text/css">
 
-
+        :root {
+            --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+            --main-Header-color: rgb(0, 255, 255);
+            --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
+            --available-color: rgb(255, 255, 255);
+        }
 
         body {
             /*background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgb(0, 0, 0, 0.02)), url('../../Content/images/Drowing.jpg');*/
@@ -25,6 +30,8 @@
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-size: 18px;
             color: rgba(255, 255, 255, 0.87);
+            
+            
         }
         /*.form-control {
             background-color: rgba(255, 255, 255, 0.1);
@@ -41,15 +48,12 @@
         tr:hover {
             background: rgba(255, 226, 0, 0.07);
         }
-       
-
-
 
 
 
 
         .video-container {
-            position: absolute;
+            position: fixed;
             top: 0;
             bottom: 0;
             width: 100%;
@@ -81,23 +85,25 @@
 </head>
 
 
-<body>
+<body onload=" hideAll()">
 
     
 
-    @*<div class="video-container">
+    <div class="video-container">
         <video id="video" autoplay loop muted>
             <source src="~/Content/images/fish2.mp4" type="video/mp4" />
         </video>
-    </div>*@
+    </div>
 
 
-    <div class="container body-content">
+    <div class="container body-content" onclick="rotate()">
 
 
 
 
         @RenderBody()
+
+       
 
         <footer>
             @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
