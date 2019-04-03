@@ -33,9 +33,12 @@
     #availableBook a {
         color: var(--available-color);
     }
-        #availableBook a:hover {
-            color: var(--main-HeaderHover-color);
-        }
+    #availableBook a:hover {
+        color: var(--main-HeaderHover-color);
+    }
+    /*#availableOwner {
+        color:white;
+    }*/
     
 </style>
 
@@ -73,7 +76,7 @@
                 </td>*@
 
             <td class="owner">
-                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
+                <spam class="availableOwner">@Html.DisplayFor(modelItem => item.Owner.ActualUsername)</spam>
             </td>
 
             <td id="availableBook" class="Status">
@@ -81,10 +84,13 @@
                 {
 
                     <spam id="availableBook">@Html.ActionLink("available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)</spam>
+
+                    // it wiil color the unavailable
                     <script>
                         myFunction();
                         function myFunction() {
                             $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
+                           
                         }
                     </script>
 
@@ -106,12 +112,7 @@
 
 <script>
 
-    // Player Text
-
-
-
-
-    ///////////////////////////////////////
+   
 
     function hideAll() {
         $('.author').hide();
