@@ -68,43 +68,57 @@
     @foreach (var item in Model)
     {
         <tr class="bookTitle">
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td class="author">
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td class="owner">
-                <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
-            </td>
+            
+            @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
 
-            @*<td class="owner">
-                <spam class="availableOwner">@Html.DisplayFor(modelItem => item.Owner.ActualUsername)</spam>
-            </td>*@
+                <td class="author">
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
 
-            <td id="availableBook" class="Status">
-                @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
-                {
+                <td class="owner">
+                    <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
+                </td>
 
-                    <spam id="availableBook">@Html.ActionLink("available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)</spam>
+                <td id="availableBook" class="Status">
 
-                    // it wiil color the unavailable
-                    <script>
-                        myFunction();
-                        function myFunction() {
-                            $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
+                        <spam id="availableBook">@Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)</spam>
+
+                        @*it will color the unavailable*@
+                        <script>
+                            myFunction();
+                            function myFunction() {
+                                $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
                            
-                        }
-                    </script>
+                            }
+                        </script>
+
+                </td>
+            }
 
 
-                }
-                @if (item.AvailabilityStatus == false || item.Owner.Id == User.Identity.GetUserId())
-                {
-                    <span>Unavailable</span>
+            @if (item.AvailabilityStatus == false || item.Owner.Id == User.Identity.GetUserId())
+            {
+                <td class="ifUnavailable">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
 
-                }
-            </td>
+                <td class="author ifUnavailable">
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+
+                <td class="owner ifUnavailable">
+                    <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
+                </td>
+
+                <td id="availableBook" class="Status ifUnavailable">
+                    <span>unavailable</span>
+                </td>
+            }
+            
         </tr>
     }
 </table>

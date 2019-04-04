@@ -282,7 +282,7 @@ namespace BookOne.Controllers
 
             dbOps.InsertReaction(model.ReactionGiven);
 
-            return RedirectToAction("MyBooks", "Books");
+            return RedirectToAction("Requests", "Player");
         }
     }
 }
