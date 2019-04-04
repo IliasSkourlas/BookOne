@@ -12,21 +12,7 @@
     h4 {
         font-style: italic;
     }
-
-    #back {
-        color: rgba(254, 225, 0, 0.20);
-        text-decoration: none;
-        position: fixed;
-    }
-
-        #back:hover {
-            color: var(--main-Header-color);
-        }
 </style>
-
-<div class="container">
-    <a id="back" href="/Books/MyBooks">Back</a>
-</div>
 
 
 <br /><br /><br />
@@ -34,20 +20,12 @@
     <div class="col-md-10">
         <h2 font-style="italic">History</h2>
     </div>
-
-    @using (Html.BeginForm("SaveHistory", "Books" , FormMethod.Post))
-    {
-        <div class="col-md-2">
-            <input type="submit" name="savedata" value="Export History" class = "btn btn-default" />
-        </div>
-    }
-    
 </div>
 
 
 
 <br />
-<div id="take">
+<div class="container-fluid">
     <h4>Had taken</h4>
     <table class="table">
         <tr>
@@ -96,7 +74,7 @@
 
 
 
-<div id="give">
+<div class="container-fluid">
     <h4>Had given</h4>
     <table class="table">
         <tr>
@@ -149,7 +127,7 @@
 
 
 
-<div id="yourRequests">
+<div class="container-fluid">
     <h4>Requests you made</h4>
     <table class="table">
         <tr>
@@ -218,7 +196,7 @@
 
 
 
-<div id="requestsToYou">
+<div class="container-fluid">
     <h4>Requests to you</h4>
     <table class="table">
         <tr>
@@ -284,77 +262,3 @@
 
     </table>
 </div>
-
-
-
-
-
-<script>
-
-
-
-    function hideAll() {
-        $('#yourRequests').hide();
-        $('#requestsToYou').hide();
-        $('#give').hide();
-    }
-
-    var n = 0;
-    var i = 1;
-
-    function rotate() {
-        n = n + i;
-        if (n === 0) {
-            i = 1;
-        }
-        if (n === 1) {
-            console.log("new", n);
-            new function () {
-                $('#give').show();
-                $('#take').hide();
-
-            }
-        }
-        if (n === 2) {
-            console.log("new", n);
-            new function () {
-                $('#yourRequests').show();
-                $('#give').hide();
-
-
-            }
-        }
-        if (n === 3) {
-            console.log("new", n);
-            new function () {
-                $('#requestsToYou').show();
-                $('#yourRequests').hide();
-
-
-
-
-            }
-        }
-        if (n === 4) {
-
-            new function () {
-                console.log("new", n);
-
-                $('#take').show();
-                $('#requestsToYou').hide();
-            }
-        }
-        if (n === 5) {
-            n = 1;
-            new function () {
-                console.log("new", n);
-
-                $('#give').show();
-                $('#take').hide();
-            }
-        }
-
-
-    }
-
-</script>
