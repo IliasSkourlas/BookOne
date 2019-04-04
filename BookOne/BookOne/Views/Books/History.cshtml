@@ -51,7 +51,7 @@
     <h4>Had taken</h4>
     <table class="table">
         <tr>
-            <th class="col-md-4">
+            <th class="col-md-3">
                 Title
             </th>
             <th class="col-md-2">
@@ -60,7 +60,10 @@
             <th class="col-md-2">
                 Borrowed On
             </th>
-            <th class="col-md-4">
+            <th class="col-md-2">
+                Returned On
+            </th>
+            <th class="col-md-3">
                 Status
             </th>
         </tr>
@@ -77,6 +80,16 @@
                 </td>
                 <td>
                     @item.BorrowedOn.Date.ToShortDateString()
+                </td>
+                <td>
+                    @if (item.ReturnedOn == null)
+                    {
+                        <span>- - -</span>
+                    }
+                    @if (item.ReturnedOn != null)
+                    {
+                        item.ReturnedOn.Date.ToShortDateString();
+                    }
                 </td>
                 <td>
                     @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Completed)
@@ -100,7 +113,7 @@
     <h4>Had given</h4>
     <table class="table">
         <tr>
-            <th class="col-md-4">
+            <th class="col-md-3">
                 Title
             </th>
             <th class="col-md-2">
@@ -109,7 +122,10 @@
             <th class="col-md-2">
                 Borrowed On
             </th>
-            <th class="col-md-4">
+            <th class="col-md-2">
+                Returned On
+            </th>
+            <th class="col-md-3">
                 Status
             </th>
         </tr>
@@ -126,6 +142,16 @@
                 </td>
                 <td>
                     @item.BorrowedOn.Date.ToShortDateString()
+                </td>
+                <td>
+                    @if (item.ReturnedOn.Date == Convert.ToDateTime("01/01/1990"))
+                    {
+                        <span>- - -</span>
+                    }
+                    @if (item.ReturnedOn != null)
+                    {
+                        @item.ReturnedOn.Date.ToShortDateString()
+                    }
                 </td>
                 <td>
                     @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Completed)
@@ -153,16 +179,16 @@
     <h4>Requests you made</h4>
     <table class="table">
         <tr>
-            <th class="col-md-4">
+            <th class="col-md-3">
                 Title
             </th>
-            <th class="col-md-2">
+            <th class="col-md-4">
                 Owner
             </th>
             <th class="col-md-2">
                 Requested On
             </th>
-            <th class="col-md-4">
+            <th class="col-md-3">
                 Status
             </th>
         </tr>
@@ -222,16 +248,16 @@
     <h4>Requests to you</h4>
     <table class="table">
         <tr>
-            <th class="col-md-4">
+            <th class="col-md-3">
                 Title
             </th>
-            <th class="col-md-2">
+            <th class="col-md-4">
                 Requested By
             </th>
             <th class="col-md-2">
                 Requested On
             </th>
-            <th class="col-md-4">
+            <th class="col-md-3">
                 Status
             </th>
         </tr>

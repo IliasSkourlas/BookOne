@@ -628,6 +628,7 @@ namespace BookOne.BookOne_Domain
                 book.Carrier = db.Users.Find(book.Owner.Id);
                 book.BorrowerAskedToReturnThisBook = false;
                 circulationForThisBook.CirculationStatus = CirculationStatuses.Completed;
+                circulationForThisBook.ReturnedOn = DateTime.Now.Date.ToString();
                 db.SaveChanges();
             }
             catch (SqlException)
