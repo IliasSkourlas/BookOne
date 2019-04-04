@@ -118,8 +118,8 @@
 
 
 <div>
-    @*<a id="back" href="/Books/Index">Back </a>*@
-    @Html.ActionLink("Back", null, null, null, new { id = "back", href = Request.UrlReferrer })
+    <a id="back" href="/Books/Index">Back </a>
+    @*@Html.ActionLink("Back", null, null, null, new { id = "back", href = Request.UrlReferrer })*@
 </div>
 
 <br />
@@ -185,7 +185,7 @@
                         {
                             <span>(Book is borrowed to someone else)</span> <span>&nbsp; &nbsp;</span>
 
-                            <span class="red">@Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                            <span class="red">@Html.ActionLink("Cancel Request", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
                         }
                     }
                 </td>
