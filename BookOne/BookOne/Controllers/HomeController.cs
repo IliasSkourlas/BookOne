@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
+using System.Data.SqlClient;
 
 namespace BookOne.Controllers
 {
@@ -32,31 +34,55 @@ namespace BookOne.Controllers
         [HttpPost]
         public ActionResult EmailNotifier(string userEmail)
         {
-            var notification = new EmailNotification()
+            try
             {
-                EmailAddress = userEmail
-            };
+                var notification = new EmailNotification()
+                {
+                    EmailAddress = userEmail
+                };
 
-            return RedirectToAction("EmailIsValidToBeNotified", notification);
+                return RedirectToAction("EmailIsValidToBeNotified", notification);
+            }
+            catch (WebException)
+            {
+
+                throw;
+            }
         }
 
         public ActionResult EmailIsValidToBeNotified(EmailNotification notification)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                ViewBag.Success = "Invalid Email Address provided.";
+                if (!ModelState.IsValid)
+                {
+                    ViewBag.Success = "Invalid Email Address provided.";
+                    return View("Index");
+                }
+
+                dbOps.InsertEmailNotification(notification);
+
+                ViewBag.Success = "You'll be notified soon..";
                 return View("Index");
             }
+            catch (SqlException)
+            {
 
-            dbOps.InsertEmailNotification(notification);
-
-            ViewBag.Success = "You'll be notified soon..";
-            return View("Index");
+                throw;
+            }
         }
 
         public ActionResult EmailNotificationsCounter()
         {
-            return Content(dbOps.EmailNotificationsCounter().ToString());
+            try
+            {
+                return Content(dbOps.EmailNotificationsCounter().ToString());
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
     }
 }
