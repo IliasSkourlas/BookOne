@@ -16,16 +16,24 @@
 </style>
 
 
+
+
 <br />
 <br />
 <br />
 
-<p>
-    @Html.ActionLink("Add new", "Create")
-</p>
 
 
-@*My Unborrowed Books*@
+
+
+<div class="tooltipp">
+    <p>
+        @Html.ActionLink("Add new", "Create")
+    </p>
+    <span class="tooltiptextt">click to add your book</span>
+</div>
+
+
 <table id="listOfBooks" class="table">
 
     <tr class="header">
@@ -49,7 +57,9 @@
 
         <tr class="bookTitle">
             <td>
-                @Html.ActionLink(item.Title, "Edit", new { id = item.BookId })
+                <div class="tooltipp">
+                    @Html.ActionLink(item.Title, "Edit", new { id = item.BookId })<span class="tooltiptextt">click to edit your book</span>
+                </div>
             </td>
             <td class="author">
                 @Html.DisplayFor(modelItem => item.Author)

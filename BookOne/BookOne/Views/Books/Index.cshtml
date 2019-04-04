@@ -41,48 +41,6 @@
     .ifUnavailable {
         color: rgba(255, 255, 255, 0.65)
     }
-
-
-
-    #help {
-        /*color: rgb(0, 255, 255);*/
-        color: rgba(255, 255, 255, 0.65);
-        background-color: transparent;
-        position: fixed;
-        right: 1em;
-        top: 2.9em;
-        font-size: medium;
-        border:none;
-    }
-    #help:hover {
-        color:var(--main-HeaderHover-color)
-    }
-    .tooltipp {
-        position: relative;
-        display: inline-block;
-
-    }
-
-        .tooltipp .tooltiptextt {
-            visibility: hidden;
-            font-size: small;
-            width: 120px;
-            background-color: rgba(255, 255, 255, 0.41);
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 5px 0;
-            /* Position the tooltip */
-            position: absolute;
-            z-index: 1;
-            top: -5px;
-            left: 105%;
-        }
-
-        .tooltipp:hover .tooltiptextt {
-            visibility: visible;
-            /*visibility:hidden;*/
-        }
 </style>
 
 
@@ -92,10 +50,9 @@
 
 @*<div class="tooltipp">
 
-        <span class="tooltiptextt">Tooltip text</span>
+        <span class="tooltiptextt">click on the background to toggle views</span>
     </div>*@
 
-<button id="help" class="btn btn-info">?</button>
 
 
 <table id="listOfBooks" class="table ">
@@ -237,11 +194,7 @@
 
 
 
-    ///// Toggle Help ?
-    function toggleHelp() {
-        var element = document.getElementById("help");
-        element.classList.toggle("tooltipp:hover .tooltiptextt");
-    }
+
 
 </script>
 
