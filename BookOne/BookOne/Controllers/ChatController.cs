@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using BookOne.Models;
 using BookOne.BookOne_Domain;
 using Microsoft.AspNet.Identity;
+using System.Data.SqlClient;
 
 namespace BookOne.Controllers
 {
@@ -27,35 +28,56 @@ namespace BookOne.Controllers
 
         public ActionResult ConversationWithContact(ApplicationUser contact)
         {
-            var loggedInUserId = User.Identity.GetUserId();
+            try
+            {
+                var loggedInUserId = User.Identity.GetUserId();
 
-            var conversation = dbOps.GetConversation(loggedInUserId, contact.Id);
+                var conversation = dbOps.GetConversation(loggedInUserId, contact.Id);
 
-            return View(conversation);
+                return View(conversation);
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
 
         [HttpPost]
         public ActionResult SendMessage(ApplicationUser contact, string content)
         {
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-            contact = dbOps.GetUser(User.Identity.GetUserId());
-
-            while (contact != loggedInUser)
+            try
             {
-                Message message = new Message
+                var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+                contact = dbOps.GetUser(User.Identity.GetUserId());
+
+                while (contact != loggedInUser)
                 {
-                    Sender = loggedInUser,
-                    Content = content,
-                    Receiver = contact
+                    Message message = new Message
+                    {
+                        Sender = loggedInUser,
+                        Content = content,
+                        Receiver = contact
+                    };
+
+                    dbOps.InsertMessage(message);
+
+                    return View(message);
                 };
 
-                dbOps.InsertMessage(message);
+                return ViewBag.Message("Please select a user to chat with");
+            }
+            catch (SqlException)
+            {
 
-                return View(message);
-            };
+                throw;
+            }
+            catch (System.Net.WebException)
+            {
 
-            return ViewBag.Message("Please select a user to chat with");
+                throw;
+            }
         }
     }
 }

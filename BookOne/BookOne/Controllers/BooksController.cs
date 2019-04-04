@@ -10,6 +10,7 @@ using BookOne.BookOne_Domain;
 using BookOne.Models;
 using BookOne.ViewModels;
 using Microsoft.AspNet.Identity;
+using System.Data.SqlClient
 
 namespace BookOne.Controllers
 {
@@ -24,9 +25,17 @@ namespace BookOne.Controllers
         public ActionResult Index()
         {
             //Displays all Books not owned by the logged in user
-            var loggedInUserId = User.Identity.GetUserId();
+            try
+            {
+                var loggedInUserId = User.Identity.GetUserId();
 
-            return View(dbOps.AllBooks(loggedInUserId));
+                return View(dbOps.AllBooks(loggedInUserId));
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
 
@@ -34,18 +43,26 @@ namespace BookOne.Controllers
         public ActionResult MyBooks()
         {
             //Displays all Books owned by the logged in user
-            var loggedInUserId = User.Identity.GetUserId();
-
-            var model = new BooksViewModel()
+            try
             {
-                Books = dbOps.MyBooks(loggedInUserId),
-                BookCirculations = dbOps.MyBooksCirculations(loggedInUserId)
-            };
+                var loggedInUserId = User.Identity.GetUserId();
 
-            foreach (var circulation in model.BookCirculations)
-                circulation.DaysRemaining = DaysRemainingCounter(circulation);
+                var model = new BooksViewModel()
+                {
+                    Books = dbOps.MyBooks(loggedInUserId),
+                    BookCirculations = dbOps.MyBooksCirculations(loggedInUserId)
+                };
 
-            return View(model);
+                foreach (var circulation in model.BookCirculations)
+                    circulation.DaysRemaining = DaysRemainingCounter(circulation);
+
+                return View(model);
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
 
@@ -53,34 +70,50 @@ namespace BookOne.Controllers
         public ActionResult MyHand()
         {
             //Displays all Books that the logged in user currently holds
-            var loggedInUserId = User.Identity.GetUserId();
-            
-            var model = new BooksViewModel()
+            try
             {
-                Books = dbOps.MyHand(loggedInUserId),
-                BookCirculations = dbOps.BooksInMyHandCirculations(loggedInUserId)
-            };
+                var loggedInUserId = User.Identity.GetUserId();
 
-            foreach (var circulation in model.BookCirculations)
-                circulation.DaysRemaining = DaysRemainingCounter(circulation);
+                var model = new BooksViewModel()
+                {
+                    Books = dbOps.MyHand(loggedInUserId),
+                    BookCirculations = dbOps.BooksInMyHandCirculations(loggedInUserId)
+                };
 
-            return View(model);
+                foreach (var circulation in model.BookCirculations)
+                    circulation.DaysRemaining = DaysRemainingCounter(circulation);
+
+                return View(model);
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
         
 
         // GET: Books/Create
         public ActionResult Create()
         {
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-            var userRole = dbOps.GetUserRole(loggedInUser);
-
-            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!(userRole == "Player" || userRole == "Administrator"))
+            try
             {
-                return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
-            }
+                var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+                var userRole = dbOps.GetUserRole(loggedInUser);
 
-            return View();
+                //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
+                if (!(userRole == "Player" || userRole == "Administrator"))
+                {
+                    return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
+                }
+
+                return View();
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         // POST: Books/Create
@@ -92,12 +125,27 @@ namespace BookOne.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+                try
+                {
+                    var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
-                book.Owner = loggedInUser;
-                book.Carrier = loggedInUser;
-                dbOps.InsertBook(book);
-                return RedirectToAction("MyBooks");
+                    book.Owner = loggedInUser;
+                    book.Carrier = loggedInUser;
+                    dbOps.InsertBook(book);
+                    return RedirectToAction("MyBooks");
+                    
+                }
+                catch (SqlException)
+                {
+
+                    throw;
+                }
+
+                catch (WebException)
+                {
+
+                    throw;
+                }
             }
 
             return View(book);
@@ -106,16 +154,24 @@ namespace BookOne.Controllers
         // GET: Books/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Book book = dbOps.GetBook(id);
+                if (book == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(book);
             }
-            Book book = dbOps.GetBook(id);
-            if (book == null)
+            catch (SqlException)
             {
-                return HttpNotFound();
+
+                throw;
             }
-            return View(book);
         }
 
         // POST: Books/Edit/5
@@ -125,12 +181,25 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BookId,Title,Author,RegisteredOn,BookStatus")] Book book)
         {
-            if (ModelState.IsValid)
+            try
             {
-                dbOps.UpdateBook(book);
-                return RedirectToAction("MyBooks");
+                if (ModelState.IsValid)
+                {
+                    dbOps.UpdateBook(book);
+                    return RedirectToAction("MyBooks");
+                }
+                return View(book);
             }
-            return View(book);
+            catch (SqlException)
+            {
+
+                throw;
+            }
+            catch (WebException)
+            {
+
+                throw;
+            }
         }
 
         // GET: Books/Delete/5
@@ -153,9 +222,22 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Book book = dbOps.GetBook(id);
-            dbOps.DeleteBook(book);
-            return RedirectToAction("MyBooks");
+            try
+            {
+                Book book = dbOps.GetBook(id);
+                dbOps.DeleteBook(book);
+                return RedirectToAction("MyBooks");
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+            catch (WebException)
+            {
+
+                throw;
+            }
         }
 
 
@@ -163,13 +245,21 @@ namespace BookOne.Controllers
         public int DaysRemainingCounter(BookCirculation circulation)
         {
             //For testing purposes, borrowing time is set to 14 days(2 weeks)
-            int weeksRemaining = circulation.BorrowedForXWeeks;
-            int daysInTheseWeeks = weeksRemaining * 7;
+            try
+            {
+                int weeksRemaining = circulation.BorrowedForXWeeks;
+                int daysInTheseWeeks = weeksRemaining * 7;
 
-            DateTime today = DateTime.Today;
-            DateTime returnBookDate = circulation.BorrowedOn.AddDays(daysInTheseWeeks);
+                DateTime today = DateTime.Today;
+                DateTime returnBookDate = circulation.BorrowedOn.AddDays(daysInTheseWeeks);
 
-            return (returnBookDate - today).Days;
+                return (returnBookDate - today).Days;
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
 
@@ -178,37 +268,53 @@ namespace BookOne.Controllers
 
         public ActionResult History()
         {
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-            var userRole = dbOps.GetUserRole(loggedInUser);
-
-            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!(userRole == "Player" || userRole == "Administrator"))
+            try
             {
-                return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
+                var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+                var userRole = dbOps.GetUserRole(loggedInUser);
+
+                //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
+                if (!(userRole == "Player" || userRole == "Administrator"))
+                {
+                    return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
+                }
+
+                var model = new UserExchangeHistoryViewModel()
+                {
+                    BookRequests = dbOps.GetAllRequests(loggedInUser),
+                    BookCirculations = dbOps.GetAllCirculations(loggedInUser)
+                };
+
+                return View(model);
             }
-
-            var model = new UserExchangeHistoryViewModel()
+            catch (SqlException)
             {
-                BookRequests = dbOps.GetAllRequests(loggedInUser),
-                BookCirculations = dbOps.GetAllCirculations(loggedInUser)
-            };
 
-            return View(model);
+                throw;
+            }
         }
 
         
         public string PrepareHistoryForDownload()
         {
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-            
-
-            var model = new UserExchangeHistoryViewModel()
+            try
             {
-                BookRequests = dbOps.GetAllRequests(loggedInUser),
-                BookCirculations = dbOps.GetAllCirculations(loggedInUser)
-            };
+                var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
 
-            return RenderViewToString("~/Views/Books/DownloadHistory.cshtml", model);
+
+                var model = new UserExchangeHistoryViewModel()
+                {
+                    BookRequests = dbOps.GetAllRequests(loggedInUser),
+                    BookCirculations = dbOps.GetAllCirculations(loggedInUser)
+                };
+
+                return RenderViewToString("~/Views/Books/DownloadHistory.cshtml", model);
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         public string RenderViewToString(string viewName, object model)
@@ -229,13 +335,21 @@ namespace BookOne.Controllers
         [HttpPost]
         public FileStreamResult SaveHistory()
         {
-            var meh = PrepareHistoryForDownload();
+            try
+            {
+                var meh = PrepareHistoryForDownload();
 
-            Byte[] stream2 = Encoding.ASCII.GetBytes(meh);
+                Byte[] stream2 = Encoding.ASCII.GetBytes(meh);
 
-            var stream = new MemoryStream(stream2);
+                var stream = new MemoryStream(stream2);
 
-            return File( stream, "text/html", "BookOne_History.html");
+                return File(stream, "text/html", "BookOne_History.html");
+            }
+            catch (WebException)
+            {
+
+                throw;
+            }
         }
 
 
@@ -244,11 +358,19 @@ namespace BookOne.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
     }
 }

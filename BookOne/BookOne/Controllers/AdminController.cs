@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.SqlClient;
 
 namespace BookOne.Controllers
 {
@@ -19,31 +20,55 @@ namespace BookOne.Controllers
         // GET: AllUsers
         public ActionResult Index()
         {
-            var allUsers = dbOps.GetAllUsers();
+            try
+            {
+                var allUsers = dbOps.GetAllUsers();
 
-            foreach(var user in allUsers)
-                user.Role = dbOps.GetUserRole(user);
+                foreach (var user in allUsers)
+                    user.Role = dbOps.GetUserRole(user);
 
-            return View(allUsers);
+                return View(allUsers);
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         // GET: AllBooks
         public ActionResult Books()
         {
-            return View(dbOps.GetAllBooks());
+            try
+            {
+                return View(dbOps.GetAllBooks());
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         // GET: AllBookCirculations
         public ActionResult BookCirculations()
         {
-            var booksController = new BooksController();
+            try
+            {
+                var booksController = new BooksController();
 
-            var circulations = dbOps.GetAllBookCirculations();
+                var circulations = dbOps.GetAllBookCirculations();
 
-            foreach (var circulation in circulations)
-                circulation.DaysRemaining = booksController.DaysRemainingCounter(circulation);
+                foreach (var circulation in circulations)
+                    circulation.DaysRemaining = booksController.DaysRemainingCounter(circulation);
 
-            return View(circulations);
+                return View(circulations);
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
 
@@ -51,16 +76,32 @@ namespace BookOne.Controllers
         // GET: Books/Edit/5
         public ActionResult EditBook(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
-            Book book = dbOps.GetBook(id);
-            if (book == null)
+            catch (WebException)
             {
-                return HttpNotFound();
+
+                throw;
             }
-            return View(book);
+            try
+            {
+                Book book = dbOps.GetBook(id);
+                if (book == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(book);
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         // POST: Books/Edit/5
@@ -68,24 +109,45 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditBook([Bind(Include = "BookId,Title,Author,RegisteredOn,BookStatus")] Book book)
         {
-            if (ModelState.IsValid)
+            try
             {
-                dbOps.UpdateBook(book);
-                return RedirectToAction("Books");
+                if (ModelState.IsValid)
+                {
+                    dbOps.UpdateBook(book);
+                    return RedirectToAction("Books");
+                }
+                return View(book);
             }
-            return View(book);
+            catch (SqlException)
+            {
+
+                throw;
+            }
+            catch (WebException)
+            {
+
+                throw;
+            }
         }
 
 
         // GET: Users/Edit/5
         public ActionResult EditUser(string userId)
         {
-            var user = dbOps.GetUser(userId);
-            if (user == null)
+            try
             {
-                return HttpNotFound();
+                var user = dbOps.GetUser(userId);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(user);
             }
-            return View(user);
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         // POST: Users/Edit/5
@@ -93,12 +155,25 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditUser(ApplicationUser user)
         {
-            if (ModelState.IsValid)
+            try
             {
-                dbOps.UpdateUserDetails(user);
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    dbOps.UpdateUserDetails(user);
+                    return RedirectToAction("Index");
+                }
+                return View(user);
             }
-            return View(user);
+            catch (SqlException)
+            {
+
+                throw;
+            }
+            catch (WebException)
+            {
+
+                throw;
+            }
         }
 
 
@@ -106,16 +181,32 @@ namespace BookOne.Controllers
         // GET: Books/Delete/5
         public ActionResult DeleteBook(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
-            Book book = dbOps.GetBook(id);
-            if (book == null)
+            catch (WebException)
             {
-                return HttpNotFound();
+
+                throw;
             }
-            return View(book);
+            try
+            {
+                Book book = dbOps.GetBook(id);
+                if (book == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(book);
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         // POST: Books/Delete/5
@@ -123,21 +214,42 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteBookConfirmed(int id)
         {
-            Book book = dbOps.GetBook(id);
-            dbOps.DeleteBook(book);
-            return RedirectToAction("Books");
+            try
+            {
+                Book book = dbOps.GetBook(id);
+                dbOps.DeleteBook(book);
+                return RedirectToAction("Books");
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+            catch (WebException)
+            {
+
+                throw;
+            }
         }
 
 
         // GET: Users/Delete/5
         public ActionResult DeleteUser(string userId)
         {
-            var user = dbOps.GetUser(userId);
-            if (user == null)
+            try
             {
-                return HttpNotFound();
+                var user = dbOps.GetUser(userId);
+                if (user == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(user);
             }
-            return View(user);
+            catch (SqlException)
+            {
+
+                throw;
+            }
         }
 
         // POST: Books/Delete/5
@@ -145,9 +257,22 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteUserConfirmed(string userId)
         {
-            var user = dbOps.GetUser(userId);
-            dbOps.DeleteUser(user);
-            return RedirectToAction("Index");
+            try
+            {
+                var user = dbOps.GetUser(userId);
+                dbOps.DeleteUser(user);
+                return RedirectToAction("Index");
+            }
+            catch (SqlException)
+            {
+
+                throw;
+            }
+            catch (WebException)
+            {
+
+                throw;
+            }
         }
     }
 }
