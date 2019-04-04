@@ -13,7 +13,6 @@
         background-size: cover;
         background-attachment: fixed;
     }
-
 </style>
 
 <br />
@@ -28,14 +27,14 @@
         <th id="Author" class="author col-md-6">
             Author
         </th>
-        <th  id="Owner" class="owner col-md-6">
+        <th id="Owner" class="owner col-md-6">
             Owner
         </th>
-        <th id="Remaining" class="timeLeft col-md-3"> 
+        <th id="Remaining" class="timeLeft col-md-3">
             Remaining Days
         </th>
         <th class="timeLeft col-md-3">
-           
+
         </th>
     </tr>
 
@@ -92,7 +91,7 @@
                         @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
                     </td>
                     <td class="timeLeft">
-                        
+
                         @if (item.DaysRemaining <= 3)
                         {
                             <div id="excludedColor">
@@ -113,7 +112,7 @@
                             @Html.DisplayFor(modelItem => item.DaysRemaining)
                         }
                     </td>
-                    <td id="returnBook"class="returnBook">
+                    <td id="returnBook" class="returnBook">
                         @if (item.BookAssociated.BorrowerAskedToReturnThisBook == false)
                         {
                             @Html.ActionLink("Return Book", "ReturnBookRequest", "Player", new { CirculationId = item.BookCirculationId }, null)
@@ -124,117 +123,80 @@
                         }
                     </td>
                 </tr>
-             </tbody>
-            }
-        </table>
+            </tbody>
+        }
+    </table>
 </div>
-
-
-
-
-
-
 
 <script>
 
-        function hideAll() {
-            $('.author').hide();
-            $('.timeLeft').hide();
-            //$('.returnBook').hide();
+    function hideAll() {
+        $('.author').hide();
+        $('.timeLeft').hide();
+        //$('.returnBook').hide();
+    }
+
+    var n = 0;
+    var i = 1;
+
+    function rotate() {
+        n = n + i;
+        if (n === 0) {
+
         }
+        if (n === 1) {
+            new function () {
 
-        var n = 0;
-        var i = 1;
+                $('.author').show();
+                $('.owner').hide();
 
-        function rotate() {
-            n = n + i;
-            if (n === 0) {
-
-            }
-            if (n === 1) {
-                new function () {
-
-                    $('.author').show();
-                    $('.owner').hide();
-
-                }
-            }
-            if (n === 2) {
-                new function () {
-                    $('.author').hide();
-                    $('.owner').show();
-
-                }
-            }
-            if (n === 3) {
-                new function () {
-                    $('.owner').hide();
-                    $('.timeLeft').show();
-                    //$('.returnBook').show();
-
-                }
-            }
-            if (n === 4) {
-                n = 1;
-                new function () {
-                    $('.author').show();
-                    $('.owner').hide();
-                    $('.timeLeft').hide();
-                    //$('.returnBook').hide();
-
-                }
-            }
-
-            console.log("new", n);
-        }
-
-
-
-
-     $(document).ready(function () {
-            $("#Author").click(function () {
-                $("#searchInput").attr("placeholder","Author");
-                $("#searchFilter").val("Authors");
-            })
-            $("#Title").click(function () {
-                $("#searchInput").attr("placeholder", "Book");
-                $("#searchFilter").val("BookTitles");
-            })
-            $("#Owner").click(function () {
-                $("#searchInput").attr("placeholder", "Owner");
-                $("#searchFilter").val("Users");
-            })
-           
-        });
-
-        function SearchFunction() {
-            // Declare variables
-            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
-            input = document.getElementById('searchInput');
-            filter = input.value.toUpperCase();
-            bookList = document.getElementById("listOfBooks");
-            bookTitles = bookList.getElementsByClassName("bookTitle");
-
-            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
-            // So we call the Array.prototype function and provide the nodeList as a parameter
-            Array.prototype.forEach.call(bookTitles,
-                book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
-
-            let searchFilter = document.getElementById("searchFilter").selectedIndex;
-
-            //Because i have added a dummy value "SelectFilter" in options
-            // I subtract it from the final index.
-            searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
-
-            // Loop through all list items, and hide those who don't match the search query
-            for (index = 0; index < bookTitles.length; index++) {
-                let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
-                txtValue = bookAuthor.innerHTML;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    bookTitles[index].style.display = "";
-                } else {
-                    bookTitles[index].style.display = "none";
-                }
             }
         }
+        if (n === 2) {
+            new function () {
+                $('.author').hide();
+                $('.owner').show();
+
+            }
+        }
+        if (n === 3) {
+            new function () {
+                $('.owner').hide();
+                $('.timeLeft').show();
+                //$('.returnBook').show();
+
+            }
+        }
+        if (n === 4) {
+            n = 1;
+            new function () {
+                $('.author').show();
+                $('.owner').hide();
+                $('.timeLeft').hide();
+                //$('.returnBook').hide();
+
+            }
+        }
+
+        console.log("new", n);
+    }
+
+
+
+
+    $(document).ready(function () {
+        $("#Author").click(function () {
+            $("#searchInput").attr("placeholder", "Author");
+            $("#searchFilter").val("Authors");
+        })
+        $("#Title").click(function () {
+            $("#searchInput").attr("placeholder", "Book");
+            $("#searchFilter").val("BookTitles");
+        })
+        $("#Owner").click(function () {
+            $("#searchInput").attr("placeholder", "Owner");
+            $("#searchFilter").val("Users");
+        })
+
+    });
 </script>

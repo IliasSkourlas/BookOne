@@ -28,20 +28,24 @@
             font-size: 18px;
             color: rgba(255, 255, 255, 1);
         }
+
         .header th {
             color: var(--main-Header-color);
         }
+
         a:hover {
             color: var(--main-HeaderHover-color);
             text-decoration: none;
         }
+
         a {
             color: rgba(255, 255, 255, 0.8);
         }
+
         .borrowed tbody tr td a:hover {
             color: var(--main-borrowed-hover-color);
         }
-       
+
 
 
         #MyNavbar {
@@ -50,9 +54,11 @@
             opacity: 0.89;
             filter: alpha(opacity=30);
         }
+
         #searchFilter {
             display: none;
         }
+
         #weAreHere a {
             color: var(--main-Header-color);
         }
@@ -64,10 +70,11 @@
         #logoutForm > ul > li:nth-child(2) > a:hover {
             background-color: transparent;
         }
+
         #logoutForm > ul > li:nth-child(3) > a:hover {
             background-color: transparent;
         }
-        
+
 
         .table > tbody > tr > td {
             padding: 8px;
@@ -75,18 +82,22 @@
             vertical-align: top;
             border-top: var(--main-border-top-color);
         }
+
         #listOfBooks > tbody > tr.header > th {
             border-top: var(--main-border-top-color);
         }
+
         .table {
             margin-bottom: 0px;
         }
+
         div .borrowed .table > tbody > tr > th {
             padding: 0px;
             line-height: 1.42857143;
             vertical-align: top;
             border-top: var(--main-border-top-color);
         }
+
         div.borrowed * {
             color: var(--main-borrowed-color);
         }
@@ -96,15 +107,19 @@
         tr:hover {
             background: rgba(255, 255, 255, 0.08);
         }
+
         div .borrowed tr:hover {
             background: rgba(17, 15, 3, 0.16);
         }
+
         #listOfBooks > tbody:nth-child(1) > tr > th:nth-child(1) {
             border-top: var(--main-border-top-color);
         }
+
         #listOfBooks > tbody {
             border-top: var(--main-border-top-color);
         }
+
         body > div.container.body-content > hr {
             border-top: var(--main-border-top-color);
             border-bottom: var(--main-border-top-color);
@@ -121,29 +136,30 @@
             pointer-events: none;
             background-attachment: fixed;
         }
-        .video-container video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            opacity: 0.2;
-            pointer-events: none;
-            background-attachment: fixed;
-            z-index: 1;
-        }
+
+            .video-container video {
+                min-width: 100%;
+                min-height: 100%;
+                width: auto;
+                height: auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                opacity: 0.2;
+                pointer-events: none;
+                background-attachment: fixed;
+                z-index: 1;
+            }
 
         /*#blink a {
             color: #9d9d9d;
         }*/
-        
+
     </style>
 
 </head>
-<body onload=" rotate()"  >
+<body onload=" rotate()">
 
 
 
@@ -170,7 +186,7 @@
                     <li>@Html.ActionLink("All", "Index", "Books")</li>
                     <li id="weAreHere">@Html.ActionLink("My", "MyBooks", "Books")</li>
                     <li>@Html.ActionLink("Hand", "MyHand", "Books")</li>
-                    
+
                     @if (User.IsInRole("Administrator"))
                     {
                         <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
@@ -194,8 +210,6 @@
         </div>
     </div>
 
-
-
     <div class="container body-content" onclick="rotate()">
 
 
@@ -206,13 +220,13 @@
             {
                 @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>@Html.ActionLink("History", "History", "Books")</li>
-            <li>
-                @Html.ActionLink(User.Identity.GetUserName(), null, null, routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("History", "History", "Books")</li>
+                    <li>
+                        @Html.ActionLink(User.Identity.GetUserName(), null, null, routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
             }
         }
         else
@@ -235,44 +249,42 @@
 
 
     @RenderSection("scripts", required: false)
+</body>
 
-   
+<script>
+    function SearchFunction() {
+        // Declare variables
+        let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        bookList = document.getElementById("listOfBooks");
+        bookTitles = bookList.getElementsByClassName("bookTitle");
 
-    <script>
-        function SearchFunction() {
-            // Declare variables
-            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
-            input = document.getElementById('searchInput');
-            filter = input.value.toUpperCase();
-            bookList = document.getElementById("listOfBooks");
-            bookTitles = bookList.getElementsByClassName("bookTitle");
+        // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
+        // So we call the Array.prototype function and provide the nodeList as a parameter
+        $(bookTitles).each(function () {
+            let book = this;
+            bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
+        });
+        //Array.prototype.forEach.call(bookTitles,
+        //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
 
-            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
-            // So we call the Array.prototype function and provide the nodeList as a parameter
-            Array.prototype.forEach.call(bookTitles,
-                book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+        let searchFilter = document.getElementById("searchFilter").selectedIndex;
 
+        //Because i have added a dummy value "SelectFilter" in options
+        // I subtract it from the final index.
+        searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
 
-            // Loop through all list items, and hide those who don't match the search query
-            for (index = 0; index < bookTitles.length; index++) {
-                let bookTitle = bookTitles[index].getElementsByTagName("td")[0];
-                txtValue = bookTitle.innerHTML;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    bookTitles[index].style.display = "";
-                } else {
-                    bookTitles[index].style.display = "none";
-                }
-            }
-
-            // Loop through all list items, and hide those who don't match the search query
-            for (index = 0; index < bookAuthors.length; index++) {
-                let author = bookAuthors[index];
-                if (author.toUpperCase().indexOf(filter) > -1) {
-                    console.log(author);
-                }
+        // Loop through all list items, and hide those who don't match the search query
+        for (index = 0; index < bookTitles.length; index++) {
+            let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
+            txtValue = bookAuthor.innerHTML;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                bookTitles[index].style.display = "";
+            } else {
+                bookTitles[index].style.display = "none";
             }
         }
-
-    </script>
-</body>
+    }
+</script>
 </html>
