@@ -272,6 +272,8 @@
                         <option value="Authors">Author</option>
                         <option value="Users">Owner</option>
                         <option value="Availability">Availability</option>
+                        <option value="Status">Status</option>
+                        <option value="Owner">Owner</option>
                     </select>
                 </form>
                
@@ -425,6 +427,14 @@
             $("#Availability").click(function () {
                 $("#searchInput").attr("placeholder", "Availability");
                 $("#searchFilter").val("Availability");
+            })
+            $("#Status").click(function () {
+                $("#searchInput").attr("placeholder", "Status");
+                $("#searchFilter").val("Status");
+            })
+            $("#Owner").click(function () {
+                $("#searchInput").attr("placeholder", "Owner");
+                $("#searchFilter").val("Owner");
             })
 
         });
