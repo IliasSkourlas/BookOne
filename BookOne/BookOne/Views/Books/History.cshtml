@@ -88,7 +88,7 @@
                     }
                     @if (item.ReturnedOn != null)
                     {
-                        item.ReturnedOn.Date.ToShortDateString();
+                        @item.ReturnedOn.Value.Date.ToShortDateString()
                     }
                 </td>
                 <td>
@@ -144,13 +144,13 @@
                     @item.BorrowedOn.Date.ToShortDateString()
                 </td>
                 <td>
-                    @if (item.ReturnedOn.Date == Convert.ToDateTime("01/01/1990"))
+                    @if (item.ReturnedOn == null)
                     {
                         <span>- - -</span>
                     }
                     @if (item.ReturnedOn != null)
                     {
-                        @item.ReturnedOn.Date.ToShortDateString()
+                        @item.ReturnedOn.Value.Date.ToShortDateString()
                     }
                 </td>
                 <td>
