@@ -504,9 +504,38 @@
         let canvas3 = document.getElementById("canvas3");
 
 
-                        // SEARCH
-                        /////////////////////////////
-
+        // SEARCH
+        /////////////////////////////
+        function SearchFunction() {
+            // Declare variables
+            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            bookList = document.getElementById("listOfBooks");
+            bookTitles = bookList.getElementsByClassName("bookTitle");
+            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
+            // So we call the Array.prototype function and provide the nodeList as a parameter
+            $(bookTitles).each(function () {
+                let book = this;
+                bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
+            });
+            //Array.prototype.forEach.call(bookTitles,
+            //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+            let searchFilter = document.getElementById("searchFilter").selectedIndex;
+            //Because i have added a dummy value "SelectFilter" in options
+            // I subtract it from the final index.
+            searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
+            // Loop through all list items, and hide those who don't match the search query
+            for (index = 0; index < bookTitles.length; index++) {
+                let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
+                txtValue = bookAuthor.innerHTML;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    bookTitles[index].style.display = "";
+                } else {
+                    bookTitles[index].style.display = "none";
+                }
+            }
+        }
     </script>
 </body>
 </html>

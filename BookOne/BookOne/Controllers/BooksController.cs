@@ -10,7 +10,7 @@ using BookOne.BookOne_Domain;
 using BookOne.Models;
 using BookOne.ViewModels;
 using Microsoft.AspNet.Identity;
-using System.Data.SqlClient
+using System.Data.SqlClient;
 
 namespace BookOne.Controllers
 {
