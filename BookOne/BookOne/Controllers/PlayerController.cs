@@ -47,7 +47,7 @@ namespace BookOne.Controllers
             {
                 dbOps.UpdateUserDetails(loggedInUser);
                 dbOps.ChangeUserRoleToPlayer(loggedInUser);
-                return RedirectToAction("Index", "Books");
+                return RedirectToAction("Index", "MyBooks");
             }
 
             return RedirectToAction("Index", "Home");
