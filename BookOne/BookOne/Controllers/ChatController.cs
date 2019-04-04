@@ -15,23 +15,23 @@ namespace BookOne.Controllers
         DatabaseOperations dbOps = new DatabaseOperations();
 
 
-        public ActionResult Index()
-        {
-            var loggedInUserId = User.Identity.GetUserId();
-            var otherUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
+        //public ActionResult Index()
+        //{
+        //    var loggedInUserId = User.Identity.GetUserId();
+        //    var otherUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
             
 
-            return View();
-        }
+        //    return View();
+        //}
 
 
         public ActionResult ConversationWithContact(ApplicationUser contact)
         {
             var loggedInUserId = User.Identity.GetUserId();
 
-            var conversations = dbOps.GetConversation(loggedInUserId, contact.Id);
+            var conversation = dbOps.GetConversation(loggedInUserId, contact.Id);
 
-            return View(conversations);
+            return View(conversation);
         }
 
 
