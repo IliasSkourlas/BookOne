@@ -252,8 +252,8 @@
 
                <div>
                    <div class="clappsAndTreats">
-                       <label onclick="startClapping()" class="clapping">@Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1, new { @checked = true }) <span id="clapping">Clapping </span> </label><br />
-                       <label onclick="stopClapping()" class="noClapping"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0) <span id="noClapping">No clapping </span></label><br />
+                       <label onclick="stopClapping()" class="noClapping"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0, new { @checked = true }) <span id="noClapping">No clapping </span></label><br />
+                       <label onclick="startClapping()" class="clapping">@Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1) <span id="clapping">Clapping </span> </label><br />
                        <label class="shovel"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span id="shovel">a shovel </span></label><br />
                        <label class="treat"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span id="treat">a treat </span></label><br />
                        <label class="cookie"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span id="cookie">a poisonous Cookie </span> </label>
