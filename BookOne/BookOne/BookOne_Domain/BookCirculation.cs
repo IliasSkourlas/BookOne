@@ -24,6 +24,8 @@ namespace BookOne.BookOne_Domain
         public ApplicationUser Borrower { get; set; }
 
         public DateTime BorrowedOn { get; set; }
+        
+        public DateTime? ReturnedOn { get; set; }
 
         [Required(ErrorMessage = "A number of weeks is required")]
         public int BorrowedForXWeeks { get; set; }

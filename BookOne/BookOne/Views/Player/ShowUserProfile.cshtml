@@ -11,6 +11,12 @@
 
 
 <style type="text/css">
+    :root {
+        --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+        --main-Header-color: rgb(0, 255, 255);
+        --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
+        --available-color: rgb(255, 255, 255);
+    }
 
     body {
         background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
@@ -18,8 +24,6 @@
         background-size: cover;
         background-attachment: fixed;
     }
-
-
 
     .owner:hover {
         border-bottom: 5px;
@@ -35,14 +39,61 @@
         #availableBook a:hover {
             color: var(--main-HeaderHover-color);
         }
+
+    spam {
+        color: rgba(255, 255, 255, 0.8);
+        font-style: italic;
+        font-size:large;
+    }
+
+    #UserName {
+        font-style: italic;
+        color: var( --main-HeaderHover-color);
+    }
+
+    #back a {
+        color: var(--main-HeaderHover-color);
+        text-decoration: none;
+        font-size: large;
+    }
+
+        #back a:hover {
+            color: var(--main-Header-color);
+        }
+
+    .center {
+        position: relative;
+        /*left: 40%;
+        right:40%;*/
+    }
+    .white {
+        color: white;
+    }
+
+
+
+    .clapping:hover {
+        color: hotpink;
+    }
+    .shovel:hover {
+        color: red;
+    }
+    .treat:hover {
+        color: green;
+    }
+    .cookie:hover {
+        color: yellow;
+    }
+   
 </style>
 
 
 
 
 
-
-<h2>@Html.DisplayFor(model => model.User.ActualUsername)</h2>
+<div class="center">
+    <h1 id="UserName">@Html.DisplayFor(model => model.User.ActualUsername)</h1>
+</div>
 
 <div>
     <br />
@@ -63,32 +114,27 @@
         @Html.HiddenFor(model => model.User.PhoneNumber)
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>*@
+                @Html.DisplayNameFor(model => model.User.Email)
+            </dt>*@
         @*<dd>
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>*@
+                @Html.DisplayFor(model => model.User.Email)
+            </dd>*@
 
-        <dt>
-            since
-        </dt>
-        <dd>
-            @Model.User.RegisteredOn.ToShortDateString()
-        </dd>
+
 
         @*<dt>
-            Completed Circulations as a Borrower
-        </dt>
-        <dd>
-            @ViewBag.CompletedCirculations
-        </dd>
+                Completed Circulations as a Borrower
+            </dt>
+            <dd>
+                @ViewBag.CompletedCirculations
+            </dd>
 
-        <dt>
-            On-Going Circulations as a Borrower
-        </dt>
-        <dd>
-            @ViewBag.OnGoingCirculations
-        </dd>*@
+            <dt>
+                On-Going Circulations as a Borrower
+            </dt>
+            <dd>
+                @ViewBag.OnGoingCirculations
+            </dd>*@
     </dl>
 </div>
 
@@ -98,25 +144,25 @@
 
 <table class="table">
     <tr>
-        <th class="col-md-2">
+        <th class="col-md-3 ">
             Claps
         </th>
-        <th class="col-md-2">
+        <th class="col-md-3">
             Shovels
         </th>
-        <th class="col-md-2">
+        <th class="col-md-3">
             Treats
         </th>
-        <th class="col-md-2">
+        <th class="col-md-3">
             Poisonous Cookies
         </th>
         @*<th class="col-md-2">
                 Connector Bonus
             </th>*@
-        <th class="col-md-4">
-            @*To be modified as col-md-2 when Connector Bonus is implemented*@
-            Nothing Received
-        </th>
+        @*<th class="col-md-4">
+                To be modified as col-md-2 when Connector Bonus is implemented
+                Nothing Received
+            </th>*@
     </tr>
 
     <tr>
@@ -133,13 +179,32 @@
             @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.PoisonousCookie)
         </td>
         @*<td>
-            @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.ConnectorBonus)
-        </td>*@
-        <td>
-            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Nothing)
-        </td>
+                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.ConnectorBonus)
+            </td>*@
+        @*<td>
+                @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Nothing)
+            </td>*@
     </tr>
+
+
+
+
 </table>
 
 
 
+
+<script>
+    function myFunction() {
+        setInterval(function () {
+            $("#back a").css("color", "var(--main-Header-color)");
+           
+        }, 700);
+        setInterval(function () {
+            $("#back a").css("color", "var(--main-HeaderHover-color)");
+
+        }, 1401);
+
+
+    }
+</script>

@@ -14,17 +14,12 @@
 
 
     <style type="text/css">
-        :root {
-            --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
-            --main-Header-color: rgb(0, 255, 255);
-            --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
-            --available-color: rgb(255, 255, 255);
-        }
+        
 
 
         .table {
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            font-size: 18px;
+            font-size: 22px;
             color: rgba(255, 255, 255, 1);
         }
         .header th {
@@ -37,6 +32,7 @@
         a {
             color: rgba(255, 255, 255, 0.8);
         }
+        
 
 
         #MyNavbar {
@@ -109,7 +105,7 @@
         }
 
         #canvas1 {
-            border: 1px solid rgba(255, 216, 0, 0.3);
+            border: 1px solid rgba(255, 216, 0, 0.91);
             background-color: rgba(255, 216, 0, 0.00);
         }
         .canvasContainer1 {
@@ -233,11 +229,37 @@
             z-index: 6;
         }
 
+
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -60px;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
+
     </style>
 
 </head>
 
-<body onload=" hideAll()">
+<body onload="myFunction()">
 
 
     <div class="video-container">
@@ -245,27 +267,21 @@
     </div>
 
 
-
-
-
     <div class="container body-content">
-
-
-
-
 
 
         @RenderBody()
 
 
-
-
         <hr />
-        <footer>
-            @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
-        </footer>
+        <div id="circulationInfo">
+            <spam class="white">@ViewBag.CompletedCirculations</spam><spam>&nbsp;completed circulations </spam><br />
+            <spam>...since&nbsp;</spam> <spam class="white">@Model.User.RegisteredOn.ToShortDateString()</spam>
+        </div>
 
-        <br /><br /><br><br />
+
+
+        <br /><br /><br><br /><br />
         <div id="back">
             @Html.ActionLink("Back", "Index", "Books")
         </div>
@@ -274,9 +290,14 @@
 
 
 
-    <div class="canvasContainer1" onclick="rotate()">
-        <canvas id="canvas1" class="contextCanvas1"></canvas>
-    </div>
+    
+
+        <div class="canvasContainer1" onclick="rotate()">
+            <canvas id="canvas1" class="contextCanvas1"></canvas>
+        </div>
+
+    
+    
 
     <div id="canvasContainer2" class="canvasContainer2">
         <canvas id="canvas2" class="contextCanvas2"></canvas>
@@ -303,6 +324,10 @@
     </div>
 
     @RenderSection("scripts", required: false)
+
+
+
+
 
 
     <script>

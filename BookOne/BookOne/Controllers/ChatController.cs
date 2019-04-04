@@ -15,47 +15,47 @@ namespace BookOne.Controllers
         DatabaseOperations dbOps = new DatabaseOperations();
 
 
-        public ActionResult Index()
-        {
-            var loggedInUserId = User.Identity.GetUserId();
-            var otherUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
+        //public ActionResult Index()
+        //{
+        //    var loggedInUserId = User.Identity.GetUserId();
+        //    var otherUsers = dbOps.GetAllOtherUsers(User.Identity.GetUserId());
             
 
-            return View();
-        }
+        //    return View();
+        //}
 
 
-        public ActionResult ConversationWithContact(ApplicationUser contact)
-        {
-            var loggedInUserId = User.Identity.GetUserId();
+        //public ActionResult ConversationWithContact(ApplicationUser contact)
+        //{
+        //    var loggedInUserId = User.Identity.GetUserId();
 
-            var conversations = dbOps.GetConversation(loggedInUserId, contact.Id);
+        //    var conversation = dbOps.GetConversation(loggedInUserId, contact.Id);
 
-            return View(conversations);
-        }
+        //    return View(conversation);
+        //}
 
 
-        [HttpPost]
-        public ActionResult SendMessage(ApplicationUser contact, string content)
-        {
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-            contact = dbOps.GetUser(User.Identity.GetUserId());
+        //[HttpPost]
+        //public ActionResult SendMessage(ApplicationUser contact, string content)
+        //{
+        //    var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+        //    contact = dbOps.GetUser(User.Identity.GetUserId());
 
-            while (contact != loggedInUser)
-            {
-                Message message = new Message
-                {
-                    Sender = loggedInUser,
-                    Content = content,
-                    Receiver = contact
-                };
+        //    while (contact != loggedInUser)
+        //    {
+        //        Message message = new Message
+        //        {
+        //            Sender = loggedInUser,
+        //            Content = content,
+        //            Receiver = contact
+        //        };
 
-                dbOps.InsertMessage(message);
+        //        dbOps.InsertMessage(message);
 
-                return View(message);
-            };
+        //        return View(message);
+        //    };
 
-            return ViewBag.Message("Please select a user to chat with");
-        }
+        //    return ViewBag.Message("Please select a user to chat with");
+        //}
     }
 }
