@@ -20,13 +20,15 @@
         font-size: 20px;
     }
 
-        #back a:hover {
-            text-decoration: none;
-            color: rgb(0, 255, 255);
-        }
+    #back a:hover {
+        text-decoration: none;
+        color: rgb(0, 255, 255);
+    }
+
     h3 {
        font-style: italic;
     }
+
     .form-control {
         font: x-large;
         color: rgba(0, 255, 232, 0.61);
@@ -88,7 +90,8 @@
 }
 
     <div id="back">
-        @Html.ActionLink("Back", "MyBooks")
+        @*@Html.ActionLink("Back", "MyBooks")*@
+        @Html.ActionLink("Back", null, null, null, new { id = "back", href = Request.UrlReferrer })
     </div>
 
 @section Scripts {

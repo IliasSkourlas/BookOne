@@ -378,7 +378,6 @@
     <Content Include="Views\Shared\_Layout - GiveAndTake.cshtml" />
     <Content Include="Views\Player\Requests.cshtml" />
     <Content Include="Views\Shared\_Layout - History - Copy.cshtml" />
-    <Content Include="Views\Player\RequestsOld.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Books.cshtml" />
     <Content Include="Views\Admin\BookCirculations.cshtml" />

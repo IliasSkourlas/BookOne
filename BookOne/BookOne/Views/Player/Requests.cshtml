@@ -120,7 +120,8 @@
 
 
 <div>
-    <a id="back" href="/Books/Index">Back </a>
+    @*<a id="back" href="/Books/Index">Back </a>*@
+    @Html.ActionLink("Back", null, null, null, new { id = "back", href = Request.UrlReferrer })
 </div>
 
 <br />
@@ -248,11 +249,11 @@
                         //Change color at MyBooks
                     }
 
-                    @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false && item.BookRequested.Owner.Id == User.Identity.GetUserId())
+                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
                     {
                         <span class="nutral">@Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })</span>
                     }
-                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == false)
+                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == false && item.BookRequested.BorrowerAskedToReturnThisBook == false)
                     {
                         <span>Book is not in your hands</span><span>&nbsp; &nbsp;</span>
 

@@ -77,7 +77,7 @@ namespace BookOne.Controllers
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
             if (!(userRole == "Player" || userRole == "Administrator"))
             {
-                return View("PlayerForm", loggedInUser);
+                return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
             }
 
             return View();
