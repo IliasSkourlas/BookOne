@@ -73,7 +73,7 @@
             since
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.RegisteredOn)
+            @Model.User.RegisteredOn.ToShortDateString()
         </dd>
 
         @*<dt>
@@ -119,29 +119,26 @@
         </th>
     </tr>
 
-    @foreach (var item in Model.UserReactions)
-    {
-        <tr>
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Clap)
-            </td>
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Shovel)
-            </td>
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Treat)
-            </td>
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.PoisonousCookie)
-            </td>
-            @*<td>
-                    @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.ConnectorBonus)
-                </td>*@
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Nothing)
-            </td>
-        </tr>
-    }
+    <tr>
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Clap)
+        </td>
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Shovel)
+        </td>
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Treat)
+        </td>
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.PoisonousCookie)
+        </td>
+        @*<td>
+            @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.ConnectorBonus)
+        </td>*@
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Nothing)
+        </td>
+    </tr>
 </table>
 
 
