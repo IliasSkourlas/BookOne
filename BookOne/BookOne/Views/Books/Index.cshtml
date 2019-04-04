@@ -106,15 +106,15 @@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
 
-                <td class="author ifUnavailable">
+                <td class="author ">
                     @Html.DisplayFor(modelItem => item.Author)
                 </td>
 
-                <td class="owner ifUnavailable">
+                <td class="owner ">
                     <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
                 </td>
 
-                <td id="availableBook" class="Status ifUnavailable">
+                <td id="availableBook" class="Status ">
                     <span>unavailable</span>
                 </td>
             }
