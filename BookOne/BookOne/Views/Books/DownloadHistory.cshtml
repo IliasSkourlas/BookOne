@@ -54,7 +54,7 @@
                     @Html.DisplayFor(modelItem => item.BookAssociated.Owner.ActualUsername)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BorrowedOn)
+                    @item.BorrowedOn.Date.ToShortDateString()
                 </td>
                 <td>
                     @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Completed)
@@ -103,7 +103,7 @@
                     @Html.DisplayFor(modelItem => item.Borrower.ActualUsername)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.BorrowedOn)
+                    @item.BorrowedOn.Date.ToShortDateString()
                 </td>
                 <td>
                     @if (item.CirculationStatus == BookOne.BookOne_Domain.CirculationStatuses.Completed)
@@ -156,7 +156,7 @@
                     @Html.DisplayFor(modelItem => item.BookRequested.Owner.ActualUsername)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestedOn)
+                    @item.RequestedOn.Date.ToShortDateString()
                 </td>
                 <td>
                     @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
@@ -225,7 +225,7 @@
                     @Html.DisplayFor(modelItem => item.RequestedBy.ActualUsername)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RequestedOn)
+                    @item.RequestedOn.Date.ToShortDateString()
                 </td>
                 <td>
                     @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Closed)
