@@ -277,6 +277,10 @@
     <Compile Include="Migrations\201904011134267_EmailNotificationModelAdded.Designer.cs">
       <DependentUpon>201904011134267_EmailNotificationModelAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904041601373_AddedReturnedOnInBookCirculationModel.cs" />
+    <Compile Include="Migrations\201904041601373_AddedReturnedOnInBookCirculationModel.Designer.cs">
+      <DependentUpon>201904041601373_AddedReturnedOnInBookCirculationModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -458,6 +462,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904011134267_EmailNotificationModelAdded.resx">
       <DependentUpon>201904011134267_EmailNotificationModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041601373_AddedReturnedOnInBookCirculationModel.resx">
+      <DependentUpon>201904041601373_AddedReturnedOnInBookCirculationModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
