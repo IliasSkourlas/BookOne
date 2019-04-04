@@ -285,6 +285,14 @@
     <Compile Include="Migrations\201904041630136_ModifiedReturnedOnInBookCirculationModel.Designer.cs">
       <DependentUpon>201904041630136_ModifiedReturnedOnInBookCirculationModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.cs" />
+    <Compile Include="Migrations\201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.Designer.cs">
+      <DependentUpon>201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.cs" />
+    <Compile Include="Migrations\201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.Designer.cs">
+      <DependentUpon>201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -472,6 +480,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904041630136_ModifiedReturnedOnInBookCirculationModel.resx">
       <DependentUpon>201904041630136_ModifiedReturnedOnInBookCirculationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.resx">
+      <DependentUpon>201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.resx">
+      <DependentUpon>201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
