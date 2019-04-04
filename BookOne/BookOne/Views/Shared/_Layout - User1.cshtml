@@ -260,7 +260,7 @@
                     @Html.Partial("_weAreHerePatial")
                 </ul>
 
-               
+
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
@@ -274,7 +274,7 @@
                         <option value="Availability">Availability</option>
                     </select>
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -317,194 +317,194 @@
             @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
         </footer>
     </div>
+    
 
 
-
-    <div class="canvasContainer1" onclick="rotate()">
-        <canvas id="canvas1" class="contextCanvas1"></canvas>
-    </div>
-
-    <div id="canvasContainer2" class="canvasContainer2">
-        <canvas id="canvas2" class="contextCanvas2"></canvas>
-        <div id="lookAtThisPlayer">
-            <h2>Oh.Sotoooo !! </h2>
-            <h2>Natoooo  </h2>
-            @Html.Partial("_LookAtThisPlayerPartial")
-
+        <div class="canvasContainer1" onclick="rotate()">
+            <canvas id="canvas1" class="contextCanvas1"></canvas>
         </div>
-    </div>
 
-    <div id="canvasContainer3" class="canvasContainer3">
-        <canvas id="canvas3" class="contextCanvas3"></canvas>
-        
-        <button id="chat-button" class="chat-button" onclick="openChat()">Chat</button>
-        <div class="messageForm" id="messageForm">
-            <form action="/action_page.php" class="form-container">
-                <textarea placeholder="your message..." name="msg" required></textarea>
+        <div id="canvasContainer2" class="canvasContainer2">
+            <canvas id="canvas2" class="contextCanvas2"></canvas>
+            <div id="lookAtThisPlayer">
+                <h2>Oh.Sotoooo !! </h2>
+                <h2>Natoooo  </h2>
+                @Html.Partial("_LookAtThisPlayerPartial")
 
-                <button type="submit" class="btn">Send</button>
-                <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
-            </form>
+            </div>
         </div>
-    </div>
 
-    @RenderSection("scripts", required: false)
+        <div id="canvasContainer3" class="canvasContainer3">
+            <canvas id="canvas3" class="contextCanvas3"></canvas>
+
+            <button id="chat-button" class="chat-button" onclick="openChat()">Chat</button>
+            <div class="messageForm" id="messageForm">
+                <form action="/action_page.php" class="form-container">
+                    <textarea placeholder="your message..." name="msg" required></textarea>
+
+                    <button type="submit" class="btn">Send</button>
+                    <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
+                </form>
+            </div>
+        </div>
+
+        @RenderSection("scripts", required: false)
 
 
-    <script>
-        // CANVAS
-        let canvas1 = document.getElementById("canvas1");
+        <script>
+            // CANVAS
+            let canvas1 = document.getElementById("canvas1");
 
-        canvas1.width = window.innerWidth;
-        canvas1.height = window.innerHeight;
+            canvas1.width = window.innerWidth;
+            canvas1.height = window.innerHeight;
 
-        let c = canvas1.getContext('2d');
+            let c = canvas1.getContext('2d');
 
-        // CANVAS2
-        let canvas2 = document.getElementById("canvas2");
+            // CANVAS2
+            let canvas2 = document.getElementById("canvas2");
 
-        canvas2.width = window.innerWidth;
-        canvas2.height = window.innerHeight;
+            canvas2.width = window.innerWidth;
+            canvas2.height = window.innerHeight;
 
-        let c2 = canvas2.getContext('2d');
+            let c2 = canvas2.getContext('2d');
 
-        c2.globalAlpha = 0.9;
-        c2.fillStyle = "blue";
-        c2.fillRect(50, 50, 75, 50);
-        c2.fillStyle = "green";
-        c2.fillRect(80, 80, 75, 50);
-        c2.fillStyle = "yellow";
-        c2.fillRect(110, 110, 75, 50);
-        c2.fillStyle = "pink";
-        c2.fillRect(140, 140, 75, 50);
+            c2.globalAlpha = 0.9;
+            c2.fillStyle = "blue";
+            c2.fillRect(50, 50, 75, 50);
+            c2.fillStyle = "green";
+            c2.fillRect(80, 80, 75, 50);
+            c2.fillStyle = "yellow";
+            c2.fillRect(110, 110, 75, 50);
+            c2.fillStyle = "pink";
+            c2.fillRect(140, 140, 75, 50);
 
-        ////// Smile
-        //c2.arc(500, 200, 100, 0, 1 * Math.PI);
-        //c2.strokeStyle = "cyan";
-        //c2.lineWidth = 40;
-        //c2.stroke();
+            ////// Smile
+            //c2.arc(500, 200, 100, 0, 1 * Math.PI);
+            //c2.strokeStyle = "cyan";
+            //c2.lineWidth = 40;
+            //c2.stroke();
 
-        //c2.beginPath();
-        //c2.arc(400, 100, 50, 0, 2 * Math.PI);
-        //c2.strokeStyle = "white";
-        //c2.lineWidth = 40;
-        //c2.stroke();
+            //c2.beginPath();
+            //c2.arc(400, 100, 50, 0, 2 * Math.PI);
+            //c2.strokeStyle = "white";
+            //c2.lineWidth = 40;
+            //c2.stroke();
 
-        //c2.beginPath();
-        //c2.arc(600, 100, 50, 0, 2 * Math.PI);
-        //c2.strokeStyle = "white";
-        //c2.lineWidth = 40;
-        //c2.stroke();
+            //c2.beginPath();
+            //c2.arc(600, 100, 50, 0, 2 * Math.PI);
+            //c2.strokeStyle = "white";
+            //c2.lineWidth = 40;
+            //c2.stroke();
 
-        //c2.beginPath();
-        //c2.arc(430, 100, 10, 0, 2 * Math.PI);
-        //c2.strokeStyle = "white";
-        //c2.lineWidth = 40;
-        //c2.stroke();
+            //c2.beginPath();
+            //c2.arc(430, 100, 10, 0, 2 * Math.PI);
+            //c2.strokeStyle = "white";
+            //c2.lineWidth = 40;
+            //c2.stroke();
 
-        //c2.beginPath();
-        //c2.arc(630, 100, 10, 0, 2 * Math.PI);
-        //c2.strokeStyle = "white";
-        //c2.lineWidth = 40;
-        //c2.stroke();
+            //c2.beginPath();
+            //c2.arc(630, 100, 10, 0, 2 * Math.PI);
+            //c2.strokeStyle = "white";
+            //c2.lineWidth = 40;
+            //c2.stroke();
 
-        /////// Change searchInput by clicking into Headers
-        $(document).ready(function () {
-            $("#Author").click(function () {
-                $("#searchInput").attr("placeholder","Author");
-                $("#searchFilter").val("Authors");
-            })
-            $("#Title").click(function () {
-                $("#searchInput").attr("placeholder", "Book");
-                $("#searchFilter").val("BookTitles");
-            })
-            $("#Owner").click(function () {
-                $("#searchInput").attr("placeholder", "Owner");
-                $("#searchFilter").val("Users");
-            })
-            $("#Availability").click(function () {
-                $("#searchInput").attr("placeholder", "Availability");
-                $("#searchFilter").val("Availability");
-            })
+            /////// Change searchInput by clicking into Headers
+            $(document).ready(function () {
+                $("#Author").click(function () {
+                    $("#searchInput").attr("placeholder", "Author");
+                    $("#searchFilter").val("Authors");
+                })
+                $("#Title").click(function () {
+                    $("#searchInput").attr("placeholder", "Book");
+                    $("#searchFilter").val("BookTitles");
+                })
+                $("#Owner").click(function () {
+                    $("#searchInput").attr("placeholder", "Owner");
+                    $("#searchFilter").val("Users");
+                })
+                $("#Availability").click(function () {
+                    $("#searchInput").attr("placeholder", "Availability");
+                    $("#searchFilter").val("Availability");
+                })
 
-        });
-     
-        ////// PLAYER VISASBILITY 2
-        ////// disappear
-        $(document).ready(function () {
-            $("#canvasContainer2").click(function () {
-                $(".canvasContainer2").css("left", "99.99%");
-                $(".canvasContainer2").css("opacity", 0);
-                $(".canvasContainer3").css("left", "99.99%");
-                $(".canvasContainer3").css("opacity", 0);
             });
-        });
 
-        // appear
-        $(document).ready(function () {
-            $(".owner").click(function () {
-                $(".canvasContainer2").css("left", "70%");
-                $(".canvasContainer2").css("opacity", 1);
-                $(".canvasContainer3").css("left", "70%");
-                $(".canvasContainer3").css("opacity", 1);
+            ////// PLAYER VISASBILITY 2
+            ////// disappear
+            $(document).ready(function () {
+                $("#canvasContainer2").click(function () {
+                    $(".canvasContainer2").css("left", "99.99%");
+                    $(".canvasContainer2").css("opacity", 0);
+                    $(".canvasContainer3").css("left", "99.99%");
+                    $(".canvasContainer3").css("opacity", 0);
+                });
             });
-        });
 
-        /////// Chat
-        function openChat() {
-            document.getElementById("messageForm").style.display = "block";
-            document.getElementById("chat-button").style.display = "none";
-
-        }
-        function closeChat() {
-            document.getElementById("messageForm").style.display = "none";
-            document.getElementById("chat-button").style.display = "block";
-        }
-
-        /////////////////// CANVAS 3
-
-        let canvas3 = document.getElementById("canvas3");
-
-
-        // SEARCH
-        /////////////////////////////
-
-        function SearchFunction() {
-            // Declare variables
-            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
-            input = document.getElementById('searchInput');
-            filter = input.value.toUpperCase();
-            bookList = document.getElementById("listOfBooks");
-            bookTitles = bookList.getElementsByClassName("bookTitle");
-
-            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
-            // So we call the Array.prototype function and provide the nodeList as a parameter
-            $(bookTitles).each(function () {
-                let book = this;
-                bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
+            // appear
+            $(document).ready(function () {
+                $(".owner").click(function () {
+                    $(".canvasContainer2").css("left", "70%");
+                    $(".canvasContainer2").css("opacity", 1);
+                    $(".canvasContainer3").css("left", "70%");
+                    $(".canvasContainer3").css("opacity", 1);
+                });
             });
-            //Array.prototype.forEach.call(bookTitles,
-            //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
 
-            let searchFilter = document.getElementById("searchFilter").selectedIndex;
+            /////// Chat
+            function openChat() {
+                document.getElementById("messageForm").style.display = "block";
+                document.getElementById("chat-button").style.display = "none";
 
-            //Because i have added a dummy value "SelectFilter" in options
-            // I subtract it from the final index.
-            searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
+            }
+            function closeChat() {
+                document.getElementById("messageForm").style.display = "none";
+                document.getElementById("chat-button").style.display = "block";
+            }
 
-            // Loop through all list items, and hide those who don't match the search query
-            for (index = 0; index < bookTitles.length; index++) {
-                let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
-                txtValue = bookAuthor.innerHTML;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    bookTitles[index].style.display = "";
-                } else {
-                    bookTitles[index].style.display = "none";
+            /////////////////// CANVAS 3
+
+            let canvas3 = document.getElementById("canvas3");
+
+
+            // SEARCH
+            /////////////////////////////
+
+            function SearchFunction() {
+                // Declare variables
+                let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
+                input = document.getElementById('searchInput');
+                filter = input.value.toUpperCase();
+                bookList = document.getElementById("listOfBooks");
+                bookTitles = bookList.getElementsByClassName("bookTitle");
+
+                // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
+                // So we call the Array.prototype function and provide the nodeList as a parameter
+                $(bookTitles).each(function () {
+                    let book = this;
+                    bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
+                });
+                //Array.prototype.forEach.call(bookTitles,
+                //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+
+                let searchFilter = document.getElementById("searchFilter").selectedIndex;
+
+                //Because i have added a dummy value "SelectFilter" in options
+                // I subtract it from the final index.
+                searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
+
+                // Loop through all list items, and hide those who don't match the search query
+                for (index = 0; index < bookTitles.length; index++) {
+                    let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
+                    txtValue = bookAuthor.innerHTML;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        bookTitles[index].style.display = "";
+                    } else {
+                        bookTitles[index].style.display = "none";
+                    }
                 }
             }
-        }
-               
-    </script>
+
+        </script>
 </body>
 </html>
 
