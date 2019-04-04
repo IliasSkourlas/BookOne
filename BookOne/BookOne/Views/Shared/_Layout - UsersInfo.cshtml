@@ -238,7 +238,7 @@
 </head>
 
 <body onload=" hideAll()">
-    
+
 
     <div class="video-container">
         @Html.Partial("_VideoPartial")
@@ -246,12 +246,12 @@
 
 
 
-   
+
 
     <div class="container body-content">
 
 
-        
+
 
 
 
@@ -264,14 +264,20 @@
         <footer>
             @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
         </footer>
+
+        <br /><br /><br><br />
+        <div id="back">
+            @Html.ActionLink("Back", "Index", "Books")
+        </div>
     </div>
+
 
 
 
     <div class="canvasContainer1" onclick="rotate()">
         <canvas id="canvas1" class="contextCanvas1"></canvas>
     </div>
-    
+
     <div id="canvasContainer2" class="canvasContainer2">
         <canvas id="canvas2" class="contextCanvas2"></canvas>
         <div id="lookAtThisPlayer">
@@ -284,7 +290,7 @@
 
     <div id="canvasContainer3" class="canvasContainer3">
         <canvas id="canvas3" class="contextCanvas3"></canvas>
-        
+
         <button id="chat-button" class="chat-button" onclick="openChat()">Chat</button>
         <div class="messageForm" id="messageForm">
             <form action="/action_page.php" class="form-container">
@@ -302,7 +308,7 @@
     <script>
         // CANVAS
         let canvas1 = document.getElementById("canvas1");
-        
+
         canvas1.width = window.innerWidth;
         canvas1.height = window.innerHeight;
 
@@ -326,11 +332,11 @@
         c2.fillStyle = "pink";
         c2.fillRect(140, 140, 75, 50);
 
-        
+
         /////// Change searchInput by clicking into Headers
         $(document).ready(function () {
             $("#Author").click(function () {
-                $("#searchInput").attr("placeholder","Author");
+                $("#searchInput").attr("placeholder", "Author");
                 $("#searchFilter").val("Authors");
             })
             $("#Title").click(function () {
@@ -347,7 +353,7 @@
             })
 
         });
-     
+
         ////// PLAYER VISASBILITY 2
         ////// disappear
         $(document).ready(function () {
@@ -385,44 +391,8 @@
         let canvas3 = document.getElementById("canvas3");
 
 
-        // SEARCH
-        /////////////////////////////
 
-        function SearchFunction() {
-            // Declare variables
-            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
-            input = document.getElementById('searchInput');
-            filter = input.value.toUpperCase();
-            bookList = document.getElementById("listOfBooks");
-            bookTitles = bookList.getElementsByClassName("bookTitle");
 
-            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
-            // So we call the Array.prototype function and provide the nodeList as a parameter
-            $(bookTitles).each(function () {
-                let book = this;
-                bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
-            });
-            //Array.prototype.forEach.call(bookTitles,
-            //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
-
-            let searchFilter = document.getElementById("searchFilter").selectedIndex;
-
-            //Because i have added a dummy value "SelectFilter" in options
-            // I subtract it from the final index.
-            searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
-
-            // Loop through all list items, and hide those who don't match the search query
-            for (index = 0; index < bookTitles.length; index++) {
-                let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
-                txtValue = bookAuthor.innerHTML;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    bookTitles[index].style.display = "";
-                } else {
-                    bookTitles[index].style.display = "none";
-                }
-            }
-        }
-               
     </script>
 </body>
 </html>
