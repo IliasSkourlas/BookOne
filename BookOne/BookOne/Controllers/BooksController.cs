@@ -1,6 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Net;
+using System.Net.Mime;
+using System.Text;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using BookOne.BookOne_Domain;
 using BookOne.Models;
 using BookOne.ViewModels;
@@ -72,7 +77,7 @@ namespace BookOne.Controllers
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
             if (!(userRole == "Player" || userRole == "Administrator"))
             {
-                return View("PlayerForm", loggedInUser);
+                return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
             }
 
             return View();
@@ -189,6 +194,48 @@ namespace BookOne.Controllers
             };
 
             return View(model);
+        }
+
+        
+        public string PrepareHistoryForDownload()
+        {
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            
+
+            var model = new UserExchangeHistoryViewModel()
+            {
+                BookRequests = dbOps.GetAllRequests(loggedInUser),
+                BookCirculations = dbOps.GetAllCirculations(loggedInUser)
+            };
+
+            return RenderViewToString("~/Views/Books/DownloadHistory.cshtml", model);
+        }
+
+        public string RenderViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+
+
+        //Download function for a user's complete history of book exchanges. Creates a BookOne_History.txt file.
+        [HttpPost]
+        public FileStreamResult SaveHistory()
+        {
+            var meh = PrepareHistoryForDownload();
+
+            Byte[] stream2 = Encoding.ASCII.GetBytes(meh);
+
+            var stream = new MemoryStream(stream2);
+
+            return File( stream, "text/html", "BookOne_History.html");
         }
 
 

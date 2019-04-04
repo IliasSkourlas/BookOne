@@ -46,7 +46,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,6 +68,7 @@
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -368,7 +378,6 @@
     <Content Include="Views\Shared\_Layout - GiveAndTake.cshtml" />
     <Content Include="Views\Player\Requests.cshtml" />
     <Content Include="Views\Shared\_Layout - History - Copy.cshtml" />
-    <Content Include="Views\Player\RequestsOld.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Books.cshtml" />
     <Content Include="Views\Admin\BookCirculations.cshtml" />
@@ -377,7 +386,7 @@
     <Content Include="Views\Admin\DeleteUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Books\History.cshtml" />
-    <Content Include="Views\Shared\_Layout - UsersInfo.cshtml" />
+    <Content Include="Views\Books\DownloadHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
