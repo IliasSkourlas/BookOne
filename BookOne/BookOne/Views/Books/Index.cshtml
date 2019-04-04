@@ -41,15 +41,44 @@
     .ifUnavailable {
         color: rgba(255, 255, 255, 0.65)
     }
+
+
+
+
+    .tooltipp {
+        position: relative;
+        display: inline-block;
+       
+    }
+
+        .tooltipp .tooltiptextt {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -60px;
+        }
+
+        .tooltipp:hover .tooltiptextt {
+            visibility: visible;
+        }
 </style>
 
 
-<h1>TTTT</h1>
-<div class="tooltip">
 
-    <h1>Test</h1>
-    <span class="tooltiptext">click at yellow</span>
+<div class="tooltipp">
+    Hover over me
+    <span class="tooltiptextt">Tooltip text</span>
 </div>
+
 
 <table id="listOfBooks" class="table ">
     
