@@ -20,9 +20,14 @@ namespace BookOne.Controllers
                 ex.Result = ViewBag("An error occurred while retrieving or storing in the database.");
             }
 
-            if (ex.Exception is WebException)
+            else if (ex.Exception is WebException)
             {
                 ex.Result = ViewBag("A network error occurred.");
+            }
+
+            else
+            {
+                ex.Result = ViewBag("An occurred.");
             }
 
             ex.Result = new ViewResult
