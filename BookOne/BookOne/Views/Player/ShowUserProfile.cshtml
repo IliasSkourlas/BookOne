@@ -38,6 +38,10 @@
 </style>
 
 
+
+
+
+
 <h2>@Html.DisplayFor(model => model.User.ActualUsername)</h2>
 
 <div>
@@ -58,21 +62,21 @@
         @Html.HiddenFor(model => model.User.Id)
         @Html.HiddenFor(model => model.User.PhoneNumber)
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-        <dd>
+        </dt>*@
+        @*<dd>
             @Html.DisplayFor(model => model.User.Email)
-        </dd>
+        </dd>*@
 
         <dt>
-            @Html.DisplayNameFor(model => model.User.RegisteredOn)
+            since
         </dt>
         <dd>
             @Html.DisplayFor(model => model.User.RegisteredOn)
         </dd>
 
-        <dt>
+        @*<dt>
             Completed Circulations as a Borrower
         </dt>
         <dd>
@@ -84,14 +88,14 @@
         </dt>
         <dd>
             @ViewBag.OnGoingCirculations
-        </dd>
+        </dd>*@
     </dl>
 </div>
 
 
 
-<br />
-<h3>Reactions Received</h3>
+<br /><br /><br />
+
 <table class="table">
     <tr>
         <th class="col-md-2">
