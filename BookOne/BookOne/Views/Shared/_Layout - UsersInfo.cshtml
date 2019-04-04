@@ -1,0 +1,511 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>@ViewBag.Title - BookOne</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+    <style type="text/css">
+        :root {
+            --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
+            --main-Header-color: rgb(0, 255, 255);
+            --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
+            --available-color: rgb(255, 255, 255);
+        }
+
+
+        .table {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 1);
+        }
+        .header th {
+            color: var(--main-Header-color);
+        }
+        a:hover {
+            color: var(--main-HeaderHover-color);
+            text-decoration: none;
+        }
+        a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+
+        #MyNavbar {
+            background-color: #000000;
+            border-bottom: none;
+            opacity: 0.89;
+            filter: alpha(opacity=30);
+        }
+        #searchFilter {
+            display: none;
+        }
+        #weAreHere a {
+            color: var(--main-Header-color);
+        }
+
+
+        #logoutForm > ul > li:nth-child(1) a:hover {
+            background-color: transparent;
+        }
+
+        #logoutForm > ul > li:nth-child(2) > a:hover {
+            background-color: transparent;
+        }
+
+
+        .table > tbody > tr > td {
+            padding: 8px;
+            line-height: 1.42857143;
+            vertical-align: top;
+            border-top: var(--main-border-top-color);
+        }
+        #listOfBooks > tbody > tr.header > th {
+            border-top: var(--main-border-top-color);
+        }
+        .table {
+            margin-bottom: 0px;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        body > div.container.body-content > hr {
+            border-top: var(--main-border-top-color);
+            border-bottom: var(--main-border-top-color);
+        }
+
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            background-attachment: fixed;
+        }
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            opacity: 0.2;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+
+        #canvas1 {
+            border: 1px solid rgba(255, 216, 0, 0.3);
+            background-color: rgba(255, 216, 0, 0.00);
+        }
+        .canvasContainer1 {
+            position: fixed;
+            left: 0%;
+            right: 0%;
+            min-width: 10%;
+            top: 0px;
+            bottom: 0px;
+            z-index: 1;
+            background-color: transparent;
+            pointer-events: none;
+        }
+        .contextCanvas1 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+        }
+
+        #canvas2 {
+            border: 1px solid rgba(255, 255, 255, 0.58);
+            background-color: rgba(14, 14, 14, 0.90);
+        }
+        .canvasContainer2 {
+            transition: left 1s;
+            transition: opacity 1s;
+            position: fixed;
+            left: 100%;
+            right: 0%;
+            min-width: 10%;
+            top: 0%;
+            bottom: 0%;
+            z-index: 1;
+            background-color: transparent;
+            opacity: 0;
+        }
+        .contextCanvas2 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+        }
+        #lookAtThisPlayer {
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            color: rgba(255, 255, 255, 0.89);
+            z-index: 2;
+        }
+
+        #canvas3 {
+            border: 1px solid rgba(255, 216, 0, 0.00);
+            background-color: rgba(0, 0, 0, 0.00);
+        }
+        .canvasContainer3 {
+            position: fixed;
+            left: 100%;
+            right: 0%;
+            min-width: 10%;
+            top: 70%;
+            bottom: 0px;
+            z-index: 2;
+            background-color: transparent;
+        }
+        .contextCanvas3 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            top: 0px;
+            z-index: 3;
+        }
+        .chat-button {
+            position: absolute;
+            cursor: pointer;
+            background-color: rgba(25, 233, 227, 0.32);
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.6;
+            z-index: 6;
+        }
+        .canvasContainer3 .btn {
+            background-color: rgba(25, 233, 227, 0.32);
+            color: rgba(0, 0, 0, 0.94);
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+        /* Add a red background color to the cancel button */
+        .canvasContainer3 .cancel {
+            background-color: rgba(233, 203, 25, 0.32);
+        }
+        .messageForm {
+            position: absolute;
+            display: none;
+            bottom: 0;
+            right: 0;
+            border: 0;
+            z-index: 5;
+        }
+        .form-container textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: rgba(255, 255, 255, 0.00);
+            color: rgba(255, 255, 255, 0.94);
+            resize: none;
+            min-height: 200px;
+            z-index: 6;
+        }
+
+    </style>
+
+</head>
+
+<body onload=" hideAll()">
+
+    <div class="video-container">
+        @Html.Partial("_VideoPartial")
+    </div>
+
+
+
+    @*<div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button id="NotThis1" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(":)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @Html.Partial("_weAreHerePatial")
+                </ul>
+
+               
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
+                    </div>
+                   
+                    <select id="searchFilter">
+                        <option value="" disabled selected style="display: none;">Select a Filter</option>
+                        <option value="BookTitles">Book</option>
+                        <option value="Authors">Author</option>
+                        <option value="Users">Owner</option>
+                        <option value="Availability">Availability</option>
+                    </select>
+                </form>
+               
+            </div>
+        </div>
+    </div>*@
+
+    <div class="container body-content">
+
+
+        @using Microsoft.AspNet.Identity
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            }
+        }
+        else
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            </ul>
+        }
+
+
+
+        @RenderBody()
+
+
+
+
+        <hr />
+        <footer>
+            @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
+        </footer>
+    </div>
+
+
+
+    <div class="canvasContainer1" onclick="rotate()">
+        <canvas id="canvas1" class="contextCanvas1"></canvas>
+    </div>
+
+    <div id="canvasContainer2" class="canvasContainer2">
+        <canvas id="canvas2" class="contextCanvas2"></canvas>
+        <div id="lookAtThisPlayer">
+            <h2>Oh.Sotoooo !! </h2>
+            <h2>Natoooo  </h2>
+            @Html.Partial("_LookAtThisPlayerPartial")
+
+        </div>
+    </div>
+
+    <div id="canvasContainer3" class="canvasContainer3">
+        <canvas id="canvas3" class="contextCanvas3"></canvas>
+        
+        <button id="chat-button" class="chat-button" onclick="openChat()">Chat</button>
+        <div class="messageForm" id="messageForm">
+            <form action="/action_page.php" class="form-container">
+                <textarea placeholder="your message..." name="msg" required></textarea>
+
+                <button type="submit" class="btn">Send</button>
+                <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
+            </form>
+        </div>
+    </div>
+
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+        // CANVAS
+        let canvas1 = document.getElementById("canvas1");
+
+        canvas1.width = window.innerWidth;
+        canvas1.height = window.innerHeight;
+
+        let c = canvas1.getContext('2d');
+
+        // CANVAS2
+        let canvas2 = document.getElementById("canvas2");
+
+        canvas2.width = window.innerWidth;
+        canvas2.height = window.innerHeight;
+
+        let c2 = canvas2.getContext('2d');
+
+        c2.globalAlpha = 0.9;
+        c2.fillStyle = "blue";
+        c2.fillRect(50, 50, 75, 50);
+        c2.fillStyle = "green";
+        c2.fillRect(80, 80, 75, 50);
+        c2.fillStyle = "yellow";
+        c2.fillRect(110, 110, 75, 50);
+        c2.fillStyle = "pink";
+        c2.fillRect(140, 140, 75, 50);
+
+        ////// Smile
+        //c2.arc(500, 200, 100, 0, 1 * Math.PI);
+        //c2.strokeStyle = "cyan";
+        //c2.lineWidth = 40;
+        //c2.stroke();
+
+        //c2.beginPath();
+        //c2.arc(400, 100, 50, 0, 2 * Math.PI);
+        //c2.strokeStyle = "white";
+        //c2.lineWidth = 40;
+        //c2.stroke();
+
+        //c2.beginPath();
+        //c2.arc(600, 100, 50, 0, 2 * Math.PI);
+        //c2.strokeStyle = "white";
+        //c2.lineWidth = 40;
+        //c2.stroke();
+
+        //c2.beginPath();
+        //c2.arc(430, 100, 10, 0, 2 * Math.PI);
+        //c2.strokeStyle = "white";
+        //c2.lineWidth = 40;
+        //c2.stroke();
+
+        //c2.beginPath();
+        //c2.arc(630, 100, 10, 0, 2 * Math.PI);
+        //c2.strokeStyle = "white";
+        //c2.lineWidth = 40;
+        //c2.stroke();
+
+        /////// Change searchInput by clicking into Headers
+        $(document).ready(function () {
+            $("#Author").click(function () {
+                $("#searchInput").attr("placeholder","Author");
+                $("#searchFilter").val("Authors");
+            })
+            $("#Title").click(function () {
+                $("#searchInput").attr("placeholder", "Book");
+                $("#searchFilter").val("BookTitles");
+            })
+            $("#Owner").click(function () {
+                $("#searchInput").attr("placeholder", "Owner");
+                $("#searchFilter").val("Users");
+            })
+            $("#Availability").click(function () {
+                $("#searchInput").attr("placeholder", "Availability");
+                $("#searchFilter").val("Availability");
+            })
+
+        });
+     
+        ////// PLAYER VISASBILITY 2
+        ////// disappear
+        $(document).ready(function () {
+            $("#canvasContainer2").click(function () {
+                $(".canvasContainer2").css("left", "99.99%");
+                $(".canvasContainer2").css("opacity", 0);
+                $(".canvasContainer3").css("left", "99.99%");
+                $(".canvasContainer3").css("opacity", 0);
+            });
+        });
+
+        // appear
+        $(document).ready(function () {
+            $(".owner").click(function () {
+                $(".canvasContainer2").css("left", "70%");
+                $(".canvasContainer2").css("opacity", 1);
+                $(".canvasContainer3").css("left", "70%");
+                $(".canvasContainer3").css("opacity", 1);
+            });
+        });
+
+        /////// Chat
+        function openChat() {
+            document.getElementById("messageForm").style.display = "block";
+            document.getElementById("chat-button").style.display = "none";
+
+        }
+        function closeChat() {
+            document.getElementById("messageForm").style.display = "none";
+            document.getElementById("chat-button").style.display = "block";
+        }
+
+        /////////////////// CANVAS 3
+
+        let canvas3 = document.getElementById("canvas3");
+
+
+        // SEARCH
+        /////////////////////////////
+
+        function SearchFunction() {
+            // Declare variables
+            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            bookList = document.getElementById("listOfBooks");
+            bookTitles = bookList.getElementsByClassName("bookTitle");
+
+            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
+            // So we call the Array.prototype function and provide the nodeList as a parameter
+            $(bookTitles).each(function () {
+                let book = this;
+                bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
+            });
+            //Array.prototype.forEach.call(bookTitles,
+            //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+
+            let searchFilter = document.getElementById("searchFilter").selectedIndex;
+
+            //Because i have added a dummy value "SelectFilter" in options
+            // I subtract it from the final index.
+            searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
+
+            // Loop through all list items, and hide those who don't match the search query
+            for (index = 0; index < bookTitles.length; index++) {
+                let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
+                txtValue = bookAuthor.innerHTML;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    bookTitles[index].style.display = "";
+                } else {
+                    bookTitles[index].style.display = "none";
+                }
+            }
+        }
+               
+    </script>
+</body>
+</html>
+
