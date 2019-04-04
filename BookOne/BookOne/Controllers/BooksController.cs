@@ -67,11 +67,12 @@ namespace BookOne.Controllers
         public ActionResult Create()
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            var userRole = dbOps.GetUserRole(loggedInUser);
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!(User.IsInRole("Administrator") || User.IsInRole("Player")))
+            if (!(userRole == "Player" || userRole == "Administrator"))
             {
-                return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
+                return View("PlayerForm", loggedInUser);
             }
 
             return View();
@@ -173,11 +174,12 @@ namespace BookOne.Controllers
         public ActionResult History()
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            var userRole = dbOps.GetUserRole(loggedInUser);
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!(User.IsInRole("Administrator") || User.IsInRole("Player")))
+            if (!(userRole == "Player" || userRole == "Administrator"))
             {
-                return View("PlayerForm", loggedInUser);
+                return View("~/Views/Player/PlayerForm.cshtml", loggedInUser);
             }
 
             var model = new UserExchangeHistoryViewModel()

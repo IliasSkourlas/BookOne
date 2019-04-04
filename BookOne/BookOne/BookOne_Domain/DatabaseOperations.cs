@@ -38,7 +38,11 @@ namespace BookOne.BookOne_Domain
         public bool AccountIsDisabled(string email)
         {
             var user = db.Users.Where(u => u.Email == email).SingleOrDefault();
-
+            if (user == null)
+            {
+                return false;
+            }
+                
             if (user.UserStatus == UserStatuses.Deleted)
                 return true;
             else
