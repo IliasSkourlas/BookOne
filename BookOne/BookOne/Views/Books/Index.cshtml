@@ -44,17 +44,30 @@
 
 
 
-
+    #help {
+        /*color: rgb(0, 255, 255);*/
+        color: rgba(255, 255, 255, 0.65);
+        background-color: transparent;
+        position: fixed;
+        right: 1em;
+        top: 2.9em;
+        font-size: medium;
+        border:none;
+    }
+    #help:hover {
+        color:var(--main-HeaderHover-color)
+    }
     .tooltipp {
         position: relative;
         display: inline-block;
-       
+
     }
 
         .tooltipp .tooltiptextt {
             visibility: hidden;
+            font-size: small;
             width: 120px;
-            background-color: black;
+            background-color: rgba(255, 255, 255, 0.41);
             color: #fff;
             text-align: center;
             border-radius: 6px;
@@ -62,160 +75,173 @@
             /* Position the tooltip */
             position: absolute;
             z-index: 1;
-            bottom: 100%;
-            left: 50%;
-            margin-left: -60px;
+            top: -5px;
+            left: 105%;
         }
 
         .tooltipp:hover .tooltiptextt {
             visibility: visible;
+            /*visibility:hidden;*/
         }
 </style>
 
 
 
-<div class="tooltipp">
-    Hover over me
-    <span class="tooltiptextt">Tooltip text</span>
-</div>
+
+
+
+@*<div class="tooltipp">
+
+        <span class="tooltiptextt">Tooltip text</span>
+    </div>*@
+
+<button id="help" class="btn btn-info">?</button>
 
 
 <table id="listOfBooks" class="table ">
-    
-       
-        <tr class="header">
-            <th id="Title" class="col-md-8">
 
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th id="Author" class="author col-md-4">
-                @Html.DisplayNameFor(model => model.Author)
-            </th>
-            <th id="Owner" col-md-4">
-                Owner
-            </th>
-            <th id="Availability" class="Status col-md-4">
-                Availability
-            </th>
+
+    <tr class="header">
+        <th id="Title" class="col-md-8">
+
+            <div class="tooltipp">  @Html.DisplayNameFor(model => model.Title)<span class="tooltiptextt">click and look at the searchbar</span></div>
+        </th>
+        <th id="Author" class="author col-md-4">
+            <div class="tooltipp">  @Html.DisplayNameFor(model => model.Author)<span class="tooltiptextt">click and look at the searchbar</span></div>
+        </th>
+        <th id="Owner" col-md-4">
+            <div class="tooltipp">  <spam>Owner</spam><span class="tooltiptextt">click and look at the searchbar</span></div>
+        </th>
+        <th id="Availability" class="Status col-md-4">
+            <div class="tooltipp">  <spam>Availability</spam><span class="tooltiptextt">click and look at the searchbar</span></div>
+        </th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr class="bookTitle">
+
+            @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td class="author">
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+
+                <td class="owner">
+                    <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
+                </td>
+
+                <td id="availableBook" class="Status">
+
+                    <spam id="availableBook"><div class="tooltipp"> @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)<span class="tooltiptextt">click...if you want me</span></div></spam>
+
+                    @*it will color the unavailable*@
+                    <script>
+                        myFunction();
+                        function myFunction() {
+                            $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
+
+                        }
+                    </script>
+
+                </td>
+            }
+
+
+            @if (item.AvailabilityStatus == false || item.Owner.Id == User.Identity.GetUserId())
+            {
+                <td class="ifUnavailable">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td class="author ">
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+
+                <td class="owner ">
+                    <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
+                </td>
+
+                <td id="availableBook" class="Status ">
+                    <span>unavailable</span>
+                </td>
+            }
+
         </tr>
-   
-
-        @foreach (var item in Model)
-        {
-            <tr class="bookTitle">
-
-                @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
-                {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-
-                    <td class="author">
-                        @Html.DisplayFor(modelItem => item.Author)
-                    </td>
-
-                    <td class="owner">
-                        <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
-                    </td>
-
-                    <td id="availableBook" class="Status">
-
-                        <spam id="availableBook">@Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)</spam>
-
-                        @*it will color the unavailable*@
-                        <script>
-                            myFunction();
-                            function myFunction() {
-                                $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
-
-                            }
-                        </script>
-
-                    </td>
-                }
-
-
-                @if (item.AvailabilityStatus == false || item.Owner.Id == User.Identity.GetUserId())
-                {
-                    <td class="ifUnavailable">
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-
-                    <td class="author ">
-                        @Html.DisplayFor(modelItem => item.Author)
-                    </td>
-
-                    <td class="owner ">
-                        <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
-                    </td>
-
-                    <td id="availableBook" class="Status ">
-                        <span>unavailable</span>
-                    </td>
-                }
-
-            </tr>
-        }
+    }
 </table>
 
 
 
 
 
-    <script>
-        function hideAll() {
-            $('.author').hide();
-            $('#Owner').hide();
-            $('.owner').hide();
+<script>
+    function hideAll() {
+        $('.author').hide();
+        $('#Owner').hide();
+        $('.owner').hide();
+    }
+
+    var n = 0;
+    var i = 1;
+
+    function rotate() {
+        n = n + i;
+        if (n === 0) {
+            i = 1;
+        }
+        if (n === 1) {
+            console.log("new", n);
+            new function () {
+                $('.author').show();
+                $('.Status').hide();
+
+            }
+        }
+        if (n === 2) {
+            console.log("new", n);
+            new function () {
+                $('.author').hide();
+                $('#Owner').show();
+                $('.owner').show();
+            }
+        }
+        if (n === 3) {
+            console.log("new", n);
+            new function () {
+                $('#Owner').hide();
+                $('.owner').hide();
+                $('.Status').show();
+
+
+
+            }
+        }
+        if (n === 4) {
+            n = 1;
+            new function () {
+                console.log("new", n);
+
+                $('.author').show();
+                $('.Status').hide();
+            }
         }
 
-        var n = 0;
-        var i = 1;
 
-        function rotate() {
-            n = n + i;
-            if (n === 0) {
-                i = 1;
-            }
-            if (n === 1) {
-                console.log("new", n);
-                new function () {
-                    $('.author').show();
-                    $('.Status').hide();
-
-                }
-            }
-            if (n === 2) {
-                console.log("new", n);
-                new function () {
-                    $('.author').hide();
-                    $('#Owner').show();
-                    $('.owner').show();
-                }
-            }
-            if (n === 3) {
-                console.log("new", n);
-                new function () {
-                    $('#Owner').hide();
-                    $('.owner').hide();
-                    $('.Status').show();
+    }
 
 
 
-                }
-            }
-            if (n === 4) {
-                n = 1;
-                new function () {
-                    console.log("new", n);
+    ///// Toggle Help ?
+    function toggleHelp() {
+        var element = document.getElementById("help");
+        element.classList.toggle("tooltipp:hover .tooltiptextt");
+    }
 
-                    $('.author').show();
-                    $('.Status').hide();
-                }
-            }
-
-
-        }
-
-    </script>
+</script>
 
