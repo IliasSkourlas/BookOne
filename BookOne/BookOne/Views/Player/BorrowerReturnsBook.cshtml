@@ -1,71 +1,303 @@
 ﻿@model BookOne.ViewModels.ReturnBookViewModel
 
 @{
+    Layout = "~/Views/Shared/_Layout - History.cshtml";
+    
+}
+
+@{
     ViewBag.Title = "BorrowerReturnsBook";
 }
 
-<h2>Return Book</h2>
 
-<h4>Are you receiving this book from its borrower right now?</h4>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
+<style type="text/css">
 
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Circulation.BookAssociated.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Circulation.BookAssociated.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Circulation.Borrower)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Circulation.BorrowedOn)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Circulation.BorrowedOn)
-        </dd>
-    </dl>
-
-    @using (Html.BeginForm("OwnerGetsBackHisBook", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Circulation.BookCirculationId)
-        @Html.HiddenFor(model => model.Circulation.BorrowedForXWeeks)
-        @Html.HiddenFor(model => model.Circulation.Borrower.Id)
-        @Html.HiddenFor(model => model.Circulation.Borrower)
-        @Html.HiddenFor(model => model.Circulation.BorrowerReceivedBook)
-        @Html.HiddenFor(model => model.Circulation.CirculationStatus)
-        @Html.HiddenFor(model => model.Circulation.OwnerGaveBook)
-        @Html.HiddenFor(model => model.Circulation.BookAssociated.BookId)
-        @Html.HiddenFor(model => model.Circulation.RequestIdForThisCirculation)
-        @Html.HiddenFor(model => model.ReactionGiven.ActionGiverId)
-        @Html.HiddenFor(model => model.ReactionGiven.ActionReceiverId)
-        @Html.HiddenFor(model => model.ReactionGiven.CirculationForThisReaction.BookCirculationId)
-        @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
-
-        <hr /><br />
-        <h5>If you are receiving your book in perfect condition, you can thank the borrower by giving him a "Clap"...</h5>
-        <div>
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1, new { @checked = true }) <span> Clap</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span> Shovel</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span> Treat</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span> Poisonous Cookie</span> <br />
-            @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0) <span> Nothing</span> <br />
-
-            <br />
-            <input type="submit" value="Yes" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "MyBooks", "Books")
-        </div>
+    .center {
+        position: relative;
+        text-align: center;
     }
+
+
+    #back {
+        color: white;
+        text-decoration: none;
+    }
+
+        #back:hover {
+            color: var(--main-Header-color);
+        }
+
+    #yes {
+        color: rgb(255, 0, 220);
+        background-color: rgba(255, 255, 255, 0.11);
+        /*border-color: rgba(0, 255, 255, 0.43);*/
+        display: inline-block;
+        margin: 10px 40px;
+        font-size: x-large;
+    }
+
+        #yes:hover {
+            background-color: rgba(0, 255, 255, 0.43);
+            border-color: var(--main-HeaderHover-color)
+        }
+
+    #no {
+        color: rgba(255, 0, 0, 0.62);
+        background-color: rgba(255, 255, 255, 0.11);
+        /*border-color: rgba(255, 0, 0, 0.36);*/
+        display: inline-block;
+        margin: 10px 40px;
+        font-size: x-large;
+    }
+
+        #no:hover {
+            background-color: rgba(255, 0, 0, 0.36);
+            border-color: red
+        }
+
+    #theBook {
+        color: white;
+        font-style: italic;
+    }
+
+    .question {
+        display: inline;
+        font-style: italic;
+    }
+    #theCarrier {
+        display: inline;
+        font-style: italic; 
+        color: rgba(0, 255, 255, 0.83);
+    }
+    .clappsAndTreats *  {
+        font-size:x-large;
+          
+    }
+
+
+    .clapping:hover:after {
+        color: hotpink;
+        content:"?";
+    }
+    .noClapping:hover:after {
+        color: gray;
+        content:"?";
+    }
+    .shovel:hover:after {
+        color: red;
+        content: "?";
+    }
+    .treat:hover:after {
+        color: green;
+        content: "?";
+    }
+    .cookie:hover:after {
+        color: yellow;
+        content: "?";
+    }
+
+    .clapping:hover {
+        color: hotpink;
+       
+    }
+
+    .noClapping:hover {
+        color: #9d9d9d;
+        
+    }
+
+    .shovel:hover {
+        color: red;
+       
+    }
+
+    .treat:hover {
+        color: green;
+       
+    }
+
+    .cookie:hover {
+        color: yellow;
+       
+    }
+
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgb(255, 255, 255);
+    }
+
+
+    tr:hover {
+        background: rgba(253, 255, 233, 0.19);
+    }
+
+
+    .green a {
+        color: rgb(0, 128, 0);
+    }
+
+        .green a:hover {
+            color: rgb(0, 206, 29);
+        }
+
+    .red a {
+        color: rgb(128, 0, 0);
+    }
+
+        .red a:hover {
+            color: rgb(206, 0, 0);
+        }
+
+    .nutral a {
+        color: var(--main-HeaderHover-color);
+    }
+
+        .nutral a:hover {
+            color: var(--main-Header-color);
+        }
+
+
+    .video-container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        background-attachment: fixed;
+    }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            opacity: 0.35;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+
+    #video2 {
+        opacity: 0.032;
+    }
+    
+</style>
+
+<div>
+
+    <a id="back" href="/Player/Requests">Back </a>
 </div>
+
+ <br /><br />
+
+
+
+
+
+       <div class="center">
+
+           <div class="dl-horizontal">
+
+               <h1 class="question">Ok  </h1>
+               <h1 id="theBook" class="question">
+                   @Html.DisplayFor(model => model.Circulation.BookAssociated.Title)
+
+               </h1>
+               <h1 class="question">is back in your hands! </h1>
+
+               <br /><br /><br />
+
+
+               @*<dd>
+                @Html.DisplayFor(model => model.Circulation.BorrowedOn)
+            </dd>*@
+
+
+           </div>
+
+           @using (Html.BeginForm("OwnerGetsBackHisBook", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+           {
+               @Html.AntiForgeryToken()
+               @Html.HiddenFor(model => model.Circulation.BookCirculationId)
+               @Html.HiddenFor(model => model.Circulation.BorrowedForXWeeks)
+               @Html.HiddenFor(model => model.Circulation.Borrower.Id)
+               @Html.HiddenFor(model => model.Circulation.Borrower)
+               @Html.HiddenFor(model => model.Circulation.BorrowerReceivedBook)
+               @Html.HiddenFor(model => model.Circulation.CirculationStatus)
+               @Html.HiddenFor(model => model.Circulation.OwnerGaveBook)
+               @Html.HiddenFor(model => model.Circulation.BookAssociated.BookId)
+               @Html.HiddenFor(model => model.Circulation.RequestIdForThisCirculation)
+               @Html.HiddenFor(model => model.ReactionGiven.ActionGiverId)
+               @Html.HiddenFor(model => model.ReactionGiven.ActionReceiverId)
+               @Html.HiddenFor(model => model.ReactionGiven.CirculationForThisReaction.BookCirculationId)
+               @Html.HiddenFor(model => model.ReactionGiven.ReceivedOn)
+
+
+               <h2 class="question">... </h2>
+               <h2 id="theCarrier" class="question">
+                   @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)
+
+               </h2>
+               <h2 class="question">deserves </h2>
+
+
+               <br /><br /><br />
+
+               <div>
+                   <div class="clappsAndTreats">
+                       <label onclick="stopClapping()" class="noClapping"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0, new { @checked = true }) <span id="noClapping">No clapping </span></label><br />
+                       <label onclick="startClapping()" class="clapping">@Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1) <span id="clapping">Clapping </span> </label><br />
+                       <label class="shovel"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span id="shovel">a shovel </span></label><br />
+                       <label class="treat"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span id="treat">a treat </span></label><br />
+                       <label class="cookie"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span id="cookie">a poisonous Cookie </span> </label>
+                   </div>
+
+                   <br /><br /><br />
+
+
+                   <div>
+                       <div class="form-group">
+                           <div id="buttons">
+                               <input id="yes" type="submit" value="this is for  @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)" class="btn btn-default" onmouseover="change1()" onmouseout="change2()"/>
+                               @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a id="no" href="/Player/Requests" class="btn btn-default">No</a>*@
+                           </div>
+                       </div>
+                   </div>
+
+               </div>
+           }
+       </div>
+
+
+
+<script>
+
+    function change1() {
+        setInterval(function () {
+            $("video").css("opacity", "0.9");
+
+        }, 700);
+    }
+    function change2() {
+        setInterval(function () {
+            $("video").css("opacity", "0.032");
+
+        }, 700);
+    }
+    function startClapping() {
+        $("#video3").css("display", "block");
+    }
+    function stopClapping() {
+        $("#video3").css("display", "none");;
+    }
+
+
+</script>

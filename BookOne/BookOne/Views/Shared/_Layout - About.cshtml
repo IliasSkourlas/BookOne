@@ -9,7 +9,7 @@
 
 
     <style type="text/css">
-        :root {
+        /*:root {
             --main-border-top-color: 1px solid rgba(255, 255, 255, 0.12);
             --main-Header-color: rgb(0, 255, 255);
             --main-HeaderHover-color: rgba(0, 255, 255, 0.84);
@@ -35,8 +35,6 @@
         #MyNavbar {
             background-color: rgba(21, 226, 226, 0.00); 
             border-bottom: none;
-            /*opacity: 0.69;*/
-            /*filter: alpha(opacity=30)*/
         }
 
         .navbar-brand{
@@ -52,9 +50,13 @@
             color: #FFC0CB;
             opacity: 0.9;
         }
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: var(--main-HeaderHover-color);
+               
+        }
         
         .nav > li > a:hover {
-            background-color: #FCC;
+            background-color: rgb(0, 255, 255);
             
         }
         .navbar-inverse .navbar-brand {
@@ -91,7 +93,7 @@
 
         a {
             color: rgba(255, 255, 255, 0.8);
-        }
+        }*/
 
         .video-container {
             position: absolute;
@@ -146,14 +148,15 @@
                     {
                         <li>@Html.ActionLink("All books", "Index", "Books")</li>
                     }
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    @*<li>@Html.ActionLink("About", "About", "Home")</li>*@
                 </ul>
-               
             </div>
         </div>
     </div>
-    <div class="container body-content" onmousemove = "myFunction(event)" onmouseout = "showEmail()">
+
+
+
+    <div class="container body-content" >
         @Html.Partial("_LoginPartial")
 
         @RenderBody()
@@ -169,44 +172,6 @@
 
 
 
-    <script>
-        document.getElementById("button").addEventListener("click", addOne);
-
-        var count = 15;
-
-        function addOne() {
-            var x = document.getElementById("emailInput").value;
-
-
-            // Make better
-            if (x.length > 12 && x.includes("") && x.includes(".")) {
-                count += 1;
-                document.getElementById("counter").innerHTML = count;
-                document.getElementById("emailInput").value = "";
-            }
-            document.getElementById("emailInput").value = "";
-        }
-
-
-        /////////// mouse over
-        //$(document).ready(function () {
-        //    $("#AboutText").onmousemove(function () {
-        //        $(".form-row").css("opacity", "1");
-        //        $("#about").css("opacity", "0");
-        //    })
-           
-
-        //});
-
-        function myFunction(e) {
-            var x = e.clientX;
-            var y = e.clientY;
-        }
-       function showEmail() {
-            $(".form-row").css("opacity", "1");
-            $("#about").css("opacity", "0");
-        };
-
-    </script>
+    
 </body>
 </html>

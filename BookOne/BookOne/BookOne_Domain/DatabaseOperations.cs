@@ -1,7 +1,6 @@
 ﻿using BookOne.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -33,7 +32,23 @@ namespace BookOne.BookOne_Domain
         {
             return db.UserReactions.Where(r => r.ActionReceiverId == userId);
         }
-        
+
+
+        //Check a user's status during Login.
+        public bool AccountIsDisabled(string email)
+        {
+            var user = db.Users.Where(u => u.Email == email).SingleOrDefault();
+            if (user == null)
+            {
+                return false;
+            }
+                
+            if (user.UserStatus == UserStatuses.Deleted)
+                return true;
+            else
+                return false;
+        }
+
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -131,9 +146,9 @@ namespace BookOne.BookOne_Domain
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
 
-        public void UpdateUserDetails(ApplicationUser loggedInUser)
+        public void UpdateUserDetails(ApplicationUser user)
         {
-            db.Entry(loggedInUser).State = EntityState.Modified;
+            db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
         }
 
@@ -147,16 +162,6 @@ namespace BookOne.BookOne_Domain
             var userManager = new UserManager<ApplicationUser>(userStore);
             userManager.RemoveFromRole(user.Id, "User");
             userManager.AddToRole(user.Id, "Player");
-        }
-
-        
-        public bool UserIsAPlayer(ApplicationUser user)
-        {
-            int userRole = user.Roles.Where(r => r.RoleId == "2").Count();
-            if (userRole > 0)
-                return true;
-            else
-                return false;
         }
 
 
@@ -222,17 +227,44 @@ namespace BookOne.BookOne_Domain
                 .Include(r => r.BookRequested.Owner);
 
             // pending BookRequests to be approved by the logged in user for books returning(user is the borrower of these books)
-            var bookRequests_BorrowerAskedToReturnBook =
-                db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Returning)
-                .Include(r => r.BookRequested.Owner);
+            //var bookRequests_BorrowerAskedToReturnBook =
+            //    db.BookRequests.Where(r => r.RequestedBy.Id == user.Id && r.RequestStatus == RequestStatuses.Returning)
+            //    .Include(r => r.BookRequested.Owner);
 
             return booksRequestedFromTheLoggedInUser
                 .Union(bookRequests_OwnerHasNotAnswered)
                 .Union(bookRequests_OwnerApproved)
                 .Union(bookRequests_OwnerDeclined)
                 .Union(bookRequests_BorrowerWantsToReturnBook)
-                .Union(bookRequests_BorrowerAskedToReturnBook)
                 .ToList();
+        }
+
+
+        //Gets all user's requests (Unfiltered)
+        public IEnumerable<BookRequest> GetAllRequests(ApplicationUser user)
+        {
+            var usersRequestsAsOwner = db.BookRequests
+                .Where(r => r.BookRequested.Owner.Id == user.Id)
+                .Include(r => r.BookRequested.Owner)
+                .Include(r => r.RequestedBy);
+
+            var usersRequestsAsBorrower = db.BookRequests
+                .Where(r => r.RequestedBy.Id == user.Id)
+                .Include(r => r.BookRequested.Owner)
+                .Include(r => r.RequestedBy);
+
+            return usersRequestsAsOwner
+                .Union(usersRequestsAsBorrower)
+                .ToList();
+        }
+
+
+        public void CloseRequest(BookRequest request)
+        {
+            var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
+
+            requestToBeChanged.RequestStatus = RequestStatuses.Closed;
+            db.SaveChanges();
         }
 
 
@@ -241,7 +273,7 @@ namespace BookOne.BookOne_Domain
         {
             var requestToBeChanged = db.BookRequests.Find(request.BookRequestId);
 
-            requestToBeChanged.RequestStatus = RequestStatuses.Closed;
+            requestToBeChanged.RequestStatus = RequestStatuses.Canceled;
             db.SaveChanges();
         }
 
@@ -292,8 +324,9 @@ namespace BookOne.BookOne_Domain
             var bookToBeBorrowed = db.Books.Where(b => b.BookId == request.BookRequested.BookId)
                 .SingleOrDefault();
 
+            var thisRequest = db.BookRequests.Find(request.BookRequestId);
 
-            request.RequestStatus = RequestStatuses.BorrowedBook;
+            thisRequest.RequestStatus = RequestStatuses.BorrowedBook;
             circulation.BorrowerReceivedBook = true;
             circulation.CirculationStatus = CirculationStatuses.Borrowed;
             bookToBeBorrowed.AvailabilityStatus = false;
@@ -317,6 +350,25 @@ namespace BookOne.BookOne_Domain
                 .FirstOrDefault();
 
             return circulation;
+        }
+
+
+        //Gets all user's Circulations (Unfiltered)
+        public IEnumerable<BookCirculation> GetAllCirculations(ApplicationUser user)
+        {
+            var usersCirculationsAsOwner = db.BookCirculations
+                .Where(c => c.BookAssociated.Owner.Id == user.Id)
+                .Include(c => c.BookAssociated.Owner)
+                .Include(c => c.Borrower);
+
+            var usersCirculationsAsBorrower = db.BookCirculations
+                .Where(c => c.Borrower.Id == user.Id && c.CirculationStatus == CirculationStatuses.Borrowed)
+                .Include(c => c.BookAssociated.Owner)
+                .Include(c => c.Borrower);
+
+            return usersCirculationsAsOwner
+                .Union(usersCirculationsAsBorrower)
+                .ToList();
         }
 
 
@@ -423,7 +475,8 @@ namespace BookOne.BookOne_Domain
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        
+        //Inserts a visitor's Email Address to the database in order to notify him when the application is ready
         public void InsertEmailNotification(EmailNotification notification)
         {
             db.EmailNotifications.Add(notification);
@@ -431,34 +484,77 @@ namespace BookOne.BookOne_Domain
         }
 
 
+        //Returns the number of users that want to be notified when the application is ready
+        public int EmailNotificationsCounter()
+        {
+            return db.EmailNotifications.Count();
+        }
+
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         //ADMIN OPERATIONS
 
 
         public IEnumerable<ApplicationUser> GetAllUsers()
         {
-            return db.Users.ToList();
+            return db.Users
+                .OrderBy(u => u.RegisteredOn)
+                .ToList();
         }
 
 
         public IEnumerable<Book> GetAllBooks()
         {
-            return db.Books.ToList();
+            return db.Books
+                .Include(b => b.Owner)
+                .OrderBy(b => b.RegisteredOn)
+                .ToList();
         }
 
 
         public IEnumerable<BookCirculation> GetAllBookCirculations()
         {
-            var onGoingCirculations =  db.BookCirculations
-                .Where(c => c.CirculationStatus == CirculationStatuses.Borrowed);
-
-            var completedCirculations =  db.BookCirculations
-                .Where(c => c.CirculationStatus == CirculationStatuses.Completed);
-
-            return onGoingCirculations
-                .Union(completedCirculations)
+            return db.BookCirculations
+                .Where(c => c.CirculationStatus != CirculationStatuses.Fresh)
+                .Include(c => c.BookAssociated)
+                .Include(c => c.Borrower)
+                .OrderBy(c => c.BorrowedOn)
                 .ToList();
         }
+
+
+        //Removes a user from the database
+        public void DeleteUser(ApplicationUser user)
+        {
+            user.UserStatus = UserStatuses.Deleted;
+            db.SaveChanges();
+        }
+
+
+        public string GetUserRole(ApplicationUser user)
+        {
+            if (user.Roles.Where(r => r.RoleId == "3").Count() > 0)
+                return "Administrator";
+            if (user.Roles.Where(r => r.RoleId == "2").Count() > 0)
+                return "Player";
+            if (user.Roles.Where(r => r.RoleId == "1").Count() > 0)
+                return "User";
+            return null;
+        }
+
+
+        //public void ChangeUserRole(ApplicationUser user)
+        //{
+        //    var savedUser = db.Users.Find(user.Id);
+        //    var oldRole = savedUser.Roles.SingleOrDefault().RoleId;
+
+        //    var roleStore = new RoleStore<IdentityRole>(db);
+        //    var roleManager = new RoleManager<IdentityRole>(roleStore);
+        //    var userStore = new UserStore<ApplicationUser>(db);
+        //    var userManager = new UserManager<ApplicationUser>(userStore);
+        //    userManager.RemoveFromRole(user.Id, oldRole);
+        //    userManager.AddToRole(user.Id, user.userRole.ToString());
+        //}
     }
 }

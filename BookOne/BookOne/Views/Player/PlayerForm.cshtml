@@ -1,19 +1,52 @@
 ﻿@model BookOne.Models.ApplicationUser
 
 @{
+    Layout = "~/Views/Shared/_Layout - AddBook.cshtml";
+}
+
+@{
     ViewBag.Title = "Player";
 }
 
-<h2>Player Information</h2>
+
+<style type="text/css">
+    #button:hover {
+        background-color: rgba(0, 255, 255, 0.43);
+        border-color: rgba(0, 255, 232, 0.61);
+        color: rgba(255, 255, 255, 0.8);
+    }
+    #back a {
+        color: rgba(0, 255, 255, 0.79);
+        font-size: 20px;
+    }
+
+    #back a:hover {
+        text-decoration: none;
+        color: rgb(0, 255, 255);
+    }
+
+    h3 {
+       font-style: italic;
+    }
+
+    .form-control {
+        font: x-large;
+        color: rgba(0, 255, 232, 0.61);
+    }
+</style>
 
 
-@using (Html.BeginForm("ChangeUserToPlayer", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) 
+
+<h3>...become a Player</h3>
+
+
+@using (Html.BeginForm("ChangeUserToPlayer", "Player", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Please enter additional details needed in order to begin exchanging books</h4>
-        <hr />
+        
+        <br />
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.PostalCode)
         @Html.HiddenFor(model => model.RegisteredOn)
@@ -32,7 +65,7 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ActualUsername, "Username" ,htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ActualUsername, "Username", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ActualUsername, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ActualUsername, "", new { @class = "text-danger" })
@@ -50,11 +83,16 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" class="btn btn-default" />
+                <input  id="button" type="submit" value="Submit" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
+
+    <div id="back">
+        @*@Html.ActionLink("Back", "MyBooks")*@
+        @Html.ActionLink("Back", null, null, null, new { id = "back", href = Request.UrlReferrer })
+    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

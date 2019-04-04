@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_Layout - AddBook.cshtml";
 }
 
+
+
+
 <div>
 
     <h2>Add your book</h2>
@@ -53,7 +56,8 @@
     }
 
     <div>
-        @Html.ActionLink("Back to List", "MyBooks")
+        @*@Html.ActionLink("Back to List", "MyBooks")*@
+        @Html.ActionLink("Back", null, null, null, new { id = "back", href = Request.UrlReferrer })
     </div>
 
     @section Scripts {

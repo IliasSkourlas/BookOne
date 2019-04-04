@@ -47,7 +47,7 @@ namespace BookOne.Controllers
             {
                 dbOps.UpdateUserDetails(loggedInUser);
                 dbOps.ChangeUserRoleToPlayer(loggedInUser);
-                return RedirectToAction("Index", "Books");
+                return RedirectToAction("Index", "MyBooks");
             }
 
             return RedirectToAction("Index", "Home");
@@ -61,9 +61,10 @@ namespace BookOne.Controllers
         public ActionResult Requests()
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            var userRole = dbOps.GetUserRole(loggedInUser);
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!dbOps.UserIsAPlayer(loggedInUser))
+            if (!(userRole == "Player" || userRole == "Administrator"))
             {
                 return View("PlayerForm", loggedInUser);
             }
@@ -77,6 +78,15 @@ namespace BookOne.Controllers
         //Create request for a book
         public ActionResult RequestConfirmation(int? bookId)
         {
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            var userRole = dbOps.GetUserRole(loggedInUser);
+
+            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
+            if (!(userRole == "Player" || userRole == "Administrator"))
+            {
+                return View("PlayerForm", loggedInUser);
+            }
+
             if (bookId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -86,8 +96,7 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
-
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+            
             var bookRequested = dbOps.GetBook(book.BookId);
 
             dbOps.InsertRequest(loggedInUser, bookRequested);
@@ -240,6 +249,14 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BorrowedBookConfirmation(BookRequest request)
         {
+            if(request.BookRequested.AvailabilityStatus == false)
+            {
+                dbOps.CloseRequest(request);
+
+                ViewBag.RequestFailed = "This book is borrowed by someone else. The request you made is closed.";
+                return RedirectToAction("Requests");
+            }
+
             dbOps.BorrowerReceivedBook(request);
 
             return RedirectToAction("Requests");
@@ -255,11 +272,7 @@ namespace BookOne.Controllers
             else
                 return null;
         }
-
-
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -269,7 +282,7 @@ namespace BookOne.Controllers
 
             dbOps.InsertReaction(model.ReactionGiven);
 
-            return RedirectToAction("MyBooks", "Books");
+            return RedirectToAction("Requests", "Player");
         }
     }
 }

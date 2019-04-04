@@ -1,13 +1,51 @@
 ﻿@model BookOne.ViewModels.UserViewModel
 
 @{
+    Layout = "~/Views/Shared/_Layout - UsersInfo.cshtml";
+}
+
+@{
     ViewBag.Title = "Show User Profile";
 }
+
+
+
+<style type="text/css">
+
+    body {
+        background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+
+
+    .owner:hover {
+        border-bottom: 5px;
+        text-decoration: underline;
+        text-decoration-style: solid;
+        color: rgb(0, 255, 255);
+    }
+
+    #availableBook a {
+        color: var(--available-color);
+    }
+
+        #availableBook a:hover {
+            color: var(--main-HeaderHover-color);
+        }
+</style>
+
+
+
+
+
 
 <h2>@Html.DisplayFor(model => model.User.ActualUsername)</h2>
 
 <div>
-    <hr />
+    <br />
     <dl class="dl-horizontal">
         @Html.HiddenFor(model => model.User.PostalCode)
         @Html.HiddenFor(model => model.User.UserStatus)
@@ -24,21 +62,21 @@
         @Html.HiddenFor(model => model.User.Id)
         @Html.HiddenFor(model => model.User.PhoneNumber)
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-        <dd>
+        </dt>*@
+        @*<dd>
             @Html.DisplayFor(model => model.User.Email)
-        </dd>
+        </dd>*@
 
         <dt>
-            @Html.DisplayNameFor(model => model.User.RegisteredOn)
+            since
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.RegisteredOn)
+            @Model.User.RegisteredOn.ToShortDateString()
         </dd>
 
-        <dt>
+        @*<dt>
             Completed Circulations as a Borrower
         </dt>
         <dd>
@@ -50,14 +88,14 @@
         </dt>
         <dd>
             @ViewBag.OnGoingCirculations
-        </dd>
+        </dd>*@
     </dl>
 </div>
 
 
 
-<br />
-<h3>Reactions Received</h3>
+<br /><br /><br />
+
 <table class="table">
     <tr>
         <th class="col-md-2">
@@ -73,40 +111,35 @@
             Poisonous Cookies
         </th>
         @*<th class="col-md-2">
-            Connector Bonus
-        </th>*@
-        <th class="col-md-4"> @*To be modified as col-md-2 when Connector Bonus is implemented*@
+                Connector Bonus
+            </th>*@
+        <th class="col-md-4">
+            @*To be modified as col-md-2 when Connector Bonus is implemented*@
             Nothing Received
         </th>
     </tr>
 
-    @foreach (var item in Model.UserReactions)
-    {
-        <tr>
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Clap)
-            </td>
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Shovel)
-            </td>
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Treat)
-            </td>
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.PoisonousCookie)
-            </td>
-            @*<td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.ConnectorBonus)
-            </td>*@
-            <td>
-                @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.Nothing)
-            </td>
-        </tr>
-    }
+    <tr>
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Clap)
+        </td>
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Shovel)
+        </td>
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Treat)
+        </td>
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.PoisonousCookie)
+        </td>
+        @*<td>
+            @Model.UserReactions.Count(modelItem => item.Choice == BookOne.BookOne_Domain.UserReactionChoices.ConnectorBonus)
+        </td>*@
+        <td>
+            @Model.UserReactions.Count(u => u.Choice == BookOne.BookOne_Domain.UserReactionChoices.Nothing)
+        </td>
+    </tr>
 </table>
 
 
 
-<div>
-    @Html.ActionLink("Back to List", "Index", "Books")
-</div>

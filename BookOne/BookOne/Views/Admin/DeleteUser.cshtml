@@ -1,20 +1,19 @@
-﻿@model BookOne.BookOne_Domain.Book
+﻿@model BookOne.Models.ApplicationUser
 
 @{
-    ViewBag.Title = "Delete Book";
+    ViewBag.Title = "Delete User";
     Layout = "~/Views/Shared/_Layout - My.cshtml";
-
 }
 
-<style type="text/css">
 
+<style type="text/css">
     body {
         background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
     }
-
+    
     .header th {
         color: var(--main-Header-color);
     }
@@ -32,13 +31,12 @@
         color: rgba(255, 255, 255, 1);
     }
 
-    #back {
+    #back{
         color: rgba(255, 255, 255, 0.8);
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: 20px;
     }
-
-    
+       
     #formLabel {
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: 15px;
@@ -50,38 +48,39 @@
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         font-size: 18px;
     }
-
-
 </style>
 
-<h2 class="">Delete Book</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h2 class="adminDashboardHeader">Delete User</h2>
+
+
 <div>
+    <hr />
+    <h3 id="formLabel">Are you sure you want to delete this user?</h3>
     <hr />
     <dl id="formLabel" class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Title)
+            Username
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.ActualUsername)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Author)
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Author)
+            @Html.DisplayFor(model => model.Email)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Owner)
+            @Html.DisplayNameFor(model => model.PhoneNumber)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Owner.ActualUsername)
+            @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
 
         <dt>
@@ -93,29 +92,21 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.BookStatus)
+            @Html.DisplayNameFor(model => model.UserStatus)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BookStatus)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AvailabilityStatus)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AvailabilityStatus)
+            @Html.DisplayFor(model => model.UserStatus)
         </dd>
     </dl>
 
-    @using (Html.BeginForm("DeleteBookConfirmed", "Admin", new { id = Model.BookId }, FormMethod.Post))
+    @using (Html.BeginForm("DeleteUserConfirmed", "Admin", new { userId = Model.Id }, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
-        <div id="delete" class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Books", new { id = "back" })
+        <div class="form-actions no-color">
+            <input id="delete"  type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index", new { id = "back" })
         </div>
     }
 </div>

@@ -25,10 +25,24 @@
 
     .owner:hover {
         border-bottom: 5px;
-        text-decoration: underline;
+        text-decoration:none;
         text-decoration-style: solid;
         color: rgb(0, 255, 255);
     }
+
+    #availableBook a {
+        color: var(--available-color);
+    }
+    #availableBook a:hover {
+        color: var(--main-HeaderHover-color);
+    }
+    .ifUnavailable {
+       color: rgba(255, 255, 255, 0.65)
+    }
+    
+   
+   
+    
 </style>
 
 
@@ -54,30 +68,57 @@
     @foreach (var item in Model)
     {
         <tr class="bookTitle">
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td class="author">
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            @*<td class="owner">
-                    @Html.ActionLink( item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)
-                </td>*@
+            
+            @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
 
-            <td class="owner">
-                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
-            </td>
+                <td class="author">
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
 
-            <td class="Status">
-                @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
-                {
-                    @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)
-                }
-                @if (item.AvailabilityStatus == false || item.Owner.Id == User.Identity.GetUserId())
-                {
-                    <span>Unavailable</span>
-                }
-            </td>
+                <td class="owner">
+                    <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
+                </td>
+
+                <td id="availableBook" class="Status">
+
+                        <spam id="availableBook">@Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)</spam>
+
+                        @*it will color the unavailable*@
+                        <script>
+                            myFunction();
+                            function myFunction() {
+                                $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
+                           
+                            }
+                        </script>
+
+                </td>
+            }
+
+
+            @if (item.AvailabilityStatus == false || item.Owner.Id == User.Identity.GetUserId())
+            {
+                <td class="ifUnavailable">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+
+                <td class="author ">
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+
+                <td class="owner ">
+                    <spam class="availableOwner"> @Html.ActionLink(item.Owner.ActualUsername, "ShowUserProfile", "Player", new { userId = item.Owner.Id }, null)</spam>
+                </td>
+
+                <td id="availableBook" class="Status ">
+                    <span>unavailable</span>
+                </td>
+            }
+            
         </tr>
     }
 </table>
@@ -87,14 +128,6 @@
 
 
 <script>
-
-    // Player Text
-
-
-
-
-    ///////////////////////////////////////
-
     function hideAll() {
         $('.author').hide();
         $('#Owner').hide();

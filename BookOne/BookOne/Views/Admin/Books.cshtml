@@ -2,59 +2,187 @@
 
 @{
     ViewBag.Title = "Books";
+    Layout = "~/Views/Shared/_Layout - My.cshtml";
 }
 
-<h2>Books</h2>
+<style>
+    body {
+        background-image: linear-gradient(rgba(22, 69, 31, 0.79),rgba(5, 48, 15, 0.32)), url('../../Content/images/Drowing.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    th {
+        color: var(--main-Header-color);
+    }
+
+    .adminDashboardHeader {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 20px;
+        text-align: center;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #formText {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+        color: rgba(255, 255, 255, 1);
+    }
+
+    #back {
+        color: rgba(255, 255, 255, 0.8);
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 20px;
+    }
+
+    .col-md-10 {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 15px;
+        color: rgb(255, 255, 255);
+    }
+
+    #formLabel {
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 15px;
+        color: rgb(255, 255, 255);
+    }
+
+    #delete:hover {
+        color: rgb(0, 255, 255);
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: 18px;
+    }
+</style>
+<br />
+<br />
+
+@Html.ActionLink("Users", "Index") |
+@Html.ActionLink("Books", "Books") |
+@Html.ActionLink("BookCirculations", "BookCirculations")
+
+
+<h2 class="adminDashboardHeader">Books</h2>
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
+        <th id="Title">
+            Title
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Author)
+        <th id="Author">
+            Author
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegisteredOn)
+        <th id="Owner">
+            Owner
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BookStatus)
+        <th id="RegisteredOn">
+            Registered On
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AvailabilityStatus)
+        <th id="Status">
+            Status
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BorrowerAskedToReturnThisBook)
+        <th id="Availability">
+            Availability
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Author)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegisteredOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BookStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AvailabilityStatus)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BorrowerAskedToReturnThisBook)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BookId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BookId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BookId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        @Html.HiddenFor(modelItem => item.BorrowerAskedToReturnThisBook)
+
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Owner.ActualUsername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegisteredOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailabilityStatus)
+            </td>
+            <td>
+                @if (item.AvailabilityStatus == true)
+                {
+                    @Html.ActionLink("Edit", "EditBook", new { id = item.BookId }) <span> | </span>
+                    @Html.ActionLink("Delete", "DeleteBook", new { id = item.BookId })
+                }
+            </td>
+        </tr>
+    }
 
 </table>
+
+<script>
+
+    /////// Change searchInput by clicking into Headers
+    $(document).ready(function () {
+        
+        $("#Title").click(function () {
+            $("#searchInput").attr("placeholder", "Book");
+            $("#searchFilter").val("BookTitles");
+        })
+        $("#Author").click(function () {
+            $("#searchInput").attr("placeholder", "Author");
+            $("#searchFilter").val("Authors");
+        })
+        $("#Owner").click(function () {
+            $("#searchInput").attr("placeholder", "Owner");
+            $("#searchFilter").val("Users");
+        })
+        $("#RegisteredOn").click(function () {
+            $("#searchInput").attr("placeholder", "Registered On");
+            $("#searchFilter").val("RegisteredOn");
+        })
+        $("#Availability").click(function () {
+            $("#searchInput").attr("placeholder", "Availability");
+            $("#searchFilter").val("Availability");
+        })
+    });
+
+
+    function SearchFunction() {
+        // Declare variables
+        let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        bookList = document.getElementById("listOfBooks");
+        bookTitles = bookList.getElementsByClassName("bookTitle");
+
+        // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
+        // So we call the Array.prototype function and provide the nodeList as a parameter
+        $(bookTitles).each(function () {
+            let book = this;
+            bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
+        });
+        //Array.prototype.forEach.call(bookTitles,
+        //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+
+        let searchFilter = document.getElementById("searchFilter").selectedIndex;
+
+        //Because i have added a dummy value "SelectFilter" in options
+        // I subtract it from the final index.
+        searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
+
+        // Loop through all list items, and hide those who don't match the search query
+        for (index = 0; index < bookTitles.length; index++) {
+            let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
+            txtValue = bookAuthor.innerHTML;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                bookTitles[index].style.display = "";
+            } else {
+                bookTitles[index].style.display = "none";
+            }
+        }
+    }
+</script>

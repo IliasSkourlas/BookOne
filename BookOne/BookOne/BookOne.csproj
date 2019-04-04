@@ -46,7 +46,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,6 +68,7 @@
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -175,7 +185,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BookOne_Domain\Book.cs" />
     <Compile Include="BookOne_Domain\BookCirculation.cs" />
-    <Compile Include="BookOne_Domain\DatabaseOperations2.cs" />
     <Compile Include="BookOne_Domain\DatabaseOperations.cs" />
     <Compile Include="BookOne_Domain\BookNote.cs" />
     <Compile Include="BookOne_Domain\BookRequest.cs" />
@@ -276,6 +285,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BooksViewModel.cs" />
     <Compile Include="ViewModels\ReturnBookViewModel.cs" />
+    <Compile Include="ViewModels\UserExchangeHistoryViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -283,10 +293,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\clapping.mp4" />
     <Content Include="Content\images\ContentsCut1.jpg" />
     <Content Include="Content\images\Drowing.jpg" />
     <Content Include="Content\images\fish2.mp4" />
     <Content Include="Content\images\fishShadowMan.mp4" />
+    <Content Include="Content\images\road Lights2.mp4" />
     <Content Include="Content\images\TenTen.jpg" />
     <Content Include="Content\images\TenTenCut.jpg" />
     <Content Include="favicon.ico" />
@@ -318,7 +330,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -360,20 +371,22 @@
     <Content Include="Views\Player\Index.cshtml" />
     <Content Include="Views\Player\ShowUserProfile.cshtml" />
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
-    <Content Include="Views\Books\BorrowedBookDetails.cshtml" />
     <Content Include="Views\Shared\_LookAtThisPlayerPartial.cshtml" />
     <Content Include="Views\Player\_UnansweredRequestsFoundPartial.cshtml" />
     <Content Include="Views\Shared\_Layout - History.cshtml" />
     <Content Include="Views\Shared\_Layout - GiveAndTake.cshtml" />
     <Content Include="Views\Player\Requests.cshtml" />
     <Content Include="Views\Shared\_Layout - History - Copy.cshtml" />
-    <Content Include="Views\Player\RequestsOld.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Books.cshtml" />
     <Content Include="Views\Admin\BookCirculations.cshtml" />
     <Content Include="Views\Admin\EditBook.cshtml" />
     <Content Include="Views\Admin\DeleteBook.cshtml" />
-    <Content Include="Views\Chat\SendMessage.cshtml" />
+    <Content Include="Views\Admin\DeleteUser.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
+    <Content Include="Views\Books\History.cshtml" />
+    <Content Include="Views\Books\DownloadHistory.cshtml" />
+    <Content Include="Views\Shared\_Layout - UsersInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

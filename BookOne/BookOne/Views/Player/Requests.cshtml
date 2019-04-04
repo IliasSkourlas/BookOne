@@ -8,24 +8,138 @@
     ViewBag.Title = "Book Requests";
 }
 
+
+
+<style type="text/css">
+
+
+
+    #back {
+        color: white;
+    }
+
+        #back:hover {
+            /*color: var(--main-Header-color);*/
+            text-decoration: none;
+        }
+
+    .headers {
+        color: hotpink;
+    }
+
+    .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: rgb(255, 255, 255);
+    }
+    
+    a {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+        a:hover {
+            color: var(--main-HeaderHover-color);
+            text-decoration: none;
+        }
+
+
+    tr:hover {
+        background: rgba(253, 255, 233, 0.19);
+    }
+
+    #give {
+        /*color: rgb(251, 219, 132);*/
+        /*color: rgb(155, 251, 132);*/
+        color: var(--main-Header-color);
+    }
+
+    #take {
+        /*color: rgb(255, 102, 102)*/
+        color: var(--main-Header-color);
+    }
+
+    .green a {
+        color: rgb(0, 128, 0);
+    }
+
+        .green a:hover {
+            color: rgb(0, 206, 29);
+        }
+
+    .red a {
+        color: rgb(128, 0, 0);
+    }
+
+        .red a:hover {
+            color: rgb(206, 0, 0);
+        }
+
+    .nutral a {
+        color: var(--main-HeaderHover-color);
+    }
+
+        .nutral a:hover {
+            color: var(--main-Header-color);
+        }
+
+
+
+
+    .video-container {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        background-attachment: fixed;
+    }
+
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            opacity: 0.35;
+            pointer-events: none;
+            background-attachment: fixed;
+            z-index: 1;
+        }
+
+    #video2 {
+        opacity: 0.032;
+    }
+</style>
+
+
+
+<div>
+    <a id="back" href="/Books/Index">Back </a>
+    @*@Html.ActionLink("Back", null, null, null, new { id = "back", href = Request.UrlReferrer })*@
+</div>
+
 <br />
-<br />
+@ViewBag.RequestFailed
 <br />
 
-<h2>You want a book</h2>
+<h2 id="take">You want </h2>
 <table class="table">
     <tbody>
-        <tr>
-            <th>
+        <tr class="headers">
+            <th class="col-md-3">
                 @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
-            <th>
+            <th class="col-md-2">
                 @Html.DisplayNameFor(model => model.BookRequested.Owner)
             </th>
-            <th>
+            <th class="col-md-2">
                 Requested On
             </th>
-            <th></th>
+            <th class="col-md-5"></th>
         </tr>
 
         @foreach (var item in Model)
@@ -42,29 +156,37 @@
                     @item.RequestedOn.Date.ToShortDateString()
                 </td>
                 <td>
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
-                    {
-                        <span>(Waiting for owner's response) | </span>
+                    @{
+                        if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Unanswered)
+                        {
+                            <span>(Waiting for owner's response) &nbsp; &nbsp; </span>
 
-                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
-                    }
+                            <span class="red"> @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                        }
 
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
-                    {
-                        @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId }) <span>|</span>
+                        if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == true)
+                        {
+                            <span class="green">
+                                @Html.ActionLink("Accept Book", "BorrowerReceivedBook", new { RequestId = item.BookRequestId })
+                            </span>
+                            <span>&nbsp; &nbsp;</span>
 
-                        @Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })
-                    }
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
-                    {
-                        <span>(You have this book)</span>
-                    }
+                            <span class="red">@Html.ActionLink("Cancel", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                        }
 
-                    @if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
-                    {
-                        <span>(Request Declined) | </span>
+                        if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Declined)
+                        {
+                            <span>(Request Declined) &nbsp; &nbsp; </span>
 
-                        @Html.ActionLink("Remove Request", "CancelConfirmation", new { RequestId = item.BookRequestId })
+                            <span class="nutral">@Html.ActionLink("Remove Request", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                        }
+
+                        if (item.RequestedBy.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Accepted && item.BookRequested.AvailabilityStatus == false)
+                        {
+                            <span>(Book is borrowed to someone else)</span> <span>&nbsp; &nbsp;</span>
+
+                            <span class="red">@Html.ActionLink("Cancel Request", "CancelConfirmation", new { RequestId = item.BookRequestId })</span>
+                        }
                     }
                 </td>
             </tr>
@@ -77,23 +199,23 @@
 <br />
 
 
-<h2>Someone wants a book from you</h2>
+<h2 id="give">Someone wants </h2>
 <table class="table">
     <tbody>
-        <tr>
-            <th>
+        <tr class="headers">
+            <th class="col-md-3">
                 @Html.DisplayNameFor(model => model.BookRequested.Title)
             </th>
-            <th>
+            <th class="col-md-2">
                 Requested By
             </th>
-            <th>
+            <th class="col-md-2">
                 Requested On
             </th>
-            <th>
+            <th class="col-md-2">
                 Phone Number
             </th>
-            <th></th>
+            <th class="col-md-3"></th>
         </tr>
 
         @foreach (var item in Model)
@@ -118,19 +240,28 @@
                 <td>
                     @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == true)
                     {
-                        @Html.ActionLink("Give Book", "BorrowerReceivesBook", new { RequestId = item.BookRequestId }) <span>|</span>
+                        <span class="green">@Html.ActionLink("Give Book", "BorrowerReceivesBook", new { RequestId = item.BookRequestId })</span> <span>&nbsp; &nbsp;</span>
 
-                        @Html.ActionLink("Decline Request", "DeclineRequest", new { RequestId = item.BookRequestId })
+                        <span class="red">@Html.ActionLink("Decline Request", "DeclineRequest", new { RequestId = item.BookRequestId })</span>
 
                         //Change color at MyBooks
                     }
 
-                    @if (item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false && item.BookRequested.Owner.Id == User.Identity.GetUserId())
+                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
                     {
-                        @Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })
+                        <span class="nutral">@Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })</span>
+                    }
+                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == false && item.BookRequested.BorrowerAskedToReturnThisBook == false)
+                    {
+                        <span>Book is not in your hands</span><span>&nbsp; &nbsp;</span>
+
+                        <span class="red">@Html.ActionLink("Cancel", "DeclineRequest", new { RequestId = item.BookRequestId })</span>
                     }
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+
+
