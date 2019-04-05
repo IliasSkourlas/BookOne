@@ -32,8 +32,10 @@ namespace BookOne.Controllers
 
             ex.Result = new ViewResult
             {
-                ViewName = "~/Views/ErrorHandler/Index.cshtml"
+                ViewName = "~/Views/Shared/Error.cshtml"
             };
         }
     }
+
+
 }

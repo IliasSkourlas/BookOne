@@ -6,7 +6,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Data.SqlClient;
 using System;
+using System.Web.Mvc;
 using System.Data.Entity.Migrations;
+using BookOne.Controllers;
 
 namespace BookOne.BookOne_Domain
 {
