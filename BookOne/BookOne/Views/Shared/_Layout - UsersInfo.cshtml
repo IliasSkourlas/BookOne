@@ -283,7 +283,8 @@
 
         <br /><br /><br><br /><br />
         <div id="back">
-            @Html.ActionLink("Back", "Index", "Books")
+            @*@Html.ActionLink("Back", "Index", "Books")*@
+            @Html.ActionLink("Back", null, null, null, new { id = "back", href = Request.UrlReferrer })
         </div>
     </div>
 

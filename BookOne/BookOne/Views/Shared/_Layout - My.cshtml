@@ -262,7 +262,7 @@
                     </li>
                            
                     <li>
-                        @Html.ActionLink(User.Identity.GetUserName(), null, null, routeValues: null, htmlAttributes: new { title = "Manage" })
+                        @Html.ActionLink(User.Identity.GetUserName(), "ShowUserProfile", "Player", routeValues: new { userId = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
                     </li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>

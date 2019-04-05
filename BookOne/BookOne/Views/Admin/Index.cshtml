@@ -64,13 +64,15 @@
         <th id="phone" class="col-md-2">
             Phone Number
         </th>
-        <th id="registeredOn" class="col-md-2">
+        <th id="registeredOn" class="col-md-1">
             RegisteredOn
         </th>
-        <th id="userStatus" class="col-md-2">
-            User Status
+        <th id="userStatus" class="col-md-1">
+            Status
         </th>
-        <th></th>
+        <th class="col-md-2">
+            Actions
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -104,7 +106,7 @@
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RegisteredOn)
+                @item.RegisteredOn.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserStatus)
