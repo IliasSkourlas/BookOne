@@ -5,15 +5,22 @@
     ViewBag.Title = "MyHand";
 }
 
+
+
 <style type="text/css">
 
     body {
-        background-image: linear-gradient(rgb(6, 9, 150, 0.9),rgba(0,0,0,0.4)), url('../../Content/images/ContentsCut1.jpg');
+        /*background-image: linear-gradient(rgb(6, 9, 150, 0.9),rgba(0,0,0,0.4)), url('../../Content/images/ContentsCut1.jpg');*/
+        background-image: linear-gradient(rgb(6, 9, 150, 0.9),rgba(0,0,0,0.4));
         background-repeat: no-repeat;
         background-size: cover;
         background-attachment: fixed;
     }
 </style>
+
+
+
+
 
 <br />
 <br />
@@ -56,7 +63,7 @@
 </table>
 
 
-@*<h2>Borrowed Books from other Users</h2>*@
+
 <div class="borrowed">
     <table id="listOfBooks" class="table">
         <tr class="header">
@@ -128,12 +135,19 @@
     </table>
 </div>
 
+
+
+
+
+
+
+
 <script>
 
     function hideAll() {
         $('.author').hide();
         $('.timeLeft').hide();
-        //$('.returnBook').hide();
+       
     }
 
     var n = 0;
@@ -163,7 +177,7 @@
             new function () {
                 $('.owner').hide();
                 $('.timeLeft').show();
-                //$('.returnBook').show();
+              
 
             }
         }
@@ -173,7 +187,7 @@
                 $('.author').show();
                 $('.owner').hide();
                 $('.timeLeft').hide();
-                //$('.returnBook').hide();
+               
 
             }
         }

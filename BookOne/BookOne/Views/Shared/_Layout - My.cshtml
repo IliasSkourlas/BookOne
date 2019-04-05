@@ -101,9 +101,7 @@
         div.borrowed * {
             color: var(--main-borrowed-color);
         }
-        /*#excludedColor a {
-            color: rgba(0, 255, 255, 0.68);
-        }*/
+        
         tr:hover {
             background: rgba(255, 255, 255, 0.08);
         }
@@ -152,9 +150,37 @@
                 z-index: 1;
             }
 
-        /*#blink a {
-            color: #9d9d9d;
-        }*/
+
+
+
+
+
+
+        .tooltipp {
+            position: relative;
+            display: inline-block;
+        }
+
+            .tooltipp .tooltiptextt {
+                visibility: hidden;
+                font-size: small;
+                width: 120px;
+                background-color: rgba(255, 255, 255, 0.41);
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                top: -5px;
+                left: 105%;
+            }
+
+            .tooltipp:hover .tooltiptextt {
+                visibility: visible;
+                /*visibility:hidden;*/
+            }
 
     </style>
 
@@ -170,44 +196,52 @@
         </video>
     </div>
 
-    <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink(":)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-
-                    <li>@Html.ActionLink("All", "Index", "Books")</li>
-                    <li id="weAreHere">@Html.ActionLink("My", "MyBooks", "Books")</li>
-                    <li>@Html.ActionLink("Hand", "MyHand", "Books")</li>
-
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
-                    }
-                    <li id="blink">@Html.ActionLink("Requests", "Requests", "Player")</li>
-
-                </ul>
 
 
-                @{Html.RenderAction("CheckUnansweredRequests", "Player"); }
+   
+
+       
+    <div class="tooltipp">
+        <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink(":)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+
+                        <li>@Html.ActionLink("All", "Index", "Books")</li>
+                        <li id="weAreHere">@Html.ActionLink("My", "MyBooks", "Books")</li>
+                        <li>@Html.ActionLink("Hand", "MyHand", "Books")</li>
+
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+                        }
+                        <li id="blink">@Html.ActionLink("Requests", "Requests", "Player")</li>
+
+                    </ul>
 
 
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">
-                        <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
-                    </div>
-                    @*<button type="submit" class="btn btn-default">?</button>*@
-                </form>
+                    @{Html.RenderAction("CheckUnansweredRequests", "Player"); }
 
+
+                    <form class="navbar-form navbar-right" role="search">
+                        <div class="form-group">
+                            <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
+                        </div>
+                      
+                    </form>
+
+                </div>
             </div>
         </div>
+        <span class="tooltiptextt">click on the background to toggle views</span>
     </div>
 
     <div class="container body-content" onclick="rotate()">
@@ -220,8 +254,13 @@
             {
                 @Html.AntiForgeryToken()
 
+                   
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("History", "History", "Books")</li>
+                       
+                    <li>
+                            @Html.ActionLink("History", "History", "Books")
+                    </li>
+                           
                     <li>
                         @Html.ActionLink(User.Identity.GetUserName(), null, null, routeValues: null, htmlAttributes: new { title = "Manage" })
                     </li>
@@ -248,8 +287,12 @@
     </div>
 
 
-    @RenderSection("scripts", required: false)
-</body>
+        @RenderSection("scripts", required: false)
+
+
+
+
+
 
 <script>
     function SearchFunction() {
@@ -287,4 +330,9 @@
         }
     }
 </script>
+
+
+
+</body>
+
 </html>

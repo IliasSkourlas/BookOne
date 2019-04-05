@@ -49,9 +49,9 @@
             filter: alpha(opacity=30);
         }
 
-        #searchFilter {
+        /*#searchFilter {
             display: none;
-        }
+        }*/
 
         #weAreHere a {
             color: var(--main-Header-color);
@@ -253,6 +253,33 @@
             min-height: 200px;
             z-index: 6;
         }
+
+
+        .tooltipp {
+            position: relative;
+            display: inline-block;
+        }
+
+            .tooltipp .tooltiptextt {
+                visibility: hidden;
+                font-size: small;
+                width: 120px;
+                background-color: rgba(255, 255, 255, 0.41);
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                top: -5px;
+                left: 105%;
+            }
+
+            .tooltipp:hover .tooltiptextt {
+                visibility: visible;
+                /*visibility:hidden;*/
+            }
     </style>
 
 </head>
@@ -265,43 +292,45 @@
 
 
 
-    <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button id="NotThis1" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink(":)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+    <div class="tooltipp">
+        <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button id="NotThis1" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink(":)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
 
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @Html.Partial("_weAreHerePatial")
-                </ul>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @Html.Partial("_weAreHerePatial")
+                    </ul>
 
 
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">
-                        <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
-                    </div>
-                    @*@*This Search form must be bypased ...later...and for now it will just be invisible*@
-                    <select id="searchFilter">
-                        <option value="" disabled selected style="display: none;">Select a Filter</option>
-                        <option value="BookTitles">Book</option>
-                        <option value="Authors">Author</option>
-                        <option value="Users">Owner</option>
-                        <option value="Availability">Availability</option>
-                        <option value="Status">Status</option>
-                        <option value="Owner">Owner</option>
-                    </select>
-                </form>
+                    <form class="navbar-form navbar-right" role="search">
+                        <div class="form-group">
+                            <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
+                        </div>
+                        @*@*This Search form must be bypased ...later...and for now it will just be invisible*@
+                        <select id="searchFilter">
+                            <option value="" disabled selected style="display: none;">Select a Filter</option>
+                            <option value="BookTitles">Book</option>
+                            <option value="Authors">Author</option>
+                            <option value="Users">Owner</option>
+                            <option value="Availability">Availability</option>
+                            <option value="Status">Status</option>
+                            <option value="Owner">Owner</option>
+                        </select>
+                    </form>
 
+                </div>
             </div>
         </div>
+        <span class="tooltiptextt">Click on the yellow area to toggle views</span>
     </div>
-
     <div class="container body-content">
 
 
@@ -345,11 +374,13 @@
 
 
 
-   
+
 
     <div class="canvasContainer1" onclick="rotate()">
         <canvas id="canvas1" class="contextCanvas1"></canvas>
     </div>
+
+
 
     <div id="canvasContainer2" class="canvasContainer2">
         <canvas id="canvas2" class="contextCanvas2"></canvas>
@@ -405,35 +436,7 @@
         c2.fillStyle = "pink";
         c2.fillRect(140, 140, 75, 50);
 
-        ////// Smile
-        //c2.arc(500, 200, 100, 0, 1 * Math.PI);
-        //c2.strokeStyle = "cyan";
-        //c2.lineWidth = 40;
-        //c2.stroke();
 
-        //c2.beginPath();
-        //c2.arc(400, 100, 50, 0, 2 * Math.PI);
-        //c2.strokeStyle = "white";
-        //c2.lineWidth = 40;
-        //c2.stroke();
-
-        //c2.beginPath();
-        //c2.arc(600, 100, 50, 0, 2 * Math.PI);
-        //c2.strokeStyle = "white";
-        //c2.lineWidth = 40;
-        //c2.stroke();
-
-        //c2.beginPath();
-        //c2.arc(430, 100, 10, 0, 2 * Math.PI);
-        //c2.strokeStyle = "white";
-        //c2.lineWidth = 40;
-        //c2.stroke();
-
-        //c2.beginPath();
-        //c2.arc(630, 100, 10, 0, 2 * Math.PI);
-        //c2.strokeStyle = "white";
-        //c2.lineWidth = 40;
-        //c2.stroke();
 
         /////// Change searchInput by clicking into Headers
         $(document).ready(function () {
@@ -502,8 +505,37 @@
 
 
         // SEARCH
-        /////////////////////////////       
-
+        /////////////////////////////
+        function SearchFunction() {
+            // Declare variables
+            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
+            input = document.getElementById('searchInput');
+            filter = input.value.toUpperCase();
+            bookList = document.getElementById("listOfBooks");
+            bookTitles = bookList.getElementsByClassName("bookTitle");
+            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
+            // So we call the Array.prototype function and provide the nodeList as a parameter
+            $(bookTitles).each(function () {
+                let book = this;
+                bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
+            });
+            //Array.prototype.forEach.call(bookTitles,
+            //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
+            let searchFilter = document.getElementById("searchFilter").selectedIndex;
+            //Because i have added a dummy value "SelectFilter" in options
+            // I subtract it from the final index.
+            searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
+            // Loop through all list items, and hide those who don't match the search query
+            for (index = 0; index < bookTitles.length; index++) {
+                let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
+                txtValue = bookAuthor.innerHTML;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    bookTitles[index].style.display = "";
+                } else {
+                    bookTitles[index].style.display = "none";
+                }
+            }
+        }
     </script>
 </body>
 </html>
