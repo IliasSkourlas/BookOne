@@ -65,6 +65,32 @@
             z-index: 1;
             pointer-events: none;
         }*/
+
+        .tooltipp {
+            position: relative;
+            display: inline-block;
+        }
+
+            .tooltipp .tooltiptextt {
+                visibility: hidden;
+                font-size: small;
+                width: 120px;
+                background-color: rgba(255, 255, 255, 0.41);
+                color: #dcdcdc;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                /* Position the tooltip */
+                position: absolute;
+                z-index: 1;
+                top: -5px;
+                left: 105%;
+            }
+
+            .tooltipp:hover .tooltiptextt {
+                visibility: visible;
+                /*visibility:hidden;*/
+            }
     </style>        
 
 
