@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>@ViewBag.Title - BookOne</title>
 
     @Styles.Render("~/Content/css")
@@ -27,13 +27,16 @@
             font-size: 18px;
             color: rgba(255, 255, 255, 1);
         }
+
         .header th {
             color: var(--main-Header-color);
         }
+
         a:hover {
             color: var(--main-HeaderHover-color);
             text-decoration: none;
         }
+
         a {
             color: rgba(255, 255, 255, 0.8);
         }
@@ -45,9 +48,11 @@
             opacity: 0.89;
             filter: alpha(opacity=30);
         }
+
         #searchFilter {
             display: none;
         }
+
         #weAreHere a {
             color: var(--main-Header-color);
         }
@@ -68,15 +73,19 @@
             vertical-align: top;
             border-top: var(--main-border-top-color);
         }
+
         #listOfBooks > tbody > tr.header > th {
             border-top: var(--main-border-top-color);
         }
+
         .table {
             margin-bottom: 0px;
         }
+
         tr:hover {
             background: rgba(255, 255, 255, 0.08);
         }
+
         body > div.container.body-content > hr {
             border-top: var(--main-border-top-color);
             border-bottom: var(--main-border-top-color);
@@ -93,25 +102,27 @@
             pointer-events: none;
             background-attachment: fixed;
         }
-        .video-container video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            opacity: 0.2;
-            pointer-events: none;
-            background-attachment: fixed;
-            z-index: 1;
-        }
+
+            .video-container video {
+                min-width: 100%;
+                min-height: 100%;
+                width: auto;
+                height: auto;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                opacity: 0.2;
+                pointer-events: none;
+                background-attachment: fixed;
+                z-index: 1;
+            }
 
         #canvas1 {
             border: 1px solid rgba(255, 216, 0, 0.3);
             background-color: rgba(255, 216, 0, 0.2);
         }
+
         .canvasContainer1 {
             position: fixed;
             left: 43%;
@@ -122,6 +133,7 @@
             z-index: 1;
             background-color: transparent;
         }
+
         .contextCanvas1 {
             position: absolute;
             width: 100%;
@@ -135,6 +147,7 @@
             border: 1px solid rgba(255, 255, 255, 0.58);
             background-color: rgba(14, 14, 14, 0.90);
         }
+
         .canvasContainer2 {
             transition: left 1s;
             transition: opacity 1s;
@@ -148,6 +161,7 @@
             background-color: transparent;
             opacity: 0;
         }
+
         .contextCanvas2 {
             position: absolute;
             width: 100%;
@@ -156,6 +170,7 @@
             top: 0px;
             z-index: 1;
         }
+
         #lookAtThisPlayer {
             position: absolute;
             top: 20%;
@@ -168,6 +183,7 @@
             border: 1px solid rgba(255, 216, 0, 0.00);
             background-color: rgba(0, 0, 0, 0.00);
         }
+
         .canvasContainer3 {
             position: fixed;
             left: 100%;
@@ -178,6 +194,7 @@
             z-index: 2;
             background-color: transparent;
         }
+
         .contextCanvas3 {
             position: absolute;
             width: 100%;
@@ -186,6 +203,7 @@
             top: 0px;
             z-index: 3;
         }
+
         .chat-button {
             position: absolute;
             cursor: pointer;
@@ -198,6 +216,7 @@
             opacity: 0.6;
             z-index: 6;
         }
+
         .canvasContainer3 .btn {
             background-color: rgba(25, 233, 227, 0.32);
             color: rgba(0, 0, 0, 0.94);
@@ -212,6 +231,7 @@
         .canvasContainer3 .cancel {
             background-color: rgba(233, 203, 25, 0.32);
         }
+
         .messageForm {
             position: absolute;
             display: none;
@@ -220,6 +240,7 @@
             border: 0;
             z-index: 5;
         }
+
         .form-container textarea {
             width: 100%;
             padding: 15px;
@@ -231,7 +252,6 @@
             min-height: 200px;
             z-index: 6;
         }
-
     </style>
 
 </head>
@@ -260,7 +280,7 @@
                     @Html.Partial("_weAreHerePatial")
                 </ul>
 
-               
+
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
@@ -272,9 +292,11 @@
                         <option value="Authors">Author</option>
                         <option value="Users">Owner</option>
                         <option value="Availability">Availability</option>
+                        <option value="Status">Status</option>
+                        <option value="Owner">Owner</option>
                     </select>
                 </form>
-               
+
             </div>
         </div>
     </div>
@@ -336,7 +358,7 @@
 
     <div id="canvasContainer3" class="canvasContainer3">
         <canvas id="canvas3" class="contextCanvas3"></canvas>
-        
+
         <button id="chat-button" class="chat-button" onclick="openChat()">Chat</button>
         <div class="messageForm" id="messageForm">
             <form action="/action_page.php" class="form-container">
@@ -411,7 +433,7 @@
         /////// Change searchInput by clicking into Headers
         $(document).ready(function () {
             $("#Author").click(function () {
-                $("#searchInput").attr("placeholder","Author");
+                $("#searchInput").attr("placeholder", "Author");
                 $("#searchFilter").val("Authors");
             })
             $("#Title").click(function () {
@@ -426,9 +448,17 @@
                 $("#searchInput").attr("placeholder", "Availability");
                 $("#searchFilter").val("Availability");
             })
+            $("#Status").click(function () {
+                $("#searchInput").attr("placeholder", "Status");
+                $("#searchFilter").val("Status");
+            })
+            $("#Owner").click(function () {
+                $("#searchInput").attr("placeholder", "Owner");
+                $("#searchFilter").val("Owner");
+            })
 
         });
-     
+
         ////// PLAYER VISASBILITY 2
         ////// disappear
         $(document).ready(function () {
@@ -467,43 +497,8 @@
 
 
         // SEARCH
-        /////////////////////////////
+        /////////////////////////////       
 
-        function SearchFunction() {
-            // Declare variables
-            let input, filter, bookList, bookTitles, index, txtValue, bookAuthors = [];
-            input = document.getElementById('searchInput');
-            filter = input.value.toUpperCase();
-            bookList = document.getElementById("listOfBooks");
-            bookTitles = bookList.getElementsByClassName("bookTitle");
-
-            // We cannot call directly forEach on bookTitles since it's a NodeList (a type of Array)
-            // So we call the Array.prototype function and provide the nodeList as a parameter
-            $(bookTitles).each(function () {
-                let book = this;
-                bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML);
-            });
-            //Array.prototype.forEach.call(bookTitles,
-            //    book => bookAuthors.push(book.getElementsByTagName("td")[1].innerHTML));
-
-            let searchFilter = document.getElementById("searchFilter").selectedIndex;
-
-            //Because i have added a dummy value "SelectFilter" in options
-            // I subtract it from the final index.
-            searchFilter = searchFilter === 0 ? 0 : searchFilter - 1;
-
-            // Loop through all list items, and hide those who don't match the search query
-            for (index = 0; index < bookTitles.length; index++) {
-                let bookAuthor = bookTitles[index].getElementsByTagName("td")[searchFilter];
-                txtValue = bookAuthor.innerHTML;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    bookTitles[index].style.display = "";
-                } else {
-                    bookTitles[index].style.display = "none";
-                }
-            }
-        }
-               
     </script>
 </body>
 </html>
