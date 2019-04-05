@@ -28,23 +28,22 @@
         }
 
     #yes {
-        color: rgb(255, 0, 220);
+        color:rgba(255, 255, 255, 0.90);
         background-color: rgba(255, 255, 255, 0.11);
-        /*border-color: rgba(0, 255, 255, 0.43);*/
         display: inline-block;
         margin: 10px 40px;
         font-size: x-large;
+        font-style:italic;
     }
 
         #yes:hover {
             background-color: rgba(0, 255, 255, 0.43);
-            border-color: var(--main-HeaderHover-color)
+            border-color: rgb(255, 36, 143);
         }
 
     #no {
         color: rgba(255, 0, 0, 0.62);
         background-color: rgba(255, 255, 255, 0.11);
-        /*border-color: rgba(255, 0, 0, 0.36);*/
         display: inline-block;
         margin: 10px 40px;
         font-size: x-large;
@@ -80,8 +79,8 @@
         content:"?";
     }
     .noClapping:hover:after {
-        color: gray;
-        content:"?";
+        color: rgba(0, 0, 0, 0.79);
+        content: "?";
     }
     .shovel:hover:after {
         color: red;
@@ -102,8 +101,7 @@
     }
 
     .noClapping:hover {
-        color: #9d9d9d;
-        
+        color: rgba(0, 0, 0, 0.79);
     }
 
     .shovel:hover {
@@ -181,11 +179,12 @@
             opacity: 0.35;
             pointer-events: none;
             background-attachment: fixed;
-            z-index: 1;
+            
         }
 
     #video2 {
-        opacity: 0.032;
+        opacity: 0.9;
+        transition: opacity, 1s;
     }
     
 </style>
@@ -245,31 +244,53 @@
                    @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)
 
                </h2>
-               <h2 class="question">deserves </h2>
+               <div class="tooltipp ">
+                   <h2 class="question">deserves </h2>
+                   <span class="tooltiptextt">...give what  @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername) deserves </span>
+               </div><br />
 
 
                <br /><br /><br />
 
                <div>
                    <div class="clappsAndTreats">
-                       <label onclick="stopClapping()" class="noClapping"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0, new { @checked = true }) <span id="noClapping">No clapping </span></label><br />
-                       <label onclick="startClapping()" class="clapping">@Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1) <span id="clapping">Clapping </span> </label><br />
-                       <label class="shovel"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span id="shovel">a shovel </span></label><br />
-                       <label class="treat"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span id="treat">a treat </span></label><br />
-                       <label class="cookie"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span id="cookie">a poisonous Cookie </span> </label>
+
+                       <div class="tooltipp ">
+                           <label onclick="stopClapping()" class="noClapping"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 0, new { @checked = true }) <span id="noClapping">No clapping </span></label><br />
+                           <span class="tooltiptextt">...if that was not the best</span>
+                       </div><br />
+                       <div class="tooltipp ">
+                           <label onclick="startClapping()" class="clapping">@Html.RadioButtonFor(m => m.ReactionGiven.Choice, 1) <span id="clapping">Clapping </span> </label><br />
+                           <span class="tooltiptextt">...if your are happy</span>
+                       </div><br />
+                       <div class="tooltipp ">
+                           <label class="shovel"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 2) <span id="shovel">a shovel </span></label><br />
+                           <span class="tooltiptextt">...if your book is kaputt</span>
+                       </div><br />
+                       <div class="tooltipp ">
+                           <label class="treat"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 3) <span id="treat">a treat </span></label><br />
+                           <span class="tooltiptextt">...this will do you good!</span>
+                       </div><br />
+                       <div class="tooltipp ">
+                           <label class="cookie"> @Html.RadioButtonFor(m => m.ReactionGiven.Choice, 4) <span id="cookie">a poisonous Cookie </span> </label>
+                           <span class="tooltiptextt">...here take a cokkie!</span>
+                       </div><br />
+
                    </div>
 
                    <br /><br /><br />
 
 
-                   <div>
-                       <div class="form-group">
-                           <div id="buttons">
-                               <input id="yes" type="submit" value="this is for  @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)" class="btn btn-default" onmouseover="change1()" onmouseout="change2()"/>
-                               @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a id="no" href="/Player/Requests" class="btn btn-default">No</a>*@
+                   <div class="tooltipp">
+                       <div>
+                           <div class="form-group">
+                               <div id="buttons">
+                                   <input id="yes" type="submit" value="this is for  @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)" class="btn btn-default" />
+
+                               </div>
                            </div>
                        </div>
+                       <span class="tooltiptextt">...this will influence @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)</span>
                    </div>
 
                </div>
@@ -278,26 +299,23 @@
 
 
 
-<script>
-
-    function change1() {
-        setInterval(function () {
-            $("video").css("opacity", "0.9");
-
-        }, 700);
-    }
-    function change2() {
-        setInterval(function () {
-            $("video").css("opacity", "0.032");
-
-        }, 700);
-    }
-    function startClapping() {
-        $("#video3").css("display", "block");
-    }
-    function stopClapping() {
-        $("#video3").css("display", "none");;
-    }
+               <script>
 
 
-</script>
+
+                   function startClapping() {
+                       $("#video3").css("display", "block");
+                       //$("video").css("opacity", "0.9");
+                       setInterval(function () {
+                           $("video").css("opacity", "0.9");
+
+                       }, 700);
+
+
+                   }
+                   function stopClapping() {
+                       $("#video3").css("display", "none");;
+                   }
+
+
+               </script>
