@@ -26,52 +26,13 @@
         color: rgba(255, 255, 255, 1);
     }
 
-    #AboutText {
-        margin-top: 20%;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        font-size: large;
-        color: rgba(255, 255, 255, 1);
-        text-align: center;
-        letter-spacing: 4px;
-    }
+    
 
     .container-fluid .navbar-brand {
         margin-left: -200px;
     }
 
-    #MyNavbar {
-        background-color: rgba(21, 226, 226, 0.00);
-        border-bottom: none;
-    }
-
-    .navbar-brand {
-        font-size: 30px;
-    }
-
-    .navbar-nav {
-        font-size: 25px;
-    }
-
-    .navbar {
-        min-height: 80px;
-    }
-
-    .navbar-inverse .navbar-nav > li > a {
-        color: #FFC0CB;
-        opacity: 0.9;
-    }
-
-        .navbar-inverse .navbar-nav > li > a:hover {
-            color: var(--main-HeaderHover-color);
-        }
-
-    .nav > li > a:hover {
-        background-color: rgb(0, 255, 255);
-    }
-
-    .navbar-inverse .navbar-brand {
-        color: #FFC0CB;
-    }
+   
 
 
     .form-control {
@@ -84,6 +45,8 @@
         transition: opacity 2s;
     }
 
+
+    /*this works but!*/
     .form-control::placeholder {
         color: rgba(255, 255, 255, 0.8);
     }
@@ -134,93 +97,135 @@
     #registerLink:hover {
         color: var(--main-HeaderHover-color);
     }
+
+
+
+    .center {
+        position: relative;
+        text-align: center;
+    }
+
+    #AboutText {
+        margin-top: 17%;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: large;
+        color: rgba(255, 255, 255, 1);
+        letter-spacing: 4px;
+    }
+
+    #positionPoint0 {
+        position: relative;
+    }
+
+    #inputEmail4 {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    #soFar {
+        position: relative;
+        bottom:4%;
+    }
+   
     
 </style>
 
-<div id="mouseMove" onmousemove="myFunction(event)" onmouseout="showEmail()">
 
 
 
-    <div id="AboutText">
-        <div id="about">
-            <h1>we are aiming on rediscovering the world of your </h1>
-            <h1>books.</h1>
+
+<div id="mouseMove" onmouseout="showEmail()">
+
+
+
+    <div class="center">
+
+        <div id="AboutText">
+            <div id="about">
+                <h1>we are aiming on rediscovering the world of your </h1>
+                <h1>books.</h1>
+            </div>
+
+
+            @*<h2>
+                    This is an app for searing your books with your friends. Not digital books, but your physical books.
+                    It helps you to keep track with their whereabouts, as they are seared from a pool of carriers that you choose.
+                    Read and write reviews and decide to give or not a Clap, when they are returned back to you in perfect condition.
+                    So...explore and have fun...and don't hesitate searing!
+                </h2>*@
+
+
+
+            <div id="positionPoint0">
+                <form action="/Home/EmailNotifier" method="Post" class="form-horizontal">
+                    <div class="form-row">
+
+                        <div class="form-group">
+                            <h2 for="inputEmail">...and we will keep you informed</h2>
+                            <br /><br /><br />
+                            <input id="inputEmail4" type="email" name="userEmail" class="form-control" placeholder="give us your email...">
+                            <br /><br /><br />
+
+                        </div>
+
+                        <button id="button" type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+
+                <br />
+                <div id="soFar" class="form-row"><p><spam>... </spam> <spam id="counter"> @Html.Action("EmailNotificationsCounter", "Home", new { area = "" }) </spam> <spam> emails so far</spam></p></div>
+            </div>
+
+
+            @ViewBag.Success
         </div>
 
-        @*<h2>
-            This is an app for searing your books with your friends. Not digital books, but your physical books.
-            It helps you to keep track with their whereabouts, as they are seared from a pool of carriers that you choose.
-            Read and write reviews and decide to give or not a Clap, when they are returned back to you in perfect condition.
-            So...explore and have fun...and don't hesitate searing!
-        </h2>*@
-
-        <br />
-        <br />
-
-        <form action="/Home/EmailNotifier" method="Post" class="form-horizontal">
-            <div class="form-row">
-
-                <div class="form-group col-md-6">
-                    <input type="email" name="userEmail" class="form-control" id="inputEmail4" placeholder="give us your email...">
-                    <br />
-                    <label for="inputEmail">...and we will keep you informed</label>
-                </div>
-
-                <button id="button" type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-
-
-        <p><spam>We have </spam> <spam id="counter"> @Html.Action("EmailNotificationsCounter", "Home", new { area = "" }) </spam> <spam> emails so far</spam></p>
-
-        @ViewBag.Success
     </div>
 
+
 </div>
-<script>
-
-    ///////  Add count with a new email
-    document.getElementById("button").addEventListener("click", addOne);
-
-    var count = 1;
-
-    function addOne() {
-        var x = document.getElementById("emailInput").value;
 
 
-        // Make better
-        if (x.length > 12 && x.includes("") && x.includes(".")) {
-            count += 1;
-            document.getElementById("counter").innerHTML = count;
+    <script>
+
+        ///////  Add count with a new email
+        document.getElementById("button").addEventListener("click", addOne);
+
+        var count = 1;
+
+        function addOne() {
+            var x = document.getElementById("emailInput").value;
+
+
+            // Make better
+            if (x.length > 12 && x.includes("") && x.includes(".")) {
+                count += 1;
+                document.getElementById("counter").innerHTML = count;
+                document.getElementById("emailInput").value = "";
+            }
             document.getElementById("emailInput").value = "";
         }
-        document.getElementById("emailInput").value = "";
-    }
-
-
-    /////////// mouse over
-    //$(document).ready(function () {
-    //    $("#AboutText").onmousemove(function () {
-    //        $(".form-row").css("opacity", "1");
-    //        $("#about").css("opacity", "0");
-    //    })
-
-
-    //});
 
 
 
 
-    function myFunction(e) {
-        var x = e.clientX;
-        var y = e.clientY;
-    }
-    function showEmail() {
-        $(".form-row").css("opacity", "1");
-        $("#about").css("opacity", "0");
-    };
 
-</script>
+        /// hide and show
+        function showEmail() {
+            $(".form-row").css("opacity", "1");
+
+            $("#about").css("opacity", "0");
+        };
+
+        function hideEmail() {
+            $(".form-row").css("opacity", "0");
+
+            $("#about").css("opacity", "1");
+        };
+
+
+
+    </script>
 
 
 
