@@ -12,7 +12,7 @@ namespace BookOne.Controllers
     [Authorize]
     public class ChatController : Controller
     {
-        DatabaseOperations dbOps = new DatabaseOperations();
+        //DatabaseOperations dbOps = new DatabaseOperations();
 
 
         //public ActionResult Index()

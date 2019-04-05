@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Data.SqlClient;
 using System;
+using System.Data.Entity.Migrations;
 
 namespace BookOne.BookOne_Domain
 {
@@ -25,7 +26,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
 
@@ -174,11 +174,11 @@ namespace BookOne.BookOne_Domain
             {
                 return db.Books.Where(b => b.BookStatus == BookStatuses.Public)
                         .Include(b => b.Owner)
+                        .OrderBy(b => b.RegisteredOn)
                         .ToList();
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -193,7 +193,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -207,7 +206,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -221,7 +219,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -230,32 +227,30 @@ namespace BookOne.BookOne_Domain
         //Returns All books that the user currently holds
         public IEnumerable<Book> MyHand(string loggedInUserId)
         {
-            //This method could just work by checking which books have the loggedInUser's Id in their Carrier field.
-
-            // my books not currently borrowed by anyone
+            //This method could just work by checking which books have the loggedInUser's Id in their CarrierId field.
             try
             {
-                var ownedBooksNotCurrentlyBorrowed =
-                        db.Books.Where(b => b.Owner.Id == loggedInUserId).Except(
-                            db.BookCirculations.Where(c => c.BookAssociated.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
-                            .Select(c => c.BookAssociated))
-                            .Include(b => b.Owner);
+                //My books not currently borrowed by anyone
+                var ownedBooksNotCurrentlyBorrowed = db.Books
+                    .Where(b => b.Owner.Id == loggedInUserId)
+                    .Except(db.BookCirculations
+                        .Where(c => c.BookAssociated.Owner.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
+                        .Select(c => c.BookAssociated))
+                        .Include(b => b.Owner);
 
-                var borrowedBooks =
-                db.BookCirculations.Where(c => c.Borrower.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
-                .Select(c => c.BookAssociated)
-                .Include(b => b.Owner);
+                //Books currently borrowed by the logged in user
+                var borrowedBooks = db.BookCirculations
+                    .Where(c => c.Borrower.Id == loggedInUserId && c.CirculationStatus == CirculationStatuses.Borrowed)
+                    .Select(c => c.BookAssociated)
+                    .Include(b => b.Owner);
+
 
                 return borrowedBooks.Union(ownedBooksNotCurrentlyBorrowed).ToList();
             }
             catch (SqlException)
             {
-
                 throw;
             }
-
-            // books currently borrowed by the logged in user
-            
         }
         
 
@@ -266,12 +261,12 @@ namespace BookOne.BookOne_Domain
         {
             try
             {
-                db.Entry(user).State = EntityState.Modified;
+                //db.Entry(user).State = EntityState.Modified;
+                db.Users.AddOrUpdate(user);
                 db.SaveChanges();
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -291,7 +286,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -311,7 +305,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -330,7 +323,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -347,7 +339,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -400,7 +391,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
             
@@ -428,7 +418,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -445,7 +434,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -463,7 +451,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -482,7 +469,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -518,7 +504,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }           
         }
@@ -544,7 +529,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -557,7 +541,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -578,7 +561,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -605,7 +587,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -633,7 +614,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -650,7 +630,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -668,7 +647,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -682,7 +660,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -696,7 +673,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -710,7 +686,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -741,7 +716,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -760,7 +734,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -779,7 +752,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -798,7 +770,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -813,7 +784,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -834,7 +804,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -851,7 +820,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -870,7 +838,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -886,7 +853,6 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
@@ -906,31 +872,30 @@ namespace BookOne.BookOne_Domain
             }
             catch (SqlException)
             {
-
                 throw;
             }
         }
 
 
-        //public void ChangeUserRole(ApplicationUser user)
-        //{
-        //    var savedUser = db.Users.Find(user.Id);
-        //    var oldRole = savedUser.Roles.SingleOrDefault().RoleId;
+        public void ChangeUserRole(ApplicationUser user, string newRole)
+        {
+            var savedUser = db.Users.Find(user.Id);
+            var oldRole = GetUserRole(savedUser);
 
-        //    var roleStore = new RoleStore<IdentityRole>(db);
-        //    var roleManager = new RoleManager<IdentityRole>(roleStore);
-        //    var userStore = new UserStore<ApplicationUser>(db);
-        //    var userManager = new UserManager<ApplicationUser>(userStore);
-        //    userManager.RemoveFromRole(user.Id, oldRole);
-        //    userManager.AddToRole(user.Id, user.userRole.ToString());
-        //}
+            var roleStore = new RoleStore<IdentityRole>(db);
+            var roleManager = new RoleManager<IdentityRole>(roleStore);
+            var userStore = new UserStore<ApplicationUser>(db);
+            var userManager = new UserManager<ApplicationUser>(userStore);
+            userManager.RemoveFromRole(user.Id, oldRole);
+            userManager.AddToRole(user.Id, newRole);
+        }
 
 
-        
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        
-        
+
+
         //Disposes the database instance when it is called
         public void DisposeDB()
         {
