@@ -80,8 +80,8 @@
         content:"?";
     }
     .noClapping:hover:after {
-        color: gray;
-        content:"?";
+        color: rgba(0, 0, 0, 0.79);
+        content: "?";
     }
     .shovel:hover:after {
         color: red;
@@ -102,8 +102,7 @@
     }
 
     .noClapping:hover {
-        color: #9d9d9d;
-        
+        color: rgba(0, 0, 0, 0.79);
     }
 
     .shovel:hover {
@@ -181,11 +180,12 @@
             opacity: 0.35;
             pointer-events: none;
             background-attachment: fixed;
-            z-index: 1;
+            
         }
 
     #video2 {
-        opacity: 0.032;
+        opacity: 0.9;
+        transition: opacity, 1s;
     }
     
 </style>
@@ -266,8 +266,7 @@
                        <div class="form-group">
                            <div id="buttons">
                                <input id="yes" type="submit" value="this is for  @Html.DisplayFor(model => model.Circulation.Borrower.ActualUsername)" class="btn btn-default" onmouseover="change1()" onmouseout="change2()"/>
-                               @*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a id="no" href="/Player/Requests" class="btn btn-default">No</a>*@
+                              
                            </div>
                        </div>
                    </div>
@@ -280,20 +279,41 @@
 
 <script>
 
-    function change1() {
-        setInterval(function () {
-            $("video").css("opacity", "0.9");
+    //function change1() {
+    //    setInterval(function () {
+    //        $("video").css("opacity", "0.9");
 
-        }, 700);
-    }
-    function change2() {
-        setInterval(function () {
-            $("video").css("opacity", "0.032");
+    //    }, 700);
+    //}
+    //function change2() {
+    //    setInterval(function () {
+    //        $("video").css("opacity", "0.032");
 
-        }, 700);
-    }
+    //    }, 700);
+    //}
+    //setInterval(function () {
+    //    $("video").css("opacity", "0.9");
+
+    //}, 700);
+    //setInterval(function () {
+    //    $("video").css("opacity", "0.032");
+
+    //}, 700);
+    
+
+
     function startClapping() {
         $("#video3").css("display", "block");
+        //$("video").css("opacity", "0.9");
+        setInterval(function () {
+            $("video").css("opacity", "0.95");
+
+        }, 700);
+        setInterval(function () {
+            $("video").css("opacity", "0.8");
+
+        }, 710);
+
     }
     function stopClapping() {
         $("#video3").css("display", "none");;
