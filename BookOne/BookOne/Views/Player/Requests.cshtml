@@ -243,17 +243,15 @@
                         <span class="green">@Html.ActionLink("Give Book", "BorrowerReceivesBook", new { RequestId = item.BookRequestId })</span> <span>&nbsp; &nbsp;</span>
 
                         <span class="red">@Html.ActionLink("Decline Request", "DeclineRequest", new { RequestId = item.BookRequestId })</span>
-
-                        //Change color at MyBooks
                     }
 
                     @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.RequestStatus == BookOne.BookOne_Domain.RequestStatuses.Returning && item.BookRequested.AvailabilityStatus == false)
                     {
                         <span class="nutral">@Html.ActionLink("Accept Book Back", "OwnerTakesBackHisBook", new { RequestId = item.BookRequestId })</span>
                     }
-                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == false && item.BookRequested.BorrowerAskedToReturnThisBook == false)
+                    @if (item.BookRequested.Owner.Id == User.Identity.GetUserId() && item.BookRequested.AvailabilityStatus == false && item.BookRequested.Carrier.Id != item.RequestedBy.Id)
                     {
-                        <span>Book is not in your hands</span><span>&nbsp; &nbsp;</span>
+                        <span>(You don't have the book)</span><span>&nbsp; &nbsp;</span>
 
                         <span class="red">@Html.ActionLink("Cancel", "DeclineRequest", new { RequestId = item.BookRequestId })</span>
                     }

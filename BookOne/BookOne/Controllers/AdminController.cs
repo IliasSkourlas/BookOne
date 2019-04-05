@@ -20,55 +20,31 @@ namespace BookOne.Controllers
         // GET: AllUsers
         public ActionResult Index()
         {
-            try
-            {
-                var allUsers = dbOps.GetAllUsers();
+            var allUsers = dbOps.GetAllUsers();
 
-                foreach (var user in allUsers)
-                    user.Role = dbOps.GetUserRole(user);
+            foreach (var user in allUsers)
+                user.Role = dbOps.GetUserRole(user);
 
-                return View(allUsers);
-            }
-            catch (SqlException)
-            {
-
-                throw;
-            }
+            return View(allUsers);
         }
 
         // GET: AllBooks
         public ActionResult Books()
         {
-            try
-            {
-                return View(dbOps.GetAllBooks());
-            }
-            catch (SqlException)
-            {
-
-                throw;
-            }
+            return View(dbOps.GetAllBooks());
         }
 
         // GET: AllBookCirculations
         public ActionResult BookCirculations()
         {
-            try
-            {
-                var booksController = new BooksController();
+            var booksController = new BooksController();
 
-                var circulations = dbOps.GetAllBookCirculations();
+            var circulations = dbOps.GetAllBookCirculations();
 
-                foreach (var circulation in circulations)
-                    circulation.DaysRemaining = booksController.DaysRemainingCounter(circulation);
+            foreach (var circulation in circulations)
+                circulation.DaysRemaining = booksController.DaysRemainingCounter(circulation);
 
-                return View(circulations);
-            }
-            catch (SqlException)
-            {
-
-                throw;
-            }
+            return View(circulations);
         }
 
 
@@ -76,32 +52,18 @@ namespace BookOne.Controllers
         // GET: Books/Edit/5
         public ActionResult EditBook(int? id)
         {
-            try
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            catch (WebException)
-            {
 
-                throw;
-            }
-            try
-            {
-                Book book = dbOps.GetBook(id);
-                if (book == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(book);
-            }
-            catch (SqlException)
-            {
 
-                throw;
+            Book book = dbOps.GetBook(id);
+            if (book == null)
+            {
+                return HttpNotFound();
             }
+            return View(book);
         }
 
         // POST: Books/Edit/5
@@ -109,45 +71,25 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditBook([Bind(Include = "BookId,Title,Author,RegisteredOn,BookStatus")] Book book)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    dbOps.UpdateBook(book);
-                    return RedirectToAction("Books");
-                }
-                return View(book);
+                dbOps.UpdateBook(book);
+                return RedirectToAction("Books");
             }
-            catch (SqlException)
-            {
-
-                throw;
-            }
-            catch (WebException)
-            {
-
-                throw;
-            }
+            return View(book);
         }
 
 
         // GET: Users/Edit/5
         public ActionResult EditUser(string userId)
         {
-            try
+            var user = dbOps.GetUser(userId);
+            if (user == null)
             {
-                var user = dbOps.GetUser(userId);
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(user);
+                return HttpNotFound();
             }
-            catch (SqlException)
-            {
-
-                throw;
-            }
+            user.Role = dbOps.GetUserRole(user);
+            return View(user);
         }
 
         // POST: Users/Edit/5
@@ -155,25 +97,19 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditUser(ApplicationUser user)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    dbOps.UpdateUserDetails(user);
-                    return RedirectToAction("Index");
-                }
-                return View(user);
-            }
-            catch (SqlException)
-            {
+                var user2 = dbOps.GetUser(user.Id);
+                var oldUserRole = dbOps.GetUserRole(user2);
 
-                throw;
-            }
-            catch (WebException)
-            {
+                dbOps.UpdateUserDetails(user);
 
-                throw;
+                if (oldUserRole != user.Role)
+                    dbOps.ChangeUserRole(user, user.Role);
+
+                return RedirectToAction("Index");
             }
+            return View(user);
         }
 
 
@@ -181,32 +117,16 @@ namespace BookOne.Controllers
         // GET: Books/Delete/5
         public ActionResult DeleteBook(int? id)
         {
-            try
+            if (id == null)
             {
-                if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            catch (WebException)
+            Book book = dbOps.GetBook(id);
+            if (book == null)
             {
-
-                throw;
+                return HttpNotFound();
             }
-            try
-            {
-                Book book = dbOps.GetBook(id);
-                if (book == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(book);
-            }
-            catch (SqlException)
-            {
-
-                throw;
-            }
+            return View(book);
         }
 
         // POST: Books/Delete/5
@@ -214,42 +134,21 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteBookConfirmed(int id)
         {
-            try
-            {
-                Book book = dbOps.GetBook(id);
-                dbOps.DeleteBook(book);
-                return RedirectToAction("Books");
-            }
-            catch (SqlException)
-            {
-
-                throw;
-            }
-            catch (WebException)
-            {
-
-                throw;
-            }
+            Book book = dbOps.GetBook(id);
+            dbOps.DeleteBook(book);
+            return RedirectToAction("Books");
         }
 
 
         // GET: Users/Delete/5
         public ActionResult DeleteUser(string userId)
         {
-            try
+            var user = dbOps.GetUser(userId);
+            if (user == null)
             {
-                var user = dbOps.GetUser(userId);
-                if (user == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(user);
+                return HttpNotFound();
             }
-            catch (SqlException)
-            {
-
-                throw;
-            }
+            return View(user);
         }
 
         // POST: Books/Delete/5
@@ -257,22 +156,9 @@ namespace BookOne.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteUserConfirmed(string userId)
         {
-            try
-            {
-                var user = dbOps.GetUser(userId);
-                dbOps.DeleteUser(user);
-                return RedirectToAction("Index");
-            }
-            catch (SqlException)
-            {
-
-                throw;
-            }
-            catch (WebException)
-            {
-
-                throw;
-            }
+            var user = dbOps.GetUser(userId);
+            dbOps.DeleteUser(user);
+            return RedirectToAction("Index");
         }
     }
 }

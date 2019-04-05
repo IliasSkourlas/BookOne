@@ -17,7 +17,7 @@ namespace BookOne.Controllers
 
             if (ex.Exception is SqlException)
             {
-                ex.Result = ViewBag("An error occurred while retrieving or storing in the database.");
+                ex.Result = ViewBag("An error occurred while communicating with the database.");
             }
 
             else if (ex.Exception is WebException)
@@ -27,7 +27,7 @@ namespace BookOne.Controllers
 
             else
             {
-                ex.Result = ViewBag("An occurred.");
+                ex.Result = ViewBag("An error occurred.");
             }
 
             ex.Result = new ViewResult
