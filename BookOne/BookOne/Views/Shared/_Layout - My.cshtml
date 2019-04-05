@@ -198,9 +198,9 @@
 
 
 
-   
 
-       
+
+
     <div class="tooltipp">
         <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -235,7 +235,7 @@
                         <div class="form-group">
                             <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
                         </div>
-                      
+
                     </form>
 
                 </div>
@@ -254,13 +254,13 @@
             {
                 @Html.AntiForgeryToken()
 
-                   
+
                 <ul class="nav navbar-nav navbar-right">
-                       
+
                     <li>
-                            @Html.ActionLink("History", "History", "Books")
+                        @Html.ActionLink("History", "History", "Books")
                     </li>
-                           
+
                     <li>
                         @Html.ActionLink(User.Identity.GetUserName(), "ShowUserProfile", "Player", routeValues: new { userId = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
                     </li>
@@ -287,7 +287,7 @@
     </div>
 
 
-        @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
 
 
 
@@ -332,7 +332,7 @@
 </script>
 
 
+    </body>
 
-</body>
 
 </html>
