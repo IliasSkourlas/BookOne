@@ -199,6 +199,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
@@ -276,6 +277,22 @@
     <Compile Include="Migrations\201904011134267_EmailNotificationModelAdded.cs" />
     <Compile Include="Migrations\201904011134267_EmailNotificationModelAdded.Designer.cs">
       <DependentUpon>201904011134267_EmailNotificationModelAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904041601373_AddedReturnedOnInBookCirculationModel.cs" />
+    <Compile Include="Migrations\201904041601373_AddedReturnedOnInBookCirculationModel.Designer.cs">
+      <DependentUpon>201904041601373_AddedReturnedOnInBookCirculationModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904041630136_ModifiedReturnedOnInBookCirculationModel.cs" />
+    <Compile Include="Migrations\201904041630136_ModifiedReturnedOnInBookCirculationModel.Designer.cs">
+      <DependentUpon>201904041630136_ModifiedReturnedOnInBookCirculationModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.cs" />
+    <Compile Include="Migrations\201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.Designer.cs">
+      <DependentUpon>201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.cs" />
+    <Compile Include="Migrations\201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.Designer.cs">
+      <DependentUpon>201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -372,7 +389,6 @@
     <Content Include="Views\Player\ShowUserProfile.cshtml" />
     <Content Include="Views\Player\BorrowerReturnsBook.cshtml" />
     <Content Include="Views\Shared\_LookAtThisPlayerPartial.cshtml" />
-    <Content Include="Views\Chat\ChatStart.cshtml" />
     <Content Include="Views\Player\_UnansweredRequestsFoundPartial.cshtml" />
     <Content Include="Views\Shared\_Layout - History.cshtml" />
     <Content Include="Views\Shared\_Layout - GiveAndTake.cshtml" />
@@ -391,6 +407,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -459,6 +476,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904011134267_EmailNotificationModelAdded.resx">
       <DependentUpon>201904011134267_EmailNotificationModelAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041601373_AddedReturnedOnInBookCirculationModel.resx">
+      <DependentUpon>201904041601373_AddedReturnedOnInBookCirculationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041630136_ModifiedReturnedOnInBookCirculationModel.resx">
+      <DependentUpon>201904041630136_ModifiedReturnedOnInBookCirculationModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.resx">
+      <DependentUpon>201904041635292_ModifiedReturnedOnInBookCirculationModelAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.resx">
+      <DependentUpon>201904041638558_ModifiedReturnedOnInBookCirculationModelAgain2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

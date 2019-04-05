@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.SqlClient;
 
 namespace BookOne.Controllers
 {
@@ -21,7 +22,7 @@ namespace BookOne.Controllers
         {
             var allUsers = dbOps.GetAllUsers();
 
-            foreach(var user in allUsers)
+            foreach (var user in allUsers)
                 user.Role = dbOps.GetUserRole(user);
 
             return View(allUsers);
@@ -55,6 +56,8 @@ namespace BookOne.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+
             Book book = dbOps.GetBook(id);
             if (book == null)
             {
@@ -85,6 +88,7 @@ namespace BookOne.Controllers
             {
                 return HttpNotFound();
             }
+            user.Role = dbOps.GetUserRole(user);
             return View(user);
         }
 
@@ -95,7 +99,14 @@ namespace BookOne.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user2 = dbOps.GetUser(user.Id);
+                var oldUserRole = dbOps.GetUserRole(user2);
+
                 dbOps.UpdateUserDetails(user);
+
+                if (oldUserRole != user.Role)
+                    dbOps.ChangeUserRole(user, user.Role);
+
                 return RedirectToAction("Index");
             }
             return View(user);

@@ -13,6 +13,7 @@
 
 
 <style type="text/css">
+
     body {
         background-image: linear-gradient(rgb(255, 0, 0),rgba(0,0,0,0.1)), url('../../Content/images/TenTenCut.jpg');
         background-repeat: no-repeat;
@@ -20,9 +21,11 @@
         background-attachment: fixed;
     }
 
+
+
     .owner:hover {
         border-bottom: 5px;
-        text-decoration:none;
+        text-decoration: none;
         text-decoration-style: solid;
         color: rgb(0, 255, 255);
     }
@@ -30,35 +33,52 @@
     #availableBook a {
         color: var(--available-color);
     }
-    #availableBook a:hover {
-        color: var(--main-HeaderHover-color);
-    }
+
+        #availableBook a:hover {
+            color: var(--main-HeaderHover-color);
+        }
+
     .ifUnavailable {
-       color: rgba(255, 255, 255, 0.65)
+        color: rgba(255, 255, 255, 0.65)
     }
 </style>
 
 
 
-<table id="listOfBooks" class="table">
+
+
+
+@*<div class="tooltipp">
+
+        <span class="tooltiptextt">click on the background to toggle views</span>
+    </div>*@
+
+
+
+<table id="listOfBooks" class="table ">
+
+
     <tr class="header">
         <th id="Title" class="col-md-8">
-            @Html.DisplayNameFor(model => model.Title)
+
+            <div class="tooltipp">  @Html.DisplayNameFor(model => model.Title)<span class="tooltiptextt">click and look at the searchbar</span></div>
         </th>
         <th id="Author" class="author col-md-4">
-            @Html.DisplayNameFor(model => model.Author)
+            <div class="tooltipp">  @Html.DisplayNameFor(model => model.Author)<span class="tooltiptextt">click and look at the searchbar</span></div>
         </th>
         <th id="Owner" col-md-4">
-            Owner
+            <div class="tooltipp">  <spam>Owner</spam><span class="tooltiptextt">click and look at the searchbar</span></div>
         </th>
         <th id="Availability" class="Status col-md-4">
-            Availability
+            <div class="tooltipp">  <spam>Availability</spam><span class="tooltiptextt">click and look at the searchbar</span></div>
         </th>
     </tr>
 
+
     @foreach (var item in Model)
     {
-        <tr class="bookTitle">            
+        <tr class="bookTitle">
+
             @if (item.AvailabilityStatus == true && item.Owner.Id != User.Identity.GetUserId())
             {
                 <td>
@@ -75,16 +95,16 @@
 
                 <td id="availableBook" class="Status">
 
-                        <spam id="availableBook">@Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)</spam>
+                    <spam id="availableBook"><div class="tooltipp"> @Html.ActionLink("Available", "RequestConfirmation", "Player", new { bookId = item.BookId }, null)<span class="tooltiptextt">click...if you want me</span></div></spam>
 
-                        @*it will color the unavailable*@
-                        <script>
-                            myFunction();
-                            function myFunction() {
-                                $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
-                           
-                            }
-                        </script>
+                    @*it will color the unavailable*@
+                    <script>
+                        myFunction();
+                        function myFunction() {
+                            $("#availableBook ").css("color", " rgba(255, 255, 255, 0.65)");
+
+                        }
+                    </script>
 
                 </td>
             }
@@ -108,7 +128,7 @@
                     <span>unavailable</span>
                 </td>
             }
-            
+
         </tr>
     }
 </table>
@@ -171,6 +191,10 @@
 
 
     }
+
+
+
+
 
 </script>
 
