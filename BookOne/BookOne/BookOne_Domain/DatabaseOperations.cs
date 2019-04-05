@@ -924,5 +924,17 @@ namespace BookOne.BookOne_Domain
         //    userManager.RemoveFromRole(user.Id, oldRole);
         //    userManager.AddToRole(user.Id, user.userRole.ToString());
         //}
+
+
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        
+        
+        //Disposes the database instance when it is called
+        public void DisposeDB()
+        {
+            db.Dispose();
+        }
     }
 }

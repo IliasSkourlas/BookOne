@@ -1,13 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Net.Mime;
 using System.Text;
 using System.Web.Mvc;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using BookOne.BookOne_Domain;
-using BookOne.Models;
 using BookOne.ViewModels;
 using Microsoft.AspNet.Identity;
 
@@ -16,24 +12,21 @@ namespace BookOne.Controllers
     [Authorize]
     public class BooksController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
         private DatabaseOperations dbOps = new DatabaseOperations();
 
 
-        // GET: Books
+        //Displays all Books
         public ActionResult Index()
         {
-            //Displays all Books not owned by the logged in user
             var loggedInUserId = User.Identity.GetUserId();
 
             return View(dbOps.AllBooks(loggedInUserId));
         }
 
 
-        // GET: MyBooks
+        //Displays all Books owned by the logged in user
         public ActionResult MyBooks()
         {
-            //Displays all Books owned by the logged in user
             var loggedInUserId = User.Identity.GetUserId();
 
             var model = new BooksViewModel()
@@ -49,10 +42,9 @@ namespace BookOne.Controllers
         }
 
 
-        // GET: MyHand
+        //Displays all Books that the logged in user currently holds
         public ActionResult MyHand()
         {
-            //Displays all Books that the logged in user currently holds
             var loggedInUserId = User.Identity.GetUserId();
             
             var model = new BooksViewModel()
@@ -84,8 +76,6 @@ namespace BookOne.Controllers
         }
 
         // POST: Books/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BookId,Title,Author,RegisteredOn,BookStatus")] Book book)
@@ -103,6 +93,7 @@ namespace BookOne.Controllers
             return View(book);
         }
 
+
         // GET: Books/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -119,8 +110,6 @@ namespace BookOne.Controllers
         }
 
         // POST: Books/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BookId,Title,Author,RegisteredOn,BookStatus")] Book book)
@@ -133,20 +122,6 @@ namespace BookOne.Controllers
             return View(book);
         }
 
-        // GET: Books/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Book book = dbOps.GetBook(id);
-        //    if (book == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(book);
-        //}
 
         // POST: Books/Delete/5
         [HttpPost]
@@ -175,7 +150,8 @@ namespace BookOne.Controllers
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        
+        //Displays all Book Requests and Circulations that the loggedIn user was a part of.
         public ActionResult History()
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
@@ -197,11 +173,11 @@ namespace BookOne.Controllers
         }
 
         
+        //Loads the model to be loaded in the History View
         public string PrepareHistoryForDownload()
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
             
-
             var model = new UserExchangeHistoryViewModel()
             {
                 BookRequests = dbOps.GetAllRequests(loggedInUser),
@@ -211,6 +187,8 @@ namespace BookOne.Controllers
             return RenderViewToString("~/Views/Books/DownloadHistory.cshtml", model);
         }
 
+
+        //Returns a given view as a string
         public string RenderViewToString(string viewName, object model)
         {
             ViewData.Model = model;
@@ -225,30 +203,34 @@ namespace BookOne.Controllers
         }
 
 
-        //Download function for a user's complete history of book exchanges. Creates a BookOne_History.txt file.
+        //Download function for a user's complete history of book exchanges. Creates a BookOne_History.html file.
         [HttpPost]
         public FileStreamResult SaveHistory()
         {
-            var meh = PrepareHistoryForDownload();
+            var viewAsString = PrepareHistoryForDownload();
 
-            Byte[] stream2 = Encoding.ASCII.GetBytes(meh);
+            Byte[] viewAsAnArrayOfBytes = Encoding.ASCII.GetBytes(viewAsString);
 
-            var stream = new MemoryStream(stream2);
+            var stream = new MemoryStream(viewAsAnArrayOfBytes);
 
-            return File( stream, "text/html", "BookOne_History.html");
+            return File(stream, "text/html", "BookOne_History.html");
         }
 
 
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                dbOps.DisposeDB();
             }
             base.Dispose(disposing);
         }
+
+        
     }
 }

@@ -12,6 +12,7 @@ namespace BookOne.Controllers
     {
         DatabaseOperations dbOps = new DatabaseOperations();
         
+
         // GET: Player
         public ActionResult Index()
         {
@@ -19,6 +20,7 @@ namespace BookOne.Controllers
         }
 
 
+        //Displays a user's Profile View along with his received Reactions(Claps, Shovels, etc)
         public ActionResult ShowUserProfile(string userId)
         {
             ApplicationUser user = dbOps.GetUser(userId);
@@ -40,13 +42,14 @@ namespace BookOne.Controllers
         }
 
 
+        //Upgrades a user's Role from simple User to Player
         [HttpPost]
-        public ActionResult ChangeUserToPlayer(ApplicationUser loggedInUser)
+        public ActionResult ChangeUserToPlayer(ApplicationUser user)
         {
             if (ModelState.IsValid)
             {
-                dbOps.UpdateUserDetails(loggedInUser);
-                dbOps.ChangeUserRoleToPlayer(loggedInUser);
+                dbOps.UpdateUserDetails(user);
+                dbOps.ChangeUserRoleToPlayer(user);
                 return RedirectToAction("Index", "MyBooks");
             }
 
@@ -54,20 +57,29 @@ namespace BookOne.Controllers
         }
 
 
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-        // GET: Requests
-        public ActionResult Requests()
+        public ActionResult CheckIfUserIsAPlayer(ApplicationUser user)
         {
-            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-            var userRole = dbOps.GetUserRole(loggedInUser);
+            var userRole = dbOps.GetUserRole(user);
 
             //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
             if (!(userRole == "Player" || userRole == "Administrator"))
             {
-                return View("PlayerForm", loggedInUser);
+                return View("PlayerForm", user);
             }
+
+            return null;
+        }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        //Displays all on-going user's Requests
+        public ActionResult Requests()
+        {
+            var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
+
+            CheckIfUserIsAPlayer(loggedInUser);
 
             var requests = dbOps.GetRequests(loggedInUser);
 
@@ -75,17 +87,12 @@ namespace BookOne.Controllers
         }
 
 
-        //Create request for a book
+        //Creates request for a book
         public ActionResult RequestConfirmation(int? bookId)
         {
             var loggedInUser = dbOps.GetUser(User.Identity.GetUserId());
-            var userRole = dbOps.GetUserRole(loggedInUser);
 
-            //Check if the loggedInUser is a Player. If he is not, he is redirected to enter additional information needed in order to become one.
-            if (!(userRole == "Player" || userRole == "Administrator"))
-            {
-                return View("PlayerForm", loggedInUser);
-            }
+            CheckIfUserIsAPlayer(loggedInUser);
 
             if (bookId == null)
             {
