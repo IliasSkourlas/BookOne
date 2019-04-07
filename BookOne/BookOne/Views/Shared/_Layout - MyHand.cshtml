@@ -116,6 +116,36 @@
         }
 
 
+
+        #canvas1 {
+            /*border: 1px solid rgba(255, 216, 0, 0.3);
+            background-color: rgba(255, 216, 0, 0.2);*/
+            border: 1px solid rgba(255, 216, 0, 0.02);
+            background-color: rgba(255, 216, 0, 0.009);
+        }
+
+        .canvasContainer1 {
+            position: fixed;
+            left: 37%;
+            right: 50%;
+            min-width: 10%;
+            top: 0px;
+            bottom: 0px;
+            z-index: 1;
+            background-color: transparent;
+        }
+
+        .contextCanvas1 {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+        }
+
+
+
         .video-container {
             position: fixed;
             top: 0;
@@ -214,7 +244,7 @@
 
 
 
-   
+
     <div class="tooltipp">
         <div id="MyNavbar" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -247,55 +277,64 @@
                         <div class="form-group">
                             <input id="searchInput" type="text" class="form-control" onkeyup="SearchFunction()" placeholder="Search">
                         </div>
-                       
+
                     </form>
 
                 </div>
             </div>
         </div>
-        <span class="tooltiptextt">click on the background to toggle views</span>
+        <span class="tooltiptextt">click on the center background to toggle views</span>
     </div>
 
 
 
 
-        <div class="container body-content" onclick="rotate()">
+    <div class="container body-content" >
 
 
-            @using Microsoft.AspNet.Identity
-            @if (Request.IsAuthenticated)
+        @using Microsoft.AspNet.Identity
+        @if (Request.IsAuthenticated)
+        {
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
             {
-                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                {
-                    @Html.AntiForgeryToken()
+                @Html.AntiForgeryToken()
 
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            @Html.ActionLink(User.Identity.GetUserName(), "ShowUserProfile", "Player", routeValues: new { userId = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
-                        </li>
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                    </ul>
-                }
-            }
-            else
-            {
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-                    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                    <li>
+                        @Html.ActionLink(User.Identity.GetUserName(), "ShowUserProfile", "Player", routeValues: new { userId = User.Identity.GetUserId() }, htmlAttributes: new { title = "Manage" })
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>
             }
+        }
+        else
+        {
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            </ul>
+        }
 
 
 
-            @RenderBody()
+        @RenderBody()
 
-            <hr />
-            <footer>
-                @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
-            </footer>
-        </div>
+        <hr />
+        <footer>
+            @*<p>&copy; @DateTime.Now.Year - BookOne</p>*@
+        </footer>
+    </div>
 
-        @RenderSection("scripts", required: false)
+
+    <div class="canvasContainer1" onclick="rotate()">
+        <canvas id="canvas1" class="contextCanvas1"></canvas>
+    </div>
+
+
+
+
+
+    @RenderSection("scripts", required: false)
 
 
 
