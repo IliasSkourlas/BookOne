@@ -144,7 +144,7 @@
             z-index: 1;
         }
 
-        /*#canvas2 {
+        #canvas2 {
             border: 1px solid rgba(255, 255, 255, 0.58);
             background-color: rgba(14, 14, 14, 0.90);
         }
@@ -231,7 +231,7 @@
         
         .canvasContainer3 .cancel {
             background-color: rgba(233, 203, 25, 0.32);
-        }*/
+        }
 
         .messageForm {
             position: absolute;
@@ -385,7 +385,7 @@
 
     @*No in use for now*@
 
-    @*<div id="canvasContainer2" class="canvasContainer2">
+    <div id="canvasContainer2" class="canvasContainer2">
         <canvas id="canvas2" class="contextCanvas2"></canvas>
         <div id="lookAtThisPlayer">
             <h2>Oh.Sotoooo !! </h2>
@@ -407,7 +407,7 @@
                 <button type="button" class="btn cancel" onclick="closeChat()">Close</button>
             </form>
         </div>
-    </div>*@
+    </div>
 
     @RenderSection("scripts", required: false)
 
@@ -463,10 +463,7 @@
                 $("#searchInput").attr("placeholder", "Status");
                 $("#searchFilter").val("Status");
             })
-            //$("#Owner").click(function () {
-            //    $("#searchInput").attr("placeholder", "Owner");
-            //    $("#searchFilter").val("Owner");
-            //})
+           
 
         });
 
@@ -481,15 +478,15 @@
             });
         });
 
-        // appear
-        $(document).ready(function () {
-            $(".owner").click(function () {
-                $(".canvasContainer2").css("left", "70%");
-                $(".canvasContainer2").css("opacity", 1);
-                $(".canvasContainer3").css("left", "70%");
-                $(".canvasContainer3").css("opacity", 1);
-            });
-        });
+        ////// appear (this section is not used....un coment if you wish to use)
+        //$(document).ready(function () {
+        //    $(".owner").click(function () {
+        //        $(".canvasContainer2").css("left", "70%");
+        //        $(".canvasContainer2").css("opacity", 1);
+        //        $(".canvasContainer3").css("left", "70%");
+        //        $(".canvasContainer3").css("opacity", 1);
+        //    });
+        //});
 
         /////// Chat
         function openChat() {
